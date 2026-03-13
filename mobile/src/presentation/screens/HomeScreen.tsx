@@ -7,7 +7,8 @@ import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository
 import { MarketTrendCard } from '../components/MarketTrendCard';
 
 // Python API URL - Adjust if your IP changes or using simulator
-const PYTHON_API_URL = 'http://10.0.2.2:8000'; // Standard Android Emulator localhost
+// Python API URL - Using local network IP for physical device testing
+const PYTHON_API_URL = 'http://192.168.1.157:8000';
 
 interface SignalData {
   ticker: string;
