@@ -9,16 +9,22 @@ from app.services.analyzer import analyze_cross
 
 logger = logging.getLogger(__name__)
 
-# A small subset of BIST30 or standard watchlist.
-# Can be loaded from DB.
+# Watchlist for BIST100 and major instruments.
+# This list covers major BIST stocks, Gold, and Silver.
 WATCHLIST = [
-    "XAUUSD=X", # Gold
-    "XAGUSD=X", # Silver
-    "THYAO.IS", # BIST example
-    "GARAN.IS",
-    "AKBNK.IS",
-    "EREGL.IS",
-    "TUPRS.IS"
+    "XAUUSD=X", "XAGUSD=X", # Gold & Silver
+    "AEFES.IS", "AGHOL.IS", "AKBNK.IS", "AKSA.IS", "AKSEN.IS", "ALARK.IS", "ALBRK.IS", "ARCLK.IS",
+    "ASELS.IS", "ASTOR.IS", "ASUZU.IS", "AYDEM.IS", "BAGFS.IS", "BERA.IS", "BIMAS.IS", "BRISA.IS",
+    "BRYAT.IS", "BUCIM.IS", "CANTE.IS", "CCOLA.IS", "CEMTS.IS", "CIMSA.IS", "CWENE.IS", "DOAS.IS",
+    "DOHOL.IS", "EGEEN.IS", "EKGYO.IS", "ENJSA.IS", "ENKAI.IS", "EREGL.IS", "EUPWR.IS", "FROTO.IS",
+    "GARAN.IS", "GENIL.IS", "GESAN.IS", "GLYHO.IS", "GSDHO.IS", "GUBRF.IS", "GWIND.IS", "HALKB.IS",
+    "HETSH.IS", "IPEKE.IS", "ISCTR.IS", "ISDMR.IS", "ISGYO.IS", "ISMEN.IS", "IZMDC.IS", "KARDM.IS",
+    "KCHOL.IS", "KENT.IS", "KONTR.IS", "KORDS.IS", "KOZAA.IS", "KOZAL.IS", "KRDMD.IS", "MAVI.IS",
+    "MGROS.IS", "MIATK.IS", "ODAS.IS", "OTKAR.IS", "OYAKC.IS", "PENTA.IS", "PETKM.IS", "PGSUS.IS",
+    "QUAGR.IS", "SAHOL.IS", "SASA.IS", "SAYAS.IS", "SISE.IS", "SKBNK.IS", "SMRTG.IS", "SOKM.IS",
+    "TARKN.IS", "TAVHL.IS", "TCELL.IS", "THYAO.IS", "TKFEN.IS", "TMSN.IS", "TOASO.IS", "TSKB.IS",
+    "TTKOM.IS", "TTRAK.IS", "TUPRS.IS", "TURSG.IS", "ULKER.IS", "VAKBN.IS", "VESBE.IS", "VESTL.IS",
+    "YEOTK.IS", "YKBNK.IS", "YYLGD.IS", "ZOREN.IS"
 ]
 
 RESULTS_FILE = "results.json"
