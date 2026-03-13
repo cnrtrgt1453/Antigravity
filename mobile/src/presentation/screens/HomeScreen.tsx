@@ -14,9 +14,9 @@ interface SignalData {
   signal: string;
   color: string;
   message: string;
-  cross_date: string | None;
-  current_price: number | None;
-  last_updated: string | None;
+  cross_date: string | null;
+  current_price: number | null;
+  last_updated: string | null;
 }
 
 export const HomeScreen: React.FC = () => {
