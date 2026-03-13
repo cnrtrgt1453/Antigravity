@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import { useAuthStore } from '../stores/useAuthStore';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 
@@ -24,23 +25,25 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { register, isLoading, error: storeError, clearError } = useAuthStore();
+  
+  // Custom Error state for validation logic (if needed), otherwise use storeError
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const error = localError || storeError;
 
   const handleRegister = async () => {
-    // Şimdilik sadece mock loading
-    setIsLoading(true);
-    setError(null);
-    try {
-      setTimeout(() => {
-        setIsLoading(false);
-        // Doğrudan Login ekranına geri gönder, normalde backend'e post edilir.
-        navigation.navigate('Login');
-      }, 1000);
-    } catch (e: any) {
-      setError(e.message);
-      setIsLoading(false);
+    clearError();
+    setLocalError(null);
+    
+    if (!fullName || !email || !password) {
+      setLocalError("Lütfen tüm alanları doldurun.");
+      return;
     }
+    
+    await register(fullName, email, password);
+    // register başarılıysa, authStore state'i güncelleyecek ve App.tsx içindeki kontrol yapısı bizi direkt HomeScreen'e atacak. 
+    // Yani navigation.navigate yapmaya gerek yok. 
   };
 
   return (
@@ -72,7 +75,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             autoCorrect={false}
             value={fullName}
             onChangeText={setFullName}
-            onFocus={() => setError(null)}
+            onFocus={() => { setLocalError(null); clearError(); }}
           />
         </View>
 
@@ -88,7 +91,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             autoCorrect={false}
             value={email}
             onChangeText={setEmail}
-            onFocus={() => setError(null)}
+            onFocus={() => { setLocalError(null); clearError(); }}
           />
         </View>
 
@@ -103,7 +106,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
-              onFocus={() => setError(null)}
+              onFocus={() => { setLocalError(null); clearError(); }}
             />
             <TouchableOpacity
               style={styles.eyeButton}

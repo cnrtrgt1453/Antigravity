@@ -7,15 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * REST API'den gelen kayıt paketini temsil eden Data Transfer Object (DTO).
- * Entity'nin doğrudan API dışına açılmasını önler.
- */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegistrationDto {
+public class LoginRequestDto {
 
     @NotBlank(message = "E-posta boş olamaz")
     @Email(message = "Geçerli bir e-posta adresi giriniz")
@@ -23,9 +19,4 @@ public class UserRegistrationDto {
 
     @NotBlank(message = "Şifre boş olamaz")
     private String password;
-
-    @NotBlank(message = "Ad soyad boş olamaz")
-    private String fullName;
-
-    private String profilePictureUrl;
 }

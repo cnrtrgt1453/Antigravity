@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -22,23 +23,21 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public User registerUser(UserRegistrationDto registrationDto) {
         log.info("Yeni kullanıcı kaydı isteği: {}", registrationDto.getEmail());
 
-        if (userRepository.existsByFirebaseUid(registrationDto.getFirebaseUid())) {
-            throw new IllegalArgumentException("Bu kullanıcı zaten kayıtlı.");
-        }
-
         if (userRepository.existsByEmail(registrationDto.getEmail())) {
             throw new IllegalArgumentException("Bu e-posta adresi kullanımda.");
         }
 
         User newUser = User.builder()
-                .firebaseUid(registrationDto.getFirebaseUid())
                 .email(registrationDto.getEmail())
+                // Şifreyi açık metin olarak değil, BCrypt ile şifrelenmiş (Hashlenmiş) formatta kaydet (Güvenlik)
+                .password(passwordEncoder.encode(registrationDto.getPassword()))
                 .fullName(registrationDto.getFullName())
                 .profilePictureUrl(registrationDto.getProfilePictureUrl())
                 // Kayıt olan kullanıcının son girişi "şu an"dır
@@ -46,6 +45,22 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         return userRepository.save(newUser);
+    }
+
+    @Override
+    @Transactional
+    public User loginUser(String email, String password) {
+        log.info("Kullanıcı giriş isteği: {}", email);
+        
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("E-posta adresi sistemde bulunamadı."));
+                
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("Hatalı şifre girişi yapıldı.");
+        }
+        
+        user.setLastLoginAt(LocalDateTime.now());
+        return userRepository.save(user);
     }
 
     @Override
@@ -57,9 +72,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateLastLogin(String firebaseUid) {
-        User user = getUserByFirebaseUid(firebaseUid);
-        user.setLastLoginAt(LocalDateTime.now());
-        userRepository.save(user);
+    public void updateLastLogin(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user != null) {
+            user.setLastLoginAt(LocalDateTime.now());
+            userRepository.save(user);
+        }
     }
 }

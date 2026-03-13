@@ -1,5 +1,6 @@
 package com.antigravity.api.controller;
 
+import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.service.UserService;
@@ -34,9 +35,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/{firebaseUid}/login")
-    public ResponseEntity<Void> logUserLogin(@PathVariable String firebaseUid) {
-        userService.updateLastLogin(firebaseUid);
-        return ResponseEntity.ok().build();
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@Valid @RequestBody LoginRequestDto loginDto) {
+        // Servis katmanında şifre doğrulaması yapılacak
+        User loggedInUser = userService.loginUser(loginDto.getEmail(), loginDto.getPassword());
+        return ResponseEntity.ok(loggedInUser);
     }
 }

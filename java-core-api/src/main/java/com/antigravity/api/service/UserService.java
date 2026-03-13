@@ -16,12 +16,17 @@ public interface UserService {
     User registerUser(UserRegistrationDto registrationDto);
 
     /**
-     * Firebase UID ile kullanıcı bulunur.
+     * Kullanıcı girişi ve şifre doğrulaması yapar.
+     */
+    User loginUser(String email, String password);
+
+    /**
+     * Firebase UID ile kullanıcı bulunur (Gelecek destek).
      */
     User getUserByFirebaseUid(String firebaseUid);
 
     /**
      * Kullanıcının platforma girme tarihini günceller.
      */
-    void updateLastLogin(String firebaseUid);
+    void updateLastLogin(String email);
 }

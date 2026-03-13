@@ -144,7 +144,7 @@ export const HomeScreen: React.FC = () => {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Text style={styles.greeting}>Hoş geldin 👋</Text>
-          <Text style={styles.email}>{user?.displayName ?? user?.email}</Text>
+          <Text style={styles.email}>{user?.fullName ?? user?.email}</Text>
         </View>
 
         <View style={styles.marketSection}>
