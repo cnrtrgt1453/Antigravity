@@ -25,8 +25,8 @@ export const HomeScreen: React.FC = () => {
     };
 
     fetchMarketData();
-    // Refresh every minute
-    const interval = setInterval(fetchMarketData, 60000);
+    // Refresh every 6 hours (6 * 60 * 60 * 1000 = 21600000 ms)
+    const interval = setInterval(fetchMarketData, 21600000);
     return () => clearInterval(interval);
   }, []);
 
