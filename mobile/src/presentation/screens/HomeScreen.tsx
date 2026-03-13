@@ -9,6 +9,7 @@ import { MarketTrendCard } from '../components/MarketTrendCard';
 // Python API URL - Adjust if your IP changes or using simulator
 // Python API URL - Using local network IP for physical device testing
 const PYTHON_API_URL = 'http://192.168.1.157:8000';
+const JAVA_API_URL = 'http://192.168.1.157:8080';
 
 interface SignalData {
   ticker: string;
@@ -44,7 +45,7 @@ export const HomeScreen: React.FC = () => {
   const fetchSignals = async () => {
     try {
       setSignalsLoading(true);
-      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/latest_signals`);
+      const response = await fetch(`${JAVA_API_URL}/api/v1/signals`);
       if (response.ok) {
         const data = await response.json();
         setSignals(data);

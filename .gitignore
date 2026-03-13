@@ -34,3 +34,10 @@ java-core-api/!**/src/test/**/target/
 
 # Git
 # mobile/.git/ # Eğer mobilde ayrı git varsa onu yoksaymasını veya sub-repo yapmasını istemiyorsak ekleyebiliriz ama şimdilik bırakalım.
+
+# Python
+__pycache__/
+*.pyc
+*.sqlite3
+*.db
+results.json

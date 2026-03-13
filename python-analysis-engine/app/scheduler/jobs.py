@@ -3,59 +3,37 @@ from apscheduler.triggers.cron import CronTrigger
 import logging
 import json
 import os
+from enum import Enum
 
-from app.services.data_client import fetch_historical_data
-from app.services.analyzer import analyze_cross
+from app.services.data_provider import YahooFinanceProvider
+from app.services.analysis_strategy import GoldenCrossStrategy
+from app.services.result_reporter import JsonResultReporter
+from app.services.scanner_engine import ScannerEngine
 
 logger = logging.getLogger(__name__)
-
-# Watchlist for BIST100 and major instruments.
-# This list covers major BIST stocks, Gold, and Silver.
-WATCHLIST = [
-    "XAUUSD=X", "XAGUSD=X", # Gold & Silver
-    "AEFES.IS", "AGHOL.IS", "AKBNK.IS", "AKSA.IS", "AKSEN.IS", "ALARK.IS", "ALBRK.IS", "ARCLK.IS",
-    "ASELS.IS", "ASTOR.IS", "ASUZU.IS", "AYDEM.IS", "BAGFS.IS", "BERA.IS", "BIMAS.IS", "BRISA.IS",
-    "BRYAT.IS", "BUCIM.IS", "CANTE.IS", "CCOLA.IS", "CEMTS.IS", "CIMSA.IS", "CWENE.IS", "DOAS.IS",
-    "DOHOL.IS", "EGEEN.IS", "EKGYO.IS", "ENJSA.IS", "ENKAI.IS", "EREGL.IS", "EUPWR.IS", "FROTO.IS",
-    "GARAN.IS", "GENIL.IS", "GESAN.IS", "GLYHO.IS", "GSDHO.IS", "GUBRF.IS", "GWIND.IS", "HALKB.IS",
-    "HETSH.IS", "IPEKE.IS", "ISCTR.IS", "ISDMR.IS", "ISGYO.IS", "ISMEN.IS", "IZMDC.IS", "KARDM.IS",
-    "KCHOL.IS", "KENT.IS", "KONTR.IS", "KORDS.IS", "KOZAA.IS", "KOZAL.IS", "KRDMD.IS", "MAVI.IS",
-    "MGROS.IS", "MIATK.IS", "ODAS.IS", "OTKAR.IS", "OYAKC.IS", "PENTA.IS", "PETKM.IS", "PGSUS.IS",
-    "QUAGR.IS", "SAHOL.IS", "SASA.IS", "SAYAS.IS", "SISE.IS", "SKBNK.IS", "SMRTG.IS", "SOKM.IS",
-    "TARKN.IS", "TAVHL.IS", "TCELL.IS", "THYAO.IS", "TKFEN.IS", "TMSN.IS", "TOASO.IS", "TSKB.IS",
-    "TTKOM.IS", "TTRAK.IS", "TUPRS.IS", "TURSG.IS", "ULKER.IS", "VAKBN.IS", "VESBE.IS", "VESTL.IS",
-    "YEOTK.IS", "YKBNK.IS", "YYLGD.IS", "ZOREN.IS"
-]
 
 RESULTS_FILE = "results.json"
 
 def scan_all_instruments():
     """
-    Scans the watchlist, fetches data, performs analysis.
+    Scans the watchlist fetching data and performing analysis asynchronously.
     This runs periodically (every Monday at 07:00).
     """
-    logger.info("Weekly scanner triggered! Scanning instruments...")
-    results = []
-    for ticker in WATCHLIST:
-        df = fetch_historical_data(ticker, period="2y", interval="1d")
-        result = analyze_cross(df, ticker)
-        results.append(result)
-        
-        # If Golden/Dead Cross found, we can send a Push Notification, save to DB, etc.
-        if result['signal'] in ['GOLDEN_CROSS', 'DEAD_CROSS']:
-            logger.info(f"SIGNAL FOUND: {ticker} -> {result['signal']} ({result['color']}) on {result['cross_date']}")
-        else:
-            logger.info(f"{ticker} -> {result['signal']}")
+    logger.info("Weekly scanner triggered! Initializing Scanner Engine...")
     
-    logger.info("Weekly scan completed!")
+    provider = YahooFinanceProvider()
+    strategy = GoldenCrossStrategy(short_window=50, long_window=200)
+    reporter = JsonResultReporter(file_path=RESULTS_FILE)
     
-    # Save results to JSON file
-    try:
-        with open(RESULTS_FILE, "w") as f:
-            json.dump(results, f)
-        logger.info(f"Results saved to {RESULTS_FILE}")
-    except Exception as e:
-        logger.error(f"Error saving results: {e}")
+    engine = ScannerEngine(
+        data_provider=provider,
+        strategy=strategy,
+        reporter=reporter,
+        max_workers=10 # 10 thread ile aynı anda hisse analizi yapacak
+    )
+    
+    # Tüm asenkron ve analiz işlemi içeride yürütülecek
+    engine.run_scan()
 
 def start_scheduler():
     scheduler = BackgroundScheduler()

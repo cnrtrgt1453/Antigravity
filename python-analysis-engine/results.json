@@ -1,1 +1,4514 @@
-[{"ticker": "XAUUSD=X", "signal": "NOT_ENOUGH_DATA", "message": "En az 200 gunluk veri gerekiyor."}, {"ticker": "XAGUSD=X", "signal": "NOT_ENOUGH_DATA", "message": "En az 200 gunluk veri gerekiyor."}, {"ticker": "THYAO.IS", "signal": "NO_SIGNAL", "color": "GRAY", "message": "Son 7 g\u00fcn i\u00e7inde kesi\u015fim olmad\u0131.", "cross_date": null, "current_price": 292.25, "sma50": 304.29, "sma200": 295.68839042663575, "last_updated": "2026-03-13"}, {"ticker": "GARAN.IS", "signal": "NO_SIGNAL", "color": "GRAY", "message": "Son 7 g\u00fcn i\u00e7inde kesi\u015fim olmad\u0131.", "cross_date": null, "current_price": 132.8000030517578, "sma50": 150.93400115966796, "sma200": 139.79150051116943, "last_updated": "2026-03-13"}, {"ticker": "AKBNK.IS", "signal": "NO_SIGNAL", "color": "GRAY", "message": "Son 7 g\u00fcn i\u00e7inde kesi\u015fim olmad\u0131.", "cross_date": null, "current_price": 72.55000305175781, "sma50": 81.80199996948242, "sma200": 68.57449998855591, "last_updated": "2026-03-13"}, {"ticker": "EREGL.IS", "signal": "NO_SIGNAL", "color": "GRAY", "message": "Son 7 g\u00fcn i\u00e7inde kesi\u015fim olmad\u0131.", "cross_date": null, "current_price": 28.399999618530273, "sma50": 28.21799991607666, "sma200": 26.95496048927307, "last_updated": "2026-03-13"}, {"ticker": "TUPRS.IS", "signal": "NO_SIGNAL", "color": "GRAY", "message": "Son 7 g\u00fcn i\u00e7inde kesi\u015fim olmad\u0131.", "cross_date": null, "current_price": 263.5, "sma50": 225.74800018310546, "sma200": 184.31408157348633, "last_updated": "2026-03-13"}]
+[
+    {
+        "ticker": "A1YEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 29.81999969482422
+    },
+    {
+        "ticker": "ADESE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.0299999713897705
+    },
+    {
+        "ticker": "ADGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 51.45000076293945
+    },
+    {
+        "ticker": "A1CAP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.59000015258789
+    },
+    {
+        "ticker": "ADEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.380001068115234
+    },
+    {
+        "ticker": "AEFES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.290000915527344
+    },
+    {
+        "ticker": "ACSEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 102.69999694824219
+    },
+    {
+        "ticker": "AGESA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 223.0
+    },
+    {
+        "ticker": "AHSGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.799999237060547
+    },
+    {
+        "ticker": "AKBNK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 72.55000305175781
+    },
+    {
+        "ticker": "AGHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.940000534057617
+    },
+    {
+        "ticker": "AFYON.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.280000686645508
+    },
+    {
+        "ticker": "AHGAZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.8799991607666
+    },
+    {
+        "ticker": "AGROT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.8399999141693115
+    },
+    {
+        "ticker": "AKHAN.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "AKGRT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.920000076293945
+    },
+    {
+        "ticker": "AKENR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.770000457763672
+    },
+    {
+        "ticker": "AKCNS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 208.5
+    },
+    {
+        "ticker": "AKFYE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.3799991607666
+    },
+    {
+        "ticker": "AKYHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.640000104904175
+    },
+    {
+        "ticker": "AKSUE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.600000381469727
+    },
+    {
+        "ticker": "AKFIS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.20000076293945
+    },
+    {
+        "ticker": "AKSEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 77.55000305175781
+    },
+    {
+        "ticker": "ALARK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 89.80000305175781
+    },
+    {
+        "ticker": "ALBRK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.170000076293945
+    },
+    {
+        "ticker": "ALKIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.31999969482422
+    },
+    {
+        "ticker": "AKSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.819999694824219
+    },
+    {
+        "ticker": "ALKA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.399999618530273
+    },
+    {
+        "ticker": "ALCTL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 124.9000015258789
+    },
+    {
+        "ticker": "ALFAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 37.58000183105469
+    },
+    {
+        "ticker": "ALCAR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 757.0
+    },
+    {
+        "ticker": "ALTNY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.0
+    },
+    {
+        "ticker": "ANELE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.25
+    },
+    {
+        "ticker": "ALTIN.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "ALKLC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 280.0
+    },
+    {
+        "ticker": "ALVES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.9700000286102295
+    },
+    {
+        "ticker": "ANHYT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 119.5999984741211
+    },
+    {
+        "ticker": "ANSGR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.079999923706055
+    },
+    {
+        "ticker": "ANGEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.270000457763672
+    },
+    {
+        "ticker": "ARDYZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.119998931884766
+    },
+    {
+        "ticker": "ARENA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 26.639999389648438
+    },
+    {
+        "ticker": "ARASE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 97.19999694824219
+    },
+    {
+        "ticker": "ARTMS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.900001525878906
+    },
+    {
+        "ticker": "ARSAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.019999980926514
+    },
+    {
+        "ticker": "ARMGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 75.5999984741211
+    },
+    {
+        "ticker": "ARFYE.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "ARCLK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 111.80000305175781
+    },
+    {
+        "ticker": "ARZUM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.690000057220459
+    },
+    {
+        "ticker": "ASTOR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 194.89999389648438
+    },
+    {
+        "ticker": "ASUZU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 65.30000305175781
+    },
+    {
+        "ticker": "ATATR.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "ASELS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 322.25
+    },
+    {
+        "ticker": "ATATP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 147.0
+    },
+    {
+        "ticker": "ATAKP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 53.54999923706055
+    },
+    {
+        "ticker": "AVGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 12.130000114440918
+    },
+    {
+        "ticker": "ATSYH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 49.400001525878906
+    },
+    {
+        "ticker": "ATEKS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 99.05000305175781
+    },
+    {
+        "ticker": "AVHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.65999984741211
+    },
+    {
+        "ticker": "AVOD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.260000228881836
+    },
+    {
+        "ticker": "ATLAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.550000190734863
+    },
+    {
+        "ticker": "AYCES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 692.5
+    },
+    {
+        "ticker": "AYEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.540000915527344
+    },
+    {
+        "ticker": "AYGAZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 264.75
+    },
+    {
+        "ticker": "BAHKM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 125.4000015258789
+    },
+    {
+        "ticker": "AYDEM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 24.799999237060547
+    },
+    {
+        "ticker": "BALSU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.039999961853027
+    },
+    {
+        "ticker": "BAKAB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.79999923706055
+    },
+    {
+        "ticker": "AYES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.779998779296875
+    },
+    {
+        "ticker": "AZTEK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.150000095367432
+    },
+    {
+        "ticker": "BANVT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 155.89999389648438
+    },
+    {
+        "ticker": "BAGFS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.900001525878906
+    },
+    {
+        "ticker": "BALAT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 89.44999694824219
+    },
+    {
+        "ticker": "BARMA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 48.099998474121094
+    },
+    {
+        "ticker": "BAYRK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.489999771118164
+    },
+    {
+        "ticker": "BEGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.159999847412109
+    },
+    {
+        "ticker": "BASCM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.100000381469727
+    },
+    {
+        "ticker": "BESTE.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "BASGZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 50.099998474121094
+    },
+    {
+        "ticker": "BIENY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 23.360000610351562
+    },
+    {
+        "ticker": "BERA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.600000381469727
+    },
+    {
+        "ticker": "BIGEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.869999885559082
+    },
+    {
+        "ticker": "BESLR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.359999656677246
+    },
+    {
+        "ticker": "BIGTK.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "BIGCH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.980000019073486
+    },
+    {
+        "ticker": "BEYAZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.600000381469727
+    },
+    {
+        "ticker": "BFREN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 143.89999389648438
+    },
+    {
+        "ticker": "BIMAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 707.0
+    },
+    {
+        "ticker": "BINBN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 163.0
+    },
+    {
+        "ticker": "BINHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.40999984741211
+    },
+    {
+        "ticker": "BLCYT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 42.0
+    },
+    {
+        "ticker": "BLUME.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 47.060001373291016
+    },
+    {
+        "ticker": "BIZIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 26.860000610351562
+    },
+    {
+        "ticker": "BNTAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.28000020980835
+    },
+    {
+        "ticker": "BIOEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.739999771118164
+    },
+    {
+        "ticker": "BJKAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.4800000190734863
+    },
+    {
+        "ticker": "BMSCH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.81999969482422
+    },
+    {
+        "ticker": "BMSTL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 88.5
+    },
+    {
+        "ticker": "BORSK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.079999923706055
+    },
+    {
+        "ticker": "BORLS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.8299999237060547
+    },
+    {
+        "ticker": "BOSSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.329999923706055
+    },
+    {
+        "ticker": "BOBET.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.3799991607666
+    },
+    {
+        "ticker": "BRISA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 90.4000015258789
+    },
+    {
+        "ticker": "BRKO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.470000267028809
+    },
+    {
+        "ticker": "BRKSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.0
+    },
+    {
+        "ticker": "BRKVY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 94.8499984741211
+    },
+    {
+        "ticker": "BRLSM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.920000076293945
+    },
+    {
+        "ticker": "BRSAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 518.0
+    },
+    {
+        "ticker": "BULGS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.959999084472656
+    },
+    {
+        "ticker": "BRYAT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2201.0
+    },
+    {
+        "ticker": "BSOKE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.0
+    },
+    {
+        "ticker": "BUCIM.IS",
+        "signal": "DEAD_CROSS",
+        "color": "red",
+        "message": "⚠️ DEAD CROSS TESPİT EDİLDİ! Düşüş trendi başlayabilir. ⚠️",
+        "cross_date": "2026-03-13",
+        "current_price": 6.190000057220459
+    },
+    {
+        "ticker": "BRMEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.25
+    },
+    {
+        "ticker": "BTCIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.170000076293945
+    },
+    {
+        "ticker": "BYDNR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 36.0
+    },
+    {
+        "ticker": "BURCE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 40.0
+    },
+    {
+        "ticker": "CASA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 95.8499984741211
+    },
+    {
+        "ticker": "CATES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 49.119998931884766
+    },
+    {
+        "ticker": "BVSAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 107.0999984741211
+    },
+    {
+        "ticker": "BURVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 775.0
+    },
+    {
+        "ticker": "CCOLA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 70.0
+    },
+    {
+        "ticker": "CELHA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.699999809265137
+    },
+    {
+        "ticker": "CGCAM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.70000076293945
+    },
+    {
+        "ticker": "CEOEM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.020000457763672
+    },
+    {
+        "ticker": "CEMTS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.529999732971191
+    },
+    {
+        "ticker": "CMBTN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1699.0
+    },
+    {
+        "ticker": "CEMAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.659999847412109
+    },
+    {
+        "ticker": "CEMZY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 58.54999923706055
+    },
+    {
+        "ticker": "CIMSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 49.13999938964844
+    },
+    {
+        "ticker": "COSMO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 191.0
+    },
+    {
+        "ticker": "CANTE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.5299999713897705
+    },
+    {
+        "ticker": "CLEBI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1774.0
+    },
+    {
+        "ticker": "CRFSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 123.4000015258789
+    },
+    {
+        "ticker": "CRDFA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 76.44999694824219
+    },
+    {
+        "ticker": "CMENT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 344.0
+    },
+    {
+        "ticker": "CONSE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.3299999237060547
+    },
+    {
+        "ticker": "DAGI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.78000020980835
+    },
+    {
+        "ticker": "CUSAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 24.520000457763672
+    },
+    {
+        "ticker": "CVKMD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 31.100000381469727
+    },
+    {
+        "ticker": "CWENE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 29.520000457763672
+    },
+    {
+        "ticker": "DCTTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.569999694824219
+    },
+    {
+        "ticker": "DAPGM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.300000190734863
+    },
+    {
+        "ticker": "DENGE.IS",
+        "signal": "DEAD_CROSS",
+        "color": "red",
+        "message": "⚠️ DEAD CROSS TESPİT EDİLDİ! Düşüş trendi başlayabilir. ⚠️",
+        "cross_date": "2026-03-13",
+        "current_price": 2.5
+    },
+    {
+        "ticker": "DARDL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.0
+    },
+    {
+        "ticker": "DERIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.41999816894531
+    },
+    {
+        "ticker": "DESA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.8100004196167
+    },
+    {
+        "ticker": "DIRIT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 25.0
+    },
+    {
+        "ticker": "DESPC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.18000030517578
+    },
+    {
+        "ticker": "DERHL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.539999961853027
+    },
+    {
+        "ticker": "DGNMO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.8499999046325684
+    },
+    {
+        "ticker": "DMRGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.930000066757202
+    },
+    {
+        "ticker": "DITAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 46.5
+    },
+    {
+        "ticker": "DGATE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 71.19999694824219
+    },
+    {
+        "ticker": "DEVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 60.599998474121094
+    },
+    {
+        "ticker": "DNISI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.860000610351562
+    },
+    {
+        "ticker": "DMSAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.5600004196167
+    },
+    {
+        "ticker": "DOGUB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 66.25
+    },
+    {
+        "ticker": "DOFRB.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "DUNYH.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "DOHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.260000228881836
+    },
+    {
+        "ticker": "DOKTA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.299999237060547
+    },
+    {
+        "ticker": "DURDO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.569999933242798
+    },
+    {
+        "ticker": "DSTKF.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1749.0
+    },
+    {
+        "ticker": "DOFER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.47999954223633
+    },
+    {
+        "ticker": "DOAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 198.39999389648438
+    },
+    {
+        "ticker": "DURKN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.709999084472656
+    },
+    {
+        "ticker": "DYOBY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.029999732971191
+    },
+    {
+        "ticker": "DZGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.429999828338623
+    },
+    {
+        "ticker": "ECOGR.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "EBEBK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 62.400001525878906
+    },
+    {
+        "ticker": "ECILC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 121.19999694824219
+    },
+    {
+        "ticker": "EFOR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.170000076293945
+    },
+    {
+        "ticker": "EGEEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5740.0
+    },
+    {
+        "ticker": "EGEGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.399999618530273
+    },
+    {
+        "ticker": "EDIP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.91999816894531
+    },
+    {
+        "ticker": "EGEPO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.800000190734863
+    },
+    {
+        "ticker": "EGGUB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 115.30000305175781
+    },
+    {
+        "ticker": "EKIZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 101.69999694824219
+    },
+    {
+        "ticker": "ECZYT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 298.0
+    },
+    {
+        "ticker": "EKOS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.659999847412109
+    },
+    {
+        "ticker": "EDATA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.529999732971191
+    },
+    {
+        "ticker": "EGSER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.9200000762939453
+    },
+    {
+        "ticker": "ELITE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 29.0
+    },
+    {
+        "ticker": "EGPRO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.3799991607666
+    },
+    {
+        "ticker": "EMKEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.700000762939453
+    },
+    {
+        "ticker": "EMNIS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 149.3000030517578
+    },
+    {
+        "ticker": "ENDAE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.0
+    },
+    {
+        "ticker": "EKSUN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.420000076293945
+    },
+    {
+        "ticker": "ENJSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 120.30000305175781
+    },
+    {
+        "ticker": "ENTRA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.390000343322754
+    },
+    {
+        "ticker": "EREGL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.399999618530273
+    },
+    {
+        "ticker": "DMLKT.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "EMPAE.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "ENKAI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 93.6500015258789
+    },
+    {
+        "ticker": "EPLAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.300000190734863
+    },
+    {
+        "ticker": "ENSRI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 33.79999923706055
+    },
+    {
+        "ticker": "ERCB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 53.349998474121094
+    },
+    {
+        "ticker": "ENERY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.1899995803833
+    },
+    {
+        "ticker": "ERBOS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 174.0
+    },
+    {
+        "ticker": "ERSU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.8799991607666
+    },
+    {
+        "ticker": "ESCAR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 27.540000915527344
+    },
+    {
+        "ticker": "ETILR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.9000000953674316
+    },
+    {
+        "ticker": "ETYAT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.739999771118164
+    },
+    {
+        "ticker": "ESCOM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.639999866485596
+    },
+    {
+        "ticker": "EUHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.199999809265137
+    },
+    {
+        "ticker": "EUREN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.710000038146973
+    },
+    {
+        "ticker": "EUYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.68000030517578
+    },
+    {
+        "ticker": "FADE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.880000114440918
+    },
+    {
+        "ticker": "ESEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.890000104904175
+    },
+    {
+        "ticker": "EUPWR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 35.220001220703125
+    },
+    {
+        "ticker": "EUKYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.100000381469727
+    },
+    {
+        "ticker": "FENER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.940000057220459
+    },
+    {
+        "ticker": "FLAP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.279999732971191
+    },
+    {
+        "ticker": "FORMT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.819999933242798
+    },
+    {
+        "ticker": "GARAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 132.8000030517578
+    },
+    {
+        "ticker": "FORTE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 93.55000305175781
+    },
+    {
+        "ticker": "FMIZP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 293.0
+    },
+    {
+        "ticker": "FRIGO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.020000457763672
+    },
+    {
+        "ticker": "GARFA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 26.0
+    },
+    {
+        "ticker": "FONET.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.420000076293945
+    },
+    {
+        "ticker": "GATEG.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "GENKM.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "GEDIK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.630000114440918
+    },
+    {
+        "ticker": "FRMPL.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "FROTO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 109.69999694824219
+    },
+    {
+        "ticker": "GEDZA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.219999313354492
+    },
+    {
+        "ticker": "FZLGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.130000114440918
+    },
+    {
+        "ticker": "GENTS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.609999656677246
+    },
+    {
+        "ticker": "GENIL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.25
+    },
+    {
+        "ticker": "GIPTA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 64.05000305175781
+    },
+    {
+        "ticker": "GEREL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.84000015258789
+    },
+    {
+        "ticker": "GESAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 44.97999954223633
+    },
+    {
+        "ticker": "GLBMD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 12.0
+    },
+    {
+        "ticker": "GLRYH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.570000171661377
+    },
+    {
+        "ticker": "GLRMK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 162.5
+    },
+    {
+        "ticker": "GMTAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.1200008392334
+    },
+    {
+        "ticker": "GLYHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.0600004196167
+    },
+    {
+        "ticker": "GLCVY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 65.1500015258789
+    },
+    {
+        "ticker": "GOLTS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 335.0
+    },
+    {
+        "ticker": "GRNYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.199999809265137
+    },
+    {
+        "ticker": "GOZDE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.520000457763672
+    },
+    {
+        "ticker": "GRSEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 331.0
+    },
+    {
+        "ticker": "GOKNR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.559999465942383
+    },
+    {
+        "ticker": "GOODY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.109999656677246
+    },
+    {
+        "ticker": "GSDDE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.539999961853027
+    },
+    {
+        "ticker": "GRTHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 259.0
+    },
+    {
+        "ticker": "GUNDG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 670.0
+    },
+    {
+        "ticker": "GWIND.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 25.059999465942383
+    },
+    {
+        "ticker": "GUBRF.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 521.0
+    },
+    {
+        "ticker": "GZNMI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 63.45000076293945
+    },
+    {
+        "ticker": "GSDHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.650000095367432
+    },
+    {
+        "ticker": "HATEK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.550000190734863
+    },
+    {
+        "ticker": "HATSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 36.97999954223633
+    },
+    {
+        "ticker": "GSRAY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.1200000047683716
+    },
+    {
+        "ticker": "HEDEF.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 115.9000015258789
+    },
+    {
+        "ticker": "HEKTS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.9700000286102295
+    },
+    {
+        "ticker": "HALKB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.52000045776367
+    },
+    {
+        "ticker": "HKTM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.300000190734863
+    },
+    {
+        "ticker": "HDFGS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.259999990463257
+    },
+    {
+        "ticker": "HUBVC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.949999809265137
+    },
+    {
+        "ticker": "HOROZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 57.349998474121094
+    },
+    {
+        "ticker": "HRKET.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 65.75
+    },
+    {
+        "ticker": "ICBCT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.369999885559082
+    },
+    {
+        "ticker": "HTTBT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.58000183105469
+    },
+    {
+        "ticker": "HUNER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.140000104904175
+    },
+    {
+        "ticker": "HURGZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.579999923706055
+    },
+    {
+        "ticker": "IEYHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 86.9000015258789
+    },
+    {
+        "ticker": "ICUGS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.8299999237060547
+    },
+    {
+        "ticker": "IHEVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.2200000286102295
+    },
+    {
+        "ticker": "IHAAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 84.80000305175781
+    },
+    {
+        "ticker": "IHGZT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.4600000381469727
+    },
+    {
+        "ticker": "IHLGM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.009999990463257
+    },
+    {
+        "ticker": "INFO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.5199999809265137
+    },
+    {
+        "ticker": "INTEK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 274.0
+    },
+    {
+        "ticker": "IHLAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.0399999618530273
+    },
+    {
+        "ticker": "INDES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.420000076293945
+    },
+    {
+        "ticker": "INGRM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 382.5
+    },
+    {
+        "ticker": "IHYAY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.7300000190734863
+    },
+    {
+        "ticker": "INVES.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 419.0
+    },
+    {
+        "ticker": "INTEM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 264.5
+    },
+    {
+        "ticker": "INVEO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.380000114440918
+    },
+    {
+        "ticker": "IMASM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.640000104904175
+    },
+    {
+        "ticker": "ISBIR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 73.5999984741211
+    },
+    {
+        "ticker": "ISDMR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.70000076293945
+    },
+    {
+        "ticker": "ISKPL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.859999656677246
+    },
+    {
+        "ticker": "ISFIN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.229999542236328
+    },
+    {
+        "ticker": "ISMEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 45.439998626708984
+    },
+    {
+        "ticker": "IZENR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.649999618530273
+    },
+    {
+        "ticker": "JANTS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.0
+    },
+    {
+        "ticker": "IZINV.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 60.0
+    },
+    {
+        "ticker": "IZMDC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.489999771118164
+    },
+    {
+        "ticker": "KAREL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.029999732971191
+    },
+    {
+        "ticker": "KAPLM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 388.0
+    },
+    {
+        "ticker": "ISSEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.230000019073486
+    },
+    {
+        "ticker": "KATMR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.8399999141693115
+    },
+    {
+        "ticker": "KAYSE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.800000190734863
+    },
+    {
+        "ticker": "KARSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.1899995803833
+    },
+    {
+        "ticker": "KBORU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.06999969482422
+    },
+    {
+        "ticker": "KARTN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 70.05000305175781
+    },
+    {
+        "ticker": "KENT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 476.0
+    },
+    {
+        "ticker": "KCHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 193.8000030517578
+    },
+    {
+        "ticker": "IZFAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 50.599998474121094
+    },
+    {
+        "ticker": "KIMMR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.399999618530273
+    },
+    {
+        "ticker": "KFEIN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.579999923706055
+    },
+    {
+        "ticker": "KCAER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.829999923706055
+    },
+    {
+        "ticker": "KLMSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.18000030517578
+    },
+    {
+        "ticker": "KERVN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.200000047683716
+    },
+    {
+        "ticker": "KLKIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 40.15999984741211
+    },
+    {
+        "ticker": "KLRHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 177.5
+    },
+    {
+        "ticker": "KLYPV.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 56.0
+    },
+    {
+        "ticker": "KLSER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 25.81999969482422
+    },
+    {
+        "ticker": "KLNMA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.5
+    },
+    {
+        "ticker": "KMPUR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.600000381469727
+    },
+    {
+        "ticker": "KOCMT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.440000057220459
+    },
+    {
+        "ticker": "KOPOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.159999847412109
+    },
+    {
+        "ticker": "KONKA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.93000030517578
+    },
+    {
+        "ticker": "KNFRT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.899999618530273
+    },
+    {
+        "ticker": "KONTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.770000457763672
+    },
+    {
+        "ticker": "KONYA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4035.0
+    },
+    {
+        "ticker": "KRDMA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 29.5
+    },
+    {
+        "ticker": "KOTON.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.699999809265137
+    },
+    {
+        "ticker": "KRONT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.479999542236328
+    },
+    {
+        "ticker": "KORDS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 58.04999923706055
+    },
+    {
+        "ticker": "KRPLS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.270000457763672
+    },
+    {
+        "ticker": "KLSYN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.289999961853027
+    },
+    {
+        "ticker": "KSTUR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3017.5
+    },
+    {
+        "ticker": "KRSTL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.220000267028809
+    },
+    {
+        "ticker": "KTLEV.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 55.20000076293945
+    },
+    {
+        "ticker": "KRTEK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 27.18000030517578
+    },
+    {
+        "ticker": "KZGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.920000076293945
+    },
+    {
+        "ticker": "KUVVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 130.0
+    },
+    {
+        "ticker": "KUTPO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 93.25
+    },
+    {
+        "ticker": "KTSKR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 75.9000015258789
+    },
+    {
+        "ticker": "KRVGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.9000000953674316
+    },
+    {
+        "ticker": "LINK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 234.6999969482422
+    },
+    {
+        "ticker": "LILAK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.81999969482422
+    },
+    {
+        "ticker": "LIDFA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.1600000858306885
+    },
+    {
+        "ticker": "LMKDC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.91999816894531
+    },
+    {
+        "ticker": "LRSHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.4200000762939453
+    },
+    {
+        "ticker": "LOGO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 136.8000030517578
+    },
+    {
+        "ticker": "LYDHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 192.0
+    },
+    {
+        "ticker": "LKMNH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.030000686645508
+    },
+    {
+        "ticker": "MAALT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 990.0
+    },
+    {
+        "ticker": "LXGYO.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "MACKO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.70000076293945
+    },
+    {
+        "ticker": "LUKSK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 97.0
+    },
+    {
+        "ticker": "MAGEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 48.79999923706055
+    },
+    {
+        "ticker": "MAKIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.700000762939453
+    },
+    {
+        "ticker": "LYDYE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17005.0
+    },
+    {
+        "ticker": "MAKTK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.140000343322754
+    },
+    {
+        "ticker": "MARBL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.5600004196167
+    },
+    {
+        "ticker": "MANAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.850000381469727
+    },
+    {
+        "ticker": "MARMR.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "MARKA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-12",
+        "current_price": 24.200000762939453
+    },
+    {
+        "ticker": "MARTI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.5299999713897705
+    },
+    {
+        "ticker": "LIDER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 87.0
+    },
+    {
+        "ticker": "MEGAP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-12",
+        "current_price": 2.859999895095825
+    },
+    {
+        "ticker": "MEPET.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 27.020000457763672
+    },
+    {
+        "ticker": "MEGMT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 65.75
+    },
+    {
+        "ticker": "MAVI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.47999954223633
+    },
+    {
+        "ticker": "MEDTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 29.799999237060547
+    },
+    {
+        "ticker": "METRO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.579999923706055
+    },
+    {
+        "ticker": "MEKAG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.03000020980835
+    },
+    {
+        "ticker": "MERCN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.18000030517578
+    },
+    {
+        "ticker": "MHRGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.4000000953674316
+    },
+    {
+        "ticker": "MERIT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.700000762939453
+    },
+    {
+        "ticker": "MGROS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 605.0
+    },
+    {
+        "ticker": "MEYSU.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "MERKO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.460000038146973
+    },
+    {
+        "ticker": "MMCAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 91.75
+    },
+    {
+        "ticker": "MIATK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.65999984741211
+    },
+    {
+        "ticker": "MOBTL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.859999656677246
+    },
+    {
+        "ticker": "MOPAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 39.36000061035156
+    },
+    {
+        "ticker": "MNDRS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 14.09000015258789
+    },
+    {
+        "ticker": "MPARK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 429.0
+    },
+    {
+        "ticker": "MNDTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.820000171661377
+    },
+    {
+        "ticker": "MTRKS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.100000381469727
+    },
+    {
+        "ticker": "MZHLD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.25
+    },
+    {
+        "ticker": "MTRYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.699999809265137
+    },
+    {
+        "ticker": "NETCD.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "NATEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.070000171661377
+    },
+    {
+        "ticker": "NTGAZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 12.210000038146973
+    },
+    {
+        "ticker": "MRSHL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1396.0
+    },
+    {
+        "ticker": "NETAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 60.099998474121094
+    },
+    {
+        "ticker": "MOGAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.600000381469727
+    },
+    {
+        "ticker": "NTHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 43.31999969482422
+    },
+    {
+        "ticker": "NIBAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.229999542236328
+    },
+    {
+        "ticker": "OBAMS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.650000095367432
+    },
+    {
+        "ticker": "ODAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.010000228881836
+    },
+    {
+        "ticker": "OBASE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.2400016784668
+    },
+    {
+        "ticker": "NUHCM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 321.0
+    },
+    {
+        "ticker": "ONRYT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 58.650001525878906
+    },
+    {
+        "ticker": "ODINE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 679.0
+    },
+    {
+        "ticker": "ORMA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 161.89999389648438
+    },
+    {
+        "ticker": "ORGE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 67.3499984741211
+    },
+    {
+        "ticker": "OFSYM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 62.70000076293945
+    },
+    {
+        "ticker": "ONCSM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 240.89999389648438
+    },
+    {
+        "ticker": "OSMEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.599999904632568
+    },
+    {
+        "ticker": "ORCAY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.440000057220459
+    },
+    {
+        "ticker": "OYAYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 57.25
+    },
+    {
+        "ticker": "OTKAR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 364.75
+    },
+    {
+        "ticker": "OSTIM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.8399999141693115
+    },
+    {
+        "ticker": "OYAKC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 23.020000457763672
+    },
+    {
+        "ticker": "OYLUM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.989999771118164
+    },
+    {
+        "ticker": "OTTO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 324.0
+    },
+    {
+        "ticker": "OYYAT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 63.599998474121094
+    },
+    {
+        "ticker": "OZRDN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.5
+    },
+    {
+        "ticker": "OZSUB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.3799991607666
+    },
+    {
+        "ticker": "OZYSR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 46.68000030517578
+    },
+    {
+        "ticker": "PAMEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 82.0999984741211
+    },
+    {
+        "ticker": "PAHOL.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "PCILT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 26.440000534057617
+    },
+    {
+        "ticker": "PENGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.800000190734863
+    },
+    {
+        "ticker": "PAPIL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.819999694824219
+    },
+    {
+        "ticker": "OZATD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 221.0
+    },
+    {
+        "ticker": "PARSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 81.05000305175781
+    },
+    {
+        "ticker": "PENTA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.170000076293945
+    },
+    {
+        "ticker": "PASEU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 121.5
+    },
+    {
+        "ticker": "PATEK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 17.979999542236328
+    },
+    {
+        "ticker": "PGSUS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 177.3000030517578
+    },
+    {
+        "ticker": "PETKM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.139999389648438
+    },
+    {
+        "ticker": "PKART.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 72.75
+    },
+    {
+        "ticker": "PETUN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.520000457763672
+    },
+    {
+        "ticker": "PLTUR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 24.600000381469727
+    },
+    {
+        "ticker": "PINSU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.1899995803833
+    },
+    {
+        "ticker": "PKENT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 155.3000030517578
+    },
+    {
+        "ticker": "PNLSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 49.779998779296875
+    },
+    {
+        "ticker": "PNSUT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.850000381469727
+    },
+    {
+        "ticker": "PRKME.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.389999389648438
+    },
+    {
+        "ticker": "POLHO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 19.709999084472656
+    },
+    {
+        "ticker": "PRDGS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.730000019073486
+    },
+    {
+        "ticker": "PRKAB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 42.880001068115234
+    },
+    {
+        "ticker": "POLTK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5027.5
+    },
+    {
+        "ticker": "PRZMA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.649999618530273
+    },
+    {
+        "ticker": "QUAGR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.1500000953674316
+    },
+    {
+        "ticker": "RALYH.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 139.8000030517578
+    },
+    {
+        "ticker": "QNBFK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 50.650001525878906
+    },
+    {
+        "ticker": "PSDTC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 125.0999984741211
+    },
+    {
+        "ticker": "RAYSG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 201.60000610351562
+    },
+    {
+        "ticker": "REEDR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.110000133514404
+    },
+    {
+        "ticker": "QNBTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 269.0
+    },
+    {
+        "ticker": "RODRG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.700000762939453
+    },
+    {
+        "ticker": "RTALB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.7799999713897705
+    },
+    {
+        "ticker": "MCARD.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "RGYAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 159.39999389648438
+    },
+    {
+        "ticker": "RNPOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.940000057220459
+    },
+    {
+        "ticker": "SAFKR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 25.899999618530273
+    },
+    {
+        "ticker": "RYSAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.600000381469727
+    },
+    {
+        "ticker": "RUBNS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.880001068115234
+    },
+    {
+        "ticker": "RUZYE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.40999984741211
+    },
+    {
+        "ticker": "SANEL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 36.20000076293945
+    },
+    {
+        "ticker": "SAMAT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.420000076293945
+    },
+    {
+        "ticker": "SASA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.4600000381469727
+    },
+    {
+        "ticker": "SANFM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 6.78000020980835
+    },
+    {
+        "ticker": "SAYAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 43.900001525878906
+    },
+    {
+        "ticker": "SANKO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.100000381469727
+    },
+    {
+        "ticker": "SAHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 94.9000015258789
+    },
+    {
+        "ticker": "SARKY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.100000381469727
+    },
+    {
+        "ticker": "SDTTR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 222.8000030517578
+    },
+    {
+        "ticker": "SEGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.579999923706055
+    },
+    {
+        "ticker": "SEKFK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.25
+    },
+    {
+        "ticker": "SEGMN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 52.099998474121094
+    },
+    {
+        "ticker": "SEKUR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 5.739999771118164
+    },
+    {
+        "ticker": "SELVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.2200000286102295
+    },
+    {
+        "ticker": "SELEC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 83.44999694824219
+    },
+    {
+        "ticker": "SKBNK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 10.949999809265137
+    },
+    {
+        "ticker": "SERNT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.300000190734863
+    },
+    {
+        "ticker": "SKTAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.2200000286102295
+    },
+    {
+        "ticker": "SILVR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.7100000381469727
+    },
+    {
+        "ticker": "SEYKM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.630000114440918
+    },
+    {
+        "ticker": "SKYMD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.920000076293945
+    },
+    {
+        "ticker": "SISE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 41.58000183105469
+    },
+    {
+        "ticker": "SMART.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 33.959999084472656
+    },
+    {
+        "ticker": "SNPAM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 21.68000030517578
+    },
+    {
+        "ticker": "SMRTG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.28000020980835
+    },
+    {
+        "ticker": "SKYLP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 280.0
+    },
+    {
+        "ticker": "SMRVA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 59.20000076293945
+    },
+    {
+        "ticker": "SOKM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 54.79999923706055
+    },
+    {
+        "ticker": "SNICA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.809999942779541
+    },
+    {
+        "ticker": "SRVGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.0899999141693115
+    },
+    {
+        "ticker": "SOKE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 15.300000190734863
+    },
+    {
+        "ticker": "SUMAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 270.0
+    },
+    {
+        "ticker": "SUNTK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 38.02000045776367
+    },
+    {
+        "ticker": "SUWEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.859999656677246
+    },
+    {
+        "ticker": "SODSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.930000305175781
+    },
+    {
+        "ticker": "SONME.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 151.6999969482422
+    },
+    {
+        "ticker": "TABGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 258.25
+    },
+    {
+        "ticker": "SURGY.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 56.70000076293945
+    },
+    {
+        "ticker": "TATEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 12.239999771118164
+    },
+    {
+        "ticker": "TARKM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 375.0
+    },
+    {
+        "ticker": "TAVHL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 296.75
+    },
+    {
+        "ticker": "TEKTU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 9.130000114440918
+    },
+    {
+        "ticker": "TBORG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 153.60000610351562
+    },
+    {
+        "ticker": "TCELL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 108.80000305175781
+    },
+    {
+        "ticker": "TATGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.3700008392334
+    },
+    {
+        "ticker": "THYAO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 292.25
+    },
+    {
+        "ticker": "TCKRC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 91.0
+    },
+    {
+        "ticker": "TEZOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.09000015258789
+    },
+    {
+        "ticker": "TDGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 18.270000457763672
+    },
+    {
+        "ticker": "TERA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 300.0
+    },
+    {
+        "ticker": "TKNSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.639999389648438
+    },
+    {
+        "ticker": "TKFEN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 85.0
+    },
+    {
+        "ticker": "TGSAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 172.5
+    },
+    {
+        "ticker": "TMSN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 106.69999694824219
+    },
+    {
+        "ticker": "TLMAN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 89.19999694824219
+    },
+    {
+        "ticker": "TOASO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 310.5
+    },
+    {
+        "ticker": "TRALT.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "TMPOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 554.0
+    },
+    {
+        "ticker": "TRENJ.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "TRHOL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 815.0
+    },
+    {
+        "ticker": "TRCAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 43.560001373291016
+    },
+    {
+        "ticker": "TRMET.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "TNZTP.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.860000610351562
+    },
+    {
+        "ticker": "TRILC.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 16.1200008392334
+    },
+    {
+        "ticker": "TUCLK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 4.260000228881836
+    },
+    {
+        "ticker": "TSKB.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 12.1899995803833
+    },
+    {
+        "ticker": "TSPOR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 0.9599999785423279
+    },
+    {
+        "ticker": "TUKAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.3299999237060547
+    },
+    {
+        "ticker": "TUPRS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 263.5
+    },
+    {
+        "ticker": "TUREX.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.829999923706055
+    },
+    {
+        "ticker": "TTKOM.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 60.900001525878906
+    },
+    {
+        "ticker": "TTRAK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 460.0
+    },
+    {
+        "ticker": "UCAYM.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "ULAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.220001220703125
+    },
+    {
+        "ticker": "UFUK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1509.0
+    },
+    {
+        "ticker": "TURGG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 26.520000457763672
+    },
+    {
+        "ticker": "ULKER.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 109.0
+    },
+    {
+        "ticker": "USAK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.6200000047683716
+    },
+    {
+        "ticker": "TURSG.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.470000267028809
+    },
+    {
+        "ticker": "ULUSE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 185.5
+    },
+    {
+        "ticker": "UNLU.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.819999694824219
+    },
+    {
+        "ticker": "ULUFA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.9600000381469727
+    },
+    {
+        "ticker": "VAKFA.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "VAKBN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 32.79999923706055
+    },
+    {
+        "ticker": "ULUUN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.820000171661377
+    },
+    {
+        "ticker": "VAKKO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 67.6500015258789
+    },
+    {
+        "ticker": "VANGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 72.19999694824219
+    },
+    {
+        "ticker": "VAKFN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 1.8899999856948853
+    },
+    {
+        "ticker": "VSNMD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 75.75
+    },
+    {
+        "ticker": "VERUS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 377.0
+    },
+    {
+        "ticker": "VBTYZ.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.559999465942383
+    },
+    {
+        "ticker": "VKING.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.34000015258789
+    },
+    {
+        "ticker": "VKFYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 30.520000457763672
+    },
+    {
+        "ticker": "VESBE.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 7.269999980926514
+    },
+    {
+        "ticker": "VESTL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 28.280000686645508
+    },
+    {
+        "ticker": "VRGYO.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.25
+    },
+    {
+        "ticker": "YAPRK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 13.6899995803833
+    },
+    {
+        "ticker": "YIGIT.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 22.15999984741211
+    },
+    {
+        "ticker": "YESIL.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-12",
+        "current_price": 1.7899999618530273
+    },
+    {
+        "ticker": "YAYLA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 23.760000228881836
+    },
+    {
+        "ticker": "YBTAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 20.739999771118164
+    },
+    {
+        "ticker": "YEOTK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 49.84000015258789
+    },
+    {
+        "ticker": "YUNSA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.399999618530273
+    },
+    {
+        "ticker": "ZERGY.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "YATAS.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 44.779998779296875
+    },
+    {
+        "ticker": "YONGA.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 53.400001525878906
+    },
+    {
+        "ticker": "YKBNK.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 34.79999923706055
+    },
+    {
+        "ticker": "YYLGD.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 11.15999984741211
+    },
+    {
+        "ticker": "YKSLN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 3.200000047683716
+    },
+    {
+        "ticker": "ZEDUR.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 8.020000457763672
+    },
+    {
+        "ticker": "YYAPI.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-12",
+        "current_price": 1.659999966621399
+    },
+    {
+        "ticker": "ZOREN.IS",
+        "signal": "NO_SIGNAL",
+        "color": "gray",
+        "message": "Şu an için önemli bir sinyal yok.",
+        "cross_date": "2026-03-13",
+        "current_price": 2.9200000762939453
+    },
+    {
+        "ticker": "ZGYO.IS",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "XAGUSD=X",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    },
+    {
+        "ticker": "XAUUSD=X",
+        "signal": "NOT_ENOUGH_DATA",
+        "color": "gray",
+        "message": "Bu enstrüman için en az 200 günlük veri bulunamadı.",
+        "cross_date": null,
+        "current_price": null
+    }
+]
