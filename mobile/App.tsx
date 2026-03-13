@@ -6,6 +6,12 @@ import { LoginScreen } from './src/presentation/screens/LoginScreen';
 import { RegisterScreen } from './src/presentation/screens/RegisterScreen';
 import { HomeScreen } from './src/presentation/screens/HomeScreen';
 import { useAuthStore } from './src/presentation/stores/useAuthStore';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com',
+  offlineAccess: true, // Google refreshToken almak için gerekli olabilir
+});
 
 export type RootStackParamList = {
   Login: undefined;

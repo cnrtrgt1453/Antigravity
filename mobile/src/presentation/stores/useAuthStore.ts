@@ -11,13 +11,14 @@ const authRepository = new ApiAuthRepository();
 const loginUseCase = new LoginUseCase(authRepository);
 const registerUseCase = new RegisterUseCase(authRepository);
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email?: string, password?: string) => Promise<void>;
+  loginWithGoogle: (idToken: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
+  logout: () => void;
   clearError: () => void;
 }
 
@@ -26,14 +27,25 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: null,
 
-  login: async (email: string, password: string) => {
+  login: async (email?: string, password?: string) => {
     set({ isLoading: true, error: null });
     try {
-      const user = await loginUseCase.execute(email, password);
+      if (!email || !password) throw new Error("Email ve şifre zorunludur");
+      const user = await loginUseCase.execute(email, password); // Re-added this line
       // Başarılı giriş veritabanından döndüğü anda store'a 'user' olarak kazınır
       set({ user, isLoading: false });
-    } catch (e: any) {
-      set({ error: e.message, isLoading: false });
+    } catch (error: any) {
+      set({ error: error.message || 'Giriş başarısız oldu.', isLoading: false });
+    }
+  },
+
+  loginWithGoogle: async (idToken: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const user = await authRepository.loginWithGoogle(idToken);
+      set({ user, isLoading: false });
+    } catch (error: any) {
+      set({ error: error.message || 'Google girişi başarısız oldu.', isLoading: false });
     }
   },
 

@@ -1,9 +1,14 @@
 package com.antigravity.api.service.impl;
 
+import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
+import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.repository.UserRepository;
 import com.antigravity.api.service.UserService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -49,18 +54,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User loginUser(String email, String password) {
-        log.info("Kullanıcı giriş isteği: {}", email);
-        
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("E-posta adresi sistemde bulunamadı."));
-                
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Hatalı şifre girişi yapıldı.");
+    public User loginUser(LoginRequestDto loginRequestDto) {
+        log.info("Kullanıcı giriş isteği: {}", loginRequestDto.getEmail());
+        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı."));
+
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Hatalı şifre.");
         }
-        
-        user.setLastLoginAt(LocalDateTime.now());
-        return userRepository.save(user);
+
+        updateLastLogin(user.getEmail());
+        return user;
     }
 
     @Override
@@ -68,6 +72,38 @@ public class UserServiceImpl implements UserService {
     public User getUserByFirebaseUid(String firebaseUid) {
         return userRepository.findByFirebaseUid(firebaseUid)
                 .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı"));
+    }
+
+    @Override
+    public User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto) {
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(googleLoginRequestDto.getIdToken());
+            String email = decodedToken.getEmail();
+            String fullName = (String) decodedToken.getClaims().get("name");
+            String profilePictureUrl = decodedToken.getPicture();
+            String firebaseUid = decodedToken.getUid();
+
+            return userRepository.findByEmail(email)
+                    .map(user -> {
+                        user.setFirebaseUid(firebaseUid);
+                        user.setLastLoginAt(java.time.LocalDateTime.now());
+                        return userRepository.save(user);
+                    })
+                    .orElseGet(() -> {
+                        User newUser = User.builder()
+                                .email(email)
+                                .fullName(fullName != null ? fullName : email.split("@")[0])
+                                .profilePictureUrl(profilePictureUrl)
+                                .firebaseUid(firebaseUid)
+                                .lastLoginAt(java.time.LocalDateTime.now())
+                                .build();
+                        return userRepository.save(newUser);
+                    });
+        } catch (FirebaseAuthException e) {
+            throw new RuntimeException("Firebase token doğrulama hatası: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Google login işlemi sırasında hata oluştu: " + e.getMessage());
+        }
     }
 
     @Override

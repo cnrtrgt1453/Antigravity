@@ -15,6 +15,7 @@ import {
   Animated,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { RootStackParamList } from '../../../App';
 import { useAuthStore } from '../stores/useAuthStore';
 
@@ -29,11 +30,37 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login, isLoading, error, clearError } = useAuthStore();
+  const { login, loginWithGoogle, isLoading, error, clearError } = useAuthStore();
 
   const handleLogin = async () => {
     if (error) clearError();
     await login(email, password);
+  };
+
+  const handleGoogleLogin = async () => {
+    if (error) clearError();
+    try {
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
+      const idToken = response.data?.idToken;
+      
+      if (idToken) {
+        await loginWithGoogle(idToken);
+      } else {
+        throw new Error('Google Sign-In idToken alınamadı.');
+      }
+    } catch (err: any) {
+      if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+        // Kullanıcı kendi iptal etti, hataya gerek yok
+        console.log('Kullanıcı Google girişini iptal etti');
+      } else if (err.code === statusCodes.IN_PROGRESS) {
+        // Zaten işlemde
+      } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.error('Play services mevcut değil veya güncel değil');
+      } else {
+        console.error('Bazı Google hataları oluştu:', err);
+      }
+    }
   };
 
   return (
@@ -125,7 +152,11 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         {/* Google ile Giriş Butonu */}
-        <TouchableOpacity style={styles.googleButton}>
+        <TouchableOpacity 
+          style={styles.googleButton} 
+          onPress={handleGoogleLogin} 
+          disabled={isLoading}
+        >
           <Text style={styles.googleIcon}>G</Text>
           <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
         </TouchableOpacity>

@@ -36,6 +36,33 @@ export class ApiAuthRepository implements AuthRepository {
     }
   }
 
+  async loginWithGoogle(idToken: string): Promise<User> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/login/google`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Google giriş işlemi başarısız oldu.');
+      }
+
+      const data = await response.json();
+      return {
+        id: data.id.toString(),
+        email: data.email,
+        fullName: data.fullName,
+        profilePictureUrl: data.profilePictureUrl,
+      };
+    } catch (error) {
+      console.error('Google Login Error:', error);
+      throw error;
+    }
+  }
+
   async register(fullName: string, email: string, password: string): Promise<User> {
     try {
       const response = await fetch(`${API_BASE_URL}/register`, {

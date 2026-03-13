@@ -2,6 +2,7 @@ package com.antigravity.api.controller;
 
 import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
+import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.service.UserService;
 import jakarta.validation.Valid;
@@ -36,9 +37,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@Valid @RequestBody LoginRequestDto loginDto) {
-        // Servis katmanında şifre doğrulaması yapılacak
-        User loggedInUser = userService.loginUser(loginDto.getEmail(), loginDto.getPassword());
-        return ResponseEntity.ok(loggedInUser);
+    public ResponseEntity<User> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        User user = userService.loginUser(loginRequestDto);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<User> loginWithGoogle(@Valid @RequestBody GoogleLoginRequestDto googleLoginRequestDto) {
+        User user = userService.loginWithGoogle(googleLoginRequestDto);
+        return ResponseEntity.ok(user);
     }
 }
