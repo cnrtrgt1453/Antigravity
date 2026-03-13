@@ -1,34 +1,72 @@
-// Presentation Layer — Home Screen (giriş sonrası geçici iskelet ekran)
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+// Presentation Layer - Home Screen
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView, ActivityIndicator } from 'react-native';
 import { useAuthStore } from '../stores/useAuthStore';
+import { MarketInstrument } from '../../domain/entities/MarketInstrument';
+import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository';
+import { MarketTrendCard } from '../components/MarketTrendCard';
 
 export const HomeScreen: React.FC = () => {
   const { user, logout } = useAuthStore();
+  const [marketData, setMarketData] = useState<MarketInstrument[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      try {
+        const repo = new ApiMarketRepository();
+        const data = await repo.getMarketSummary();
+        setMarketData(data);
+      } catch (error) {
+        console.error("Failed to fetch market data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMarketData();
+    // Refresh every minute
+    const interval = setInterval(fetchMarketData, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0D1117" />
-      <View style={styles.header}>
-        <Text style={styles.greeting}>Hoş geldin 👋</Text>
-        <Text style={styles.email}>{user?.displayName ?? user?.email}</Text>
-      </View>
+      
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Hoş geldin 👋</Text>
+          <Text style={styles.email}>{user?.displayName ?? user?.email}</Text>
+        </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardIcon}>📈</Text>
-        <Text style={styles.cardTitle}>Golden Cross Sinyalleri</Text>
-        <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
-      </View>
+        <View style={styles.marketSection}>
+          <Text style={styles.sectionTitle}>Piyasa Özeti (₺)</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="#58A6FF" style={{ marginTop: 20 }} />
+          ) : (
+            marketData.map((instrument) => (
+              <MarketTrendCard key={instrument.id} instrument={instrument} />
+            ))
+          )}
+        </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardIcon}>📉</Text>
-        <Text style={styles.cardTitle}>Dead Cross Sinyalleri</Text>
-        <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
-      </View>
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>📈</Text>
+          <Text style={styles.cardTitle}>Golden Cross Sinyalleri</Text>
+          <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
+        </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={logout} activeOpacity={0.8}>
-        <Text style={styles.logoutText}>Çıkış Yap</Text>
-      </TouchableOpacity>
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>📉</Text>
+          <Text style={styles.cardTitle}>Dead Cross Sinyalleri</Text>
+          <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
+        </View>
+
+        <TouchableOpacity style={styles.logoutButton} onPress={logout} activeOpacity={0.8}>
+          <Text style={styles.logoutText}>Çıkış Yap</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -37,8 +75,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0D1117',
-    paddingHorizontal: 24,
     paddingTop: 60,
+  },
+  scrollContent: {
+    paddingHorizontal: 24,
+    paddingBottom: 40,
   },
   header: {
     marginBottom: 32,
@@ -52,6 +93,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6B7280',
     marginTop: 4,
+  },
+  marketSection: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    marginBottom: 12,
   },
   card: {
     backgroundColor: '#161B22',
@@ -77,8 +127,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   logoutButton: {
-    marginTop: 'auto',
-    marginBottom: 40,
+    marginTop: 20,
     borderWidth: 1,
     borderColor: '#7F1D1D',
     borderRadius: 14,
