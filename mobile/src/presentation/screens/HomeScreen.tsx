@@ -9,12 +9,24 @@ import { MarketTrendCard } from '../components/MarketTrendCard';
 // Python API URL - Adjust if your IP changes or using simulator
 const PYTHON_API_URL = 'http://10.0.2.2:8000'; // Standard Android Emulator localhost
 
+interface SignalData {
+  ticker: string;
+  signal: string;
+  color: string;
+  message: string;
+  cross_date: string | None;
+  current_price: number | None;
+  last_updated: string | None;
+}
+
 export const HomeScreen: React.FC = () => {
   const { user, logout } = useAuthStore();
   const [marketData, setMarketData] = useState<MarketInstrument[]>([]);
   const [loading, setLoading] = useState(true);
   const [scanLoading, setScanLoading] = useState(false);
   const [cooldown, setCooldown] = useState<{ can_scan: boolean, remaining_seconds: number }>({ can_scan: true, remaining_seconds: 0 });
+  const [signals, setSignals] = useState<{ golden_signals: SignalData[], dead_signals: SignalData[] }>({ golden_signals: [], dead_signals: [] });
+  const [signalsLoading, setSignalsLoading] = useState(true);
 
   const fetchMarketData = async () => {
     try {
@@ -25,6 +37,21 @@ export const HomeScreen: React.FC = () => {
       console.error("Failed to fetch market data", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchSignals = async () => {
+    try {
+      setSignalsLoading(true);
+      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/latest_signals`);
+      if (response.ok) {
+        const data = await response.json();
+        setSignals(data);
+      }
+    } catch (error) {
+      console.log("Failed to fetch signals (Backend might be down)");
+    } finally {
+      setSignalsLoading(false);
     }
   };
 
@@ -54,6 +81,7 @@ export const HomeScreen: React.FC = () => {
       if (response.ok) {
         Alert.alert("Başarılı", "Tüm enstrümanlar tarandı ve sinyaller güncellendi.");
         fetchMarketData();
+        fetchSignals();
         fetchCooldownStatus();
       } else {
         Alert.alert("Hata", result.detail || "Tarama başlatılamadı.");
@@ -73,19 +101,39 @@ export const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     fetchMarketData();
+    fetchSignals();
     fetchCooldownStatus();
     
     // Refresh market data every 6 hours
     const interval = setInterval(fetchMarketData, 21600000);
+    
+    // Poll signals every 10 minutes
+    const signalsInterval = setInterval(fetchSignals, 600000);
     
     // Poll cooldown status every minute to update UI
     const cooldownInterval = setInterval(fetchCooldownStatus, 60000);
     
     return () => {
       clearInterval(interval);
+      clearInterval(signalsInterval);
       clearInterval(cooldownInterval);
     };
   }, []);
+
+  const renderSignalList = (list: SignalData[]) => {
+    if (list.length === 0) {
+      return <Text style={styles.cardSubtitle}>Şu an için aktif bir sinyal bulunmuyor.</Text>;
+    }
+    return list.map((item, idx) => (
+      <View key={idx} style={styles.signalItem}>
+        <Text style={styles.signalTicker}>{item.ticker.replace('.IS', '')}</Text>
+        <View style={styles.signalRight}>
+          <Text style={styles.signalPrice}>{item.current_price?.toFixed(2)} ₺</Text>
+          <Text style={styles.signalDate}>{item.cross_date}</Text>
+        </View>
+      </View>
+    ));
+  };
 
   return (
     <View style={styles.container}>
@@ -125,15 +173,27 @@ export const HomeScreen: React.FC = () => {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardIcon}>📈</Text>
-          <Text style={styles.cardTitle}>Golden Cross Sinyalleri</Text>
-          <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardIcon}>📈</Text>
+            <Text style={styles.cardTitle}>Golden Cross Sinyalleri</Text>
+          </View>
+          {signalsLoading ? (
+            <ActivityIndicator size="small" color="#238636" />
+          ) : (
+            renderSignalList(signals.golden_signals)
+          )}
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardIcon}>📉</Text>
-          <Text style={styles.cardTitle}>Dead Cross Sinyalleri</Text>
-          <Text style={styles.cardSubtitle}>Yakında burada günlük tarama sonuçları görünecek.</Text>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardIcon}>📉</Text>
+            <Text style={styles.cardTitle}>Dead Cross Sinyalleri</Text>
+          </View>
+          {signalsLoading ? (
+            <ActivityIndicator size="small" color="#7F1D1D" />
+          ) : (
+            renderSignalList(signals.dead_signals)
+          )}
         </View>
 
         <TouchableOpacity style={styles.logoutButton} onPress={logout} activeOpacity={0.8}>
@@ -205,20 +265,50 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#21262D',
   },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   cardIcon: {
-    fontSize: 28,
-    marginBottom: 10,
+    fontSize: 24,
+    marginRight: 10,
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: '700',
     color: '#FFFFFF',
-    marginBottom: 6,
   },
   cardSubtitle: {
     fontSize: 13,
     color: '#6B7280',
     lineHeight: 20,
+  },
+  signalItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#21262D',
+  },
+  signalTicker: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  signalRight: {
+    alignItems: 'flex-end',
+  },
+  signalPrice: {
+    fontSize: 14,
+    color: '#C9D1D9',
+    fontWeight: '500',
+  },
+  signalDate: {
+    fontSize: 11,
+    color: '#6B7280',
+    marginTop: 2,
   },
   logoutButton: {
     marginTop: 20,

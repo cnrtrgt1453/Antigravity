@@ -12,6 +12,7 @@ router = APIRouter()
 
 COOLDOWN_FILE = "last_scan.json"
 COOLDOWN_HOURS = 12
+RESULTS_FILE = "results.json"
 
 class AnalysisResult(BaseModel):
     ticker: str
@@ -89,3 +90,25 @@ def get_cooldown_status():
         "remaining_seconds": remaining,
         "last_scan_timestamp": last_scan
     }
+
+@router.get("/latest_signals")
+def get_latest_signals():
+    """
+    Returns the latest scan results from results.json.
+    """
+    if not os.path.exists(RESULTS_FILE):
+        return {"golden_signals": [], "dead_signals": []}
+    
+    try:
+        with open(RESULTS_FILE, "r") as f:
+            results = json.load(f)
+            
+        golden = [r for r in results if r.get("signal") == "GOLDEN_CROSS"]
+        dead = [r for r in results if r.get("signal") == "DEAD_CROSS"]
+        
+        return {
+            "golden_signals": golden,
+            "dead_signals": dead
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -1,6 +1,8 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import logging
+import json
+import os
 
 from app.services.data_client import fetch_historical_data
 from app.services.analyzer import analyze_cross
@@ -18,6 +20,8 @@ WATCHLIST = [
     "EREGL.IS",
     "TUPRS.IS"
 ]
+
+RESULTS_FILE = "results.json"
 
 def scan_all_instruments():
     """
@@ -38,7 +42,14 @@ def scan_all_instruments():
             logger.info(f"{ticker} -> {result['signal']}")
     
     logger.info("Weekly scan completed!")
-    # TODO: In the future, save `results` to PostgreSQL so Java/Mobile can read it instantly.
+    
+    # Save results to JSON file
+    try:
+        with open(RESULTS_FILE, "w") as f:
+            json.dump(results, f)
+        logger.info(f"Results saved to {RESULTS_FILE}")
+    except Exception as e:
+        logger.error(f"Error saving results: {e}")
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
