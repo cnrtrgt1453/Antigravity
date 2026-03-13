@@ -1,0 +1,36 @@
+# Borsa Analiz App - Root .gitignore
+
+# Mac/Windows
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node (Mobile / React Native)
+node_modules/
+.expo/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+
+# Java (Spring Boot)
+java-core-api/target/
+java-core-api/build/
+java-core-api/.mvn/
+java-core-api/logs/
+java-core-api/!**/src/main/**/target/
+java-core-api/!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Git
+# mobile/.git/ # Eğer mobilde ayrı git varsa onu yoksaymasını veya sub-repo yapmasını istemiyorsak ekleyebiliriz ama şimdilik bırakalım.

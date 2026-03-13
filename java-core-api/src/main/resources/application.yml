@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: borsa-analiz-api
+
+  datasource:
+    # Veritabanı URL, Kullanıcı adı ve şifre ".env" dosyasından veya çalışma ortamından gelecek. (Stateless kuralı)
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/borsa_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # Sadece geliştirme (dev) aşamasında "update" kullanılır. Prod için "validate" veya "none" olmalıdır.
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org.springframework.web: INFO
+    com.antigravity.api: DEBUG
