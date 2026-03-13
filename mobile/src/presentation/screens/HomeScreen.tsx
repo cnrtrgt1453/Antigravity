@@ -1,33 +1,90 @@
 // Presentation Layer - Home Screen
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useAuthStore } from '../stores/useAuthStore';
 import { MarketInstrument } from '../../domain/entities/MarketInstrument';
 import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository';
 import { MarketTrendCard } from '../components/MarketTrendCard';
 
+// Python API URL - Adjust if your IP changes or using simulator
+const PYTHON_API_URL = 'http://10.0.2.2:8000'; // Standard Android Emulator localhost
+
 export const HomeScreen: React.FC = () => {
   const { user, logout } = useAuthStore();
   const [marketData, setMarketData] = useState<MarketInstrument[]>([]);
   const [loading, setLoading] = useState(true);
+  const [scanLoading, setScanLoading] = useState(false);
+  const [cooldown, setCooldown] = useState<{ can_scan: boolean, remaining_seconds: number }>({ can_scan: true, remaining_seconds: 0 });
+
+  const fetchMarketData = async () => {
+    try {
+      const repo = new ApiMarketRepository();
+      const data = await repo.getMarketSummary();
+      setMarketData(data);
+    } catch (error) {
+      console.error("Failed to fetch market data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCooldownStatus = async () => {
+    try {
+      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/cooldown_status`);
+      if (response.ok) {
+        const data = await response.json();
+        setCooldown(data);
+      }
+    } catch (error) {
+      console.log("Cooldown status check failed (Backend might be down)");
+    }
+  };
+
+  const handleManualScan = async () => {
+    if (!cooldown.can_scan) {
+      Alert.alert("Beklemeniz Gerekiyor", `Bir sonraki tarama için kalan süre: ${formatCooldown(cooldown.remaining_seconds)}`);
+      return;
+    }
+
+    setScanLoading(true);
+    try {
+      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/run_full_scan_now`);
+      const result = await response.json();
+      
+      if (response.ok) {
+        Alert.alert("Başarılı", "Tüm enstrümanlar tarandı ve sinyaller güncellendi.");
+        fetchMarketData();
+        fetchCooldownStatus();
+      } else {
+        Alert.alert("Hata", result.detail || "Tarama başlatılamadı.");
+      }
+    } catch (error) {
+      Alert.alert("Bağlantı Hatası", "Python analiz motoruna ulaşılamadı. Lütfen sunucunun açık olduğundan emin olun.");
+    } finally {
+      setScanLoading(false);
+    }
+  };
+
+  const formatCooldown = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return `${h}s ${m}d`;
+  };
 
   useEffect(() => {
-    const fetchMarketData = async () => {
-      try {
-        const repo = new ApiMarketRepository();
-        const data = await repo.getMarketSummary();
-        setMarketData(data);
-      } catch (error) {
-        console.error("Failed to fetch market data", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchMarketData();
-    // Refresh every 6 hours (6 * 60 * 60 * 1000 = 21600000 ms)
+    fetchCooldownStatus();
+    
+    // Refresh market data every 6 hours
     const interval = setInterval(fetchMarketData, 21600000);
-    return () => clearInterval(interval);
+    
+    // Poll cooldown status every minute to update UI
+    const cooldownInterval = setInterval(fetchCooldownStatus, 60000);
+    
+    return () => {
+      clearInterval(interval);
+      clearInterval(cooldownInterval);
+    };
   }, []);
 
   return (
@@ -41,7 +98,23 @@ export const HomeScreen: React.FC = () => {
         </View>
 
         <View style={styles.marketSection}>
-          <Text style={styles.sectionTitle}>Piyasa Özeti (₺)</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Piyasa Özeti (₺)</Text>
+            <TouchableOpacity 
+              style={[styles.scanButton, !cooldown.can_scan && styles.scanButtonDisabled]} 
+              onPress={handleManualScan}
+              disabled={scanLoading}
+            >
+              {scanLoading ? (
+                <ActivityIndicator size="small" color="#FFFFFF" />
+              ) : (
+                <Text style={styles.scanButtonText}>
+                  {cooldown.can_scan ? "Şimdi Tara" : formatCooldown(cooldown.remaining_seconds)}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+
           {loading ? (
             <ActivityIndicator size="small" color="#58A6FF" style={{ marginTop: 20 }} />
           ) : (
@@ -97,11 +170,32 @@ const styles = StyleSheet.create({
   marketSection: {
     marginBottom: 24,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#FFFFFF',
-    marginBottom: 12,
+  },
+  scanButton: {
+    backgroundColor: '#238636',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    minWidth: 90,
+    alignItems: 'center',
+  },
+  scanButtonDisabled: {
+    backgroundColor: '#21262D',
+  },
+  scanButtonText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
   },
   card: {
     backgroundColor: '#161B22',
