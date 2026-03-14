@@ -33,4 +33,9 @@ public interface UserService {
     User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto);
 
     void updateLastLogin(String email);
+
+    /**
+     * E-posta adresi ile kullanıcıyı getirir.
+     */
+    User getUserByEmail(String email);
 }

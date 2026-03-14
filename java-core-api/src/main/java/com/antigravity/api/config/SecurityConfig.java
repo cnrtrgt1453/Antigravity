@@ -23,7 +23,8 @@ public class SecurityConfig {
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/users/register", "/api/v1/users/login").permitAll()
-                .anyRequest().permitAll() // Şimdilik geliştirme ortamı için hepsi açık
+                .requestMatchers("/api/v1/watchlist/**").authenticated()
+                .anyRequest().permitAll() // Şimdilik geliştirme ortamı için diğerlerini açık bırakıyoruz
             );
             
         return http.build();
