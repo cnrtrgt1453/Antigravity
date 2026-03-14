@@ -1,6 +1,8 @@
 package com.antigravity.api.service;
 
+import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
+import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 
 /**
@@ -16,12 +18,24 @@ public interface UserService {
     User registerUser(UserRegistrationDto registrationDto);
 
     /**
-     * Firebase UID ile kullanıcı bulunur.
+     * Kullanıcı girişi ve şifre doğrulaması yapar.
+     */
+    User loginUser(LoginRequestDto loginRequestDto);
+
+    /**
+     * Firebase UID ile kullanıcı bulunur (Gelecek destek).
      */
     User getUserByFirebaseUid(String firebaseUid);
 
     /**
      * Kullanıcının platforma girme tarihini günceller.
      */
-    void updateLastLogin(String firebaseUid);
+    User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto);
+
+    void updateLastLogin(String email);
+
+    /**
+     * E-posta adresi ile kullanıcıyı getirir.
+     */
+    User getUserByEmail(String email);
 }

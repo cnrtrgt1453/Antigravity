@@ -1,6 +1,8 @@
 package com.antigravity.api.controller;
 
+import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
+import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.service.UserService;
 import jakarta.validation.Valid;
@@ -34,9 +36,15 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/{firebaseUid}/login")
-    public ResponseEntity<Void> logUserLogin(@PathVariable String firebaseUid) {
-        userService.updateLastLogin(firebaseUid);
-        return ResponseEntity.ok().build();
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        User user = userService.loginUser(loginRequestDto);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<User> loginWithGoogle(@Valid @RequestBody GoogleLoginRequestDto googleLoginRequestDto) {
+        User user = userService.loginWithGoogle(googleLoginRequestDto);
+        return ResponseEntity.ok(user);
     }
 }

@@ -25,9 +25,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Firebase Authentication'da dönen eşsiz kimlik
-    @Column(name = "firebase_uid", unique = true, nullable = false, length = 128)
+    // Firebase Authentication Opsiyonel Kullanım İçin
+    @Column(name = "firebase_uid", unique = true, length = 128)
     private String firebaseUid;
+
+    @Column(nullable = false, length = 255)
+    private String password;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
@@ -54,4 +57,7 @@ public class User {
     // Analiz için: Son Giriş Tarihi
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
+
+    @Column(name = "last_report_date")
+    private LocalDateTime lastReportDate;
 }
