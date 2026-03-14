@@ -1,6 +1,9 @@
 // Presentation Layer - Home Screen
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../App';
 import { useAuthStore } from '../stores/useAuthStore';
 import { MarketInstrument } from '../../domain/entities/MarketInstrument';
 import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository';
@@ -22,6 +25,7 @@ interface SignalData {
 }
 
 export const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { user, logout } = useAuthStore();
   const [marketData, setMarketData] = useState<MarketInstrument[]>([]);
   const [loading, setLoading] = useState(true);
@@ -143,8 +147,18 @@ export const HomeScreen: React.FC = () => {
       
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Text style={styles.greeting}>Hoş geldin 👋</Text>
-          <Text style={styles.email}>{user?.fullName ?? user?.email}</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View>
+              <Text style={styles.greeting}>Hoş geldin 👋</Text>
+              <Text style={styles.email}>{user?.fullName ?? user?.email}</Text>
+            </View>
+            <TouchableOpacity 
+              style={styles.newsButton} 
+              onPress={() => navigation.navigate('News')}
+            >
+              <Text style={styles.newsButtonText}>📰 Haberler</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.marketSection}>
@@ -323,6 +337,19 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#FCA5A5',
     fontSize: 15,
+    fontWeight: '600',
+  },
+  newsButton: {
+    backgroundColor: '#21262D',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#30363D',
+  },
+  newsButtonText: {
+    color: '#FFFFFF',
+    fontSize: 13,
     fontWeight: '600',
   },
 });

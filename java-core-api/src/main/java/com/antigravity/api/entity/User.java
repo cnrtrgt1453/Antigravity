@@ -57,4 +57,7 @@ public class User {
     // Analiz için: Son Giriş Tarihi
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
+
+    @Column(name = "last_report_date")
+    private LocalDateTime lastReportDate;
 }

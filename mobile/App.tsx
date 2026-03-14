@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LoginScreen } from './src/presentation/screens/LoginScreen';
 import { RegisterScreen } from './src/presentation/screens/RegisterScreen';
 import { HomeScreen } from './src/presentation/screens/HomeScreen';
+import { NewsScreen } from './src/presentation/screens/NewsScreen';
 import { useAuthStore } from './src/presentation/stores/useAuthStore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Home: undefined;
+  News: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,7 +31,10 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {user ? (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="News" component={NewsScreen} />
+            </>
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
