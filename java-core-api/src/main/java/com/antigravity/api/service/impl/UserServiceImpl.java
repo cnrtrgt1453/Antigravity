@@ -6,9 +6,9 @@ import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.repository.UserRepository;
 import com.antigravity.api.service.UserService;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.antigravity.api.service.FirebaseAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FirebaseAuthService firebaseAuthService;
 
     @Override
     @Transactional
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto) {
         try {
-            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(googleLoginRequestDto.getIdToken());
+            FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(googleLoginRequestDto.getIdToken());
             String email = decodedToken.getEmail();
             String fullName = (String) decodedToken.getClaims().get("name");
             String profilePictureUrl = decodedToken.getPicture();

@@ -22,7 +22,11 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+
 logging:
   level:
     org.springframework.web: INFO
     com.antigravity.api: DEBUG
+
+external:
+  python-analysis-url: ${PYTHON_ANALYSIS_URL:http://localhost:8000/api/v1/analysis}

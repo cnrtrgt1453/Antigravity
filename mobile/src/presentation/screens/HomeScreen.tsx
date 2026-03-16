@@ -6,23 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import { useAuthStore } from '../stores/useAuthStore';
 import { MarketInstrument } from '../../domain/entities/MarketInstrument';
-import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository';
+import { ApiMarketRepository, SignalData, CooldownStatus } from '../../data/repositories/ApiMarketRepository';
 import { MarketTrendCard } from '../components/MarketTrendCard';
+import { Config } from '../../config';
 
-// Python API URL - Adjust if your IP changes or using simulator
-// Python API URL - Using local network IP for physical device testing
-const PYTHON_API_URL = 'http://192.168.1.157:8000';
-const JAVA_API_URL = 'http://192.168.1.157:8080';
-
-interface SignalData {
-  ticker: string;
-  signal: string;
-  color: string;
-  message: string;
-  cross_date: string | null;
-  current_price: number | null;
-  last_updated: string | null;
-}
+// Interfaces moved to Repository
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -49,13 +37,11 @@ export const HomeScreen: React.FC = () => {
   const fetchSignals = async () => {
     try {
       setSignalsLoading(true);
-      const response = await fetch(`${JAVA_API_URL}/api/v1/signals`);
-      if (response.ok) {
-        const data = await response.json();
-        setSignals(data);
-      }
+      const repo = new ApiMarketRepository();
+      const data = await repo.getLatestSignals();
+      setSignals(data);
     } catch (error) {
-      console.log("Failed to fetch signals (Backend might be down)");
+      console.log("Failed to fetch signals", error);
     } finally {
       setSignalsLoading(false);
     }
@@ -63,13 +49,11 @@ export const HomeScreen: React.FC = () => {
 
   const fetchCooldownStatus = async () => {
     try {
-      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/cooldown_status`);
-      if (response.ok) {
-        const data = await response.json();
-        setCooldown(data);
-      }
+      const repo = new ApiMarketRepository();
+      const data = await repo.getCooldownStatus();
+      setCooldown(data);
     } catch (error) {
-      console.log("Cooldown status check failed (Backend might be down)");
+      console.log("Cooldown status check failed", error);
     }
   };
 
@@ -81,19 +65,19 @@ export const HomeScreen: React.FC = () => {
 
     setScanLoading(true);
     try {
-      const response = await fetch(`${PYTHON_API_URL}/api/v1/analysis/run_full_scan_now`);
-      const result = await response.json();
+      const repo = new ApiMarketRepository();
+      const result = await repo.triggerFullScan();
       
-      if (response.ok) {
-        Alert.alert("Başarılı", "Tüm enstrümanlar tarandı ve sinyaller güncellendi.");
+      if (result.success) {
+        Alert.alert("Başarılı", result.message);
         fetchMarketData();
         fetchSignals();
         fetchCooldownStatus();
       } else {
-        Alert.alert("Hata", result.detail || "Tarama başlatılamadı.");
+        Alert.alert("Hata", result.message);
       }
     } catch (error) {
-      Alert.alert("Bağlantı Hatası", "Python analiz motoruna ulaşılamadı. Lütfen sunucunun açık olduğundan emin olun.");
+      Alert.alert("Bağlantı Hatası", "Analiz motoruna ulaşılamadı. Lütfen sunucunun açık olduğundan emin olun.");
     } finally {
       setScanLoading(false);
     }
@@ -110,14 +94,10 @@ export const HomeScreen: React.FC = () => {
     fetchSignals();
     fetchCooldownStatus();
     
-    // Refresh market data every 6 hours
-    const interval = setInterval(fetchMarketData, 21600000);
-    
-    // Poll signals every 10 minutes
-    const signalsInterval = setInterval(fetchSignals, 600000);
-    
-    // Poll cooldown status every minute to update UI
-    const cooldownInterval = setInterval(fetchCooldownStatus, 60000);
+    // Refresh data based on Config intervals
+    const interval = setInterval(fetchMarketData, Config.REFRESH_INTERVALS.MARKET_DATA);
+    const signalsInterval = setInterval(fetchSignals, Config.REFRESH_INTERVALS.SIGNALS);
+    const cooldownInterval = setInterval(fetchCooldownStatus, Config.REFRESH_INTERVALS.COOLDOWN);
     
     return () => {
       clearInterval(interval);
