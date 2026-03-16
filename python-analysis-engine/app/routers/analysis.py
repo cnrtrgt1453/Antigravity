@@ -3,8 +3,8 @@ import json
 import time
 from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException
-from app.services.data_client import fetch_historical_data
-from app.services.analyzer import analyze_cross
+from app.services.data_provider import YahooFinanceProvider
+from app.services.analysis_strategy import GoldenCrossStrategy
 from pydantic import BaseModel
 from typing import List, Any, Dict
 
@@ -45,8 +45,10 @@ def scan_single_instrument(ticker: str):
     Scans a single instrument right now on-demand.
     Example: ?ticker=THYAO.IS OR ?ticker=XAUUSD=X
     """
-    df = fetch_historical_data(ticker, period="2y", interval="1d")
-    result = analyze_cross(df, ticker)
+    provider = YahooFinanceProvider()
+    strategy = GoldenCrossStrategy()
+    df = provider.fetch_historical_data(ticker, period="2y", interval="1d")
+    result = strategy.analyze(df, ticker)
     return result
 
 @router.get("/run_full_scan_now")

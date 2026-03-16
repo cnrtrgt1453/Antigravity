@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useAuthStore } from '../stores/useAuthStore';
 import { NewsCard } from '../components/NewsCard';
-import { Config } from '../config';
+import { Config } from '../../config';
 
 const JAVA_API_URL = Config.JAVA_API_URL;
 
