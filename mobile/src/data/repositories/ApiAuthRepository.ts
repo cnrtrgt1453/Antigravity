@@ -1,8 +1,9 @@
 import { AuthRepository } from '../../domain/repositories/AuthRepository';
 import { User } from '../../domain/entities/User';
 import { Platform } from 'react-native';
+import { Config } from '../../config';
 
-const API_BASE_URL = Platform.OS === 'android' ? 'http://10.0.2.2:8080/api/v1/users' : 'http://localhost:8080/api/v1/users';
+const API_BASE_URL = `${Config.JAVA_API_URL}/api/v1/users`;
 
 export class ApiAuthRepository implements AuthRepository {
   

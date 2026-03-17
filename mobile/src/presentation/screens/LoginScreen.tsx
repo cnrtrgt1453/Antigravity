@@ -53,7 +53,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       const idToken = response.data?.idToken;
-      
+
       if (idToken) {
         await loginWithGoogle(idToken);
       } else {
@@ -162,9 +162,9 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         {/* Google ile Giriş Butonu */}
-        <TouchableOpacity 
-          style={styles.googleButton} 
-          onPress={handleGoogleLogin} 
+        <TouchableOpacity
+          style={styles.googleButton}
+          onPress={handleGoogleLogin}
           disabled={isLoading}
         >
           <Text style={styles.googleIcon}>G</Text>
@@ -173,7 +173,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
         {/* Kayıt Ol Linki */}
         <TouchableOpacity style={styles.registerLinkButton} onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerLinkText}>Hesabınız yok mu? <Text style={{fontWeight: '700', color: '#F6C90E'}}>Kayıt Olun</Text></Text>
+          <Text style={styles.registerLinkText}>Hesabınız yok mu? <Text style={{ fontWeight: '700', color: '#F6C90E' }}>Kayıt Olun</Text></Text>
         </TouchableOpacity>
       </View>
 

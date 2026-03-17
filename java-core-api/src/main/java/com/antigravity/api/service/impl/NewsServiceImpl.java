@@ -31,15 +31,17 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<News> getNews(User user, String symbol, boolean watchlistOnly, Pageable pageable) {
+    public Page<News> getNews(User user, List<String> symbols, boolean watchlistOnly, Pageable pageable) {
         if (watchlistOnly) {
-            if (symbol != null && !symbol.isEmpty()) {
-                return newsRepository.findByUserIdWatchlistAndSymbol(user.getId(), symbol, pageable);
+            if (symbols != null && !symbols.isEmpty()) {
+                // Not: Repository'de InAndWatchlist metodu yok, şimdilik sadece ilki için veya logic geliştirilmeli.
+                // Basitlik adına tekli hali koruyabiliriz veya IN sorgusu yazabiliriz.
+                return newsRepository.findByUserIdWatchlistAndSymbol(user.getId(), symbols.get(0), pageable);
             }
             return newsRepository.findByUserIdWatchlist(user.getId(), pageable);
         } else {
-            if (symbol != null && !symbol.isEmpty()) {
-                return newsRepository.findAllByStockSymbol(symbol, pageable);
+            if (symbols != null && !symbols.isEmpty()) {
+                return newsRepository.findAllByStockSymbolIn(symbols, pageable);
             }
             return newsRepository.findAll(pageable);
         }

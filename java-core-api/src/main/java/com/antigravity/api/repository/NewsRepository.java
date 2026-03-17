@@ -29,5 +29,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
            "(SELECT w.stockSymbol FROM Watchlist w WHERE w.user.id = :userId)")
     Page<News> findByUserIdWatchlistAndSymbol(@Param("userId") Long userId, @Param("symbol") String symbol, Pageable pageable);
 
+    Page<News> findAllByStockSymbolIn(List<String> symbols, Pageable pageable);
+
     List<News> findAllByStockSymbolInAndPublishedAtAfter(List<String> symbols, LocalDateTime after);
 }

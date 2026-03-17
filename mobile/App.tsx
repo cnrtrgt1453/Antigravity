@@ -8,6 +8,13 @@ import { HomeScreen } from './src/presentation/screens/HomeScreen';
 import { NewsScreen } from './src/presentation/screens/NewsScreen';
 import { useAuthStore } from './src/presentation/stores/useAuthStore';
 import Constants from 'expo-constants';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+// Yeni Ekranlar
+import { MarketScreen } from './src/presentation/screens/MarketScreen';
+import { GoldenScreen } from './src/presentation/screens/GoldenScreen';
+import { DeadScreen } from './src/presentation/screens/DeadScreen';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -28,9 +35,49 @@ export type RootStackParamList = {
   Register: undefined;
   Home: undefined;
   News: undefined;
+  Main: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
+
+function MainTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: any;
+
+          if (route.name === 'Piyasalar') {
+            iconName = focused ? 'stats-chart' : 'stats-chart-outline';
+          } else if (route.name === 'Golden Cross') {
+            iconName = focused ? 'trending-up' : 'trending-up-outline';
+          } else if (route.name === 'Dead Cross') {
+            iconName = focused ? 'trending-down' : 'trending-down-outline';
+          } else if (route.name === 'Haberler') {
+            iconName = focused ? 'newspaper' : 'newspaper-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#F6C90E',
+        tabBarInactiveTintColor: '#8B949E',
+        tabBarStyle: {
+          backgroundColor: '#161B22',
+          borderTopColor: '#30363D',
+          height: 60,
+          paddingBottom: 10,
+        },
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Piyasalar" component={MarketScreen} />
+      <Tab.Screen name="Golden Cross" component={GoldenScreen} />
+      <Tab.Screen name="Dead Cross" component={DeadScreen} />
+      <Tab.Screen name="Haberler" component={NewsScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   const { user } = useAuthStore();
@@ -40,10 +87,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {user ? (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="News" component={NewsScreen} />
-            </>
+            <Stack.Screen name="Main" component={MainTabs} />
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />

@@ -68,11 +68,23 @@ class GoldenCrossStrategy:
                 color = "red"
                 cross_date = str(curr_row.name.date())
 
+        # Golden Cross veya Dead Cross olmuşsa o günkü fiyatı da kaydedelim
+        cross_price = None
+        if cross_date:
+             # Kesişim gününün fiyatını bul (Index tarihtir)
+             try:
+                 cross_price = float(df.loc[cross_date]['Close'])
+             except:
+                 cross_price = None
+
         return {
             "ticker": ticker,
             "signal": signal,
             "color": color,
             "message": message,
             "cross_date": cross_date,
-            "current_price": float(df['Close'].iloc[-1])
+            "current_price": float(df['Close'].iloc[-1]),
+            "sma50": float(df['SMA_Short'].iloc[-1]) if not pd.isna(df['SMA_Short'].iloc[-1]) else None,
+            "sma200": float(df['SMA_Long'].iloc[-1]) if not pd.isna(df['SMA_Long'].iloc[-1]) else None,
+            "cross_price": cross_price
         }
