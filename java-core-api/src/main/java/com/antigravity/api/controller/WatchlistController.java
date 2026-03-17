@@ -4,6 +4,8 @@ import com.antigravity.api.entity.User;
 import com.antigravity.api.entity.Watchlist;
 import com.antigravity.api.service.WatchlistService;
 import com.antigravity.api.service.UserService;
+import com.antigravity.api.service.StockService;
+import com.antigravity.api.entity.Stock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,7 @@ public class WatchlistController {
 
     private final WatchlistService watchlistService;
     private final UserService userService;
+    private final StockService stockService;
 
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,7 +40,8 @@ public class WatchlistController {
     public ResponseEntity<Watchlist> addToWatchlist(@RequestBody Map<String, String> request) {
         String symbol = request.get("symbol");
         User user = getAuthenticatedUser();
-        Watchlist watchlist = watchlistService.addToWatchlist(user, symbol);
+        Stock stock = stockService.getStockBySymbol(symbol);
+        Watchlist watchlist = watchlistService.addToWatchlist(user, stock);
         return ResponseEntity.ok(watchlist);
     }
 
@@ -45,7 +49,8 @@ public class WatchlistController {
     public ResponseEntity<Void> removeFromWatchlist(@RequestBody Map<String, String> request) {
         String symbol = request.get("symbol");
         User user = getAuthenticatedUser();
-        watchlistService.removeFromWatchlist(user, symbol);
+        Stock stock = stockService.getStockBySymbol(symbol);
+        watchlistService.removeFromWatchlist(user, stock);
         return ResponseEntity.noContent().build();
     }
 
@@ -54,7 +59,7 @@ public class WatchlistController {
         User user = getAuthenticatedUser();
         List<String> symbols = watchlistService.getWatchlistByUser(user)
                 .stream()
-                .map(Watchlist::getStockSymbol)
+                .map(w -> w.getStock().getSymbol())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(symbols);
     }

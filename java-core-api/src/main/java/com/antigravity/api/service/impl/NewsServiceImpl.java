@@ -69,7 +69,7 @@ public class NewsServiceImpl implements NewsService {
         // 3. Watchlist Çekme
         List<String> watchlistSymbols = watchlistRepository.findByUser(user)
                 .stream()
-                .map(Watchlist::getStockSymbol)
+                .map(w -> w.getStock().getSymbol())
                 .collect(Collectors.toList());
 
         if (watchlistSymbols.isEmpty()) {
