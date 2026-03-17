@@ -13,8 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Yeni Ekranlar
 import { MarketScreen } from './src/presentation/screens/MarketScreen';
-import { GoldenScreen } from './src/presentation/screens/GoldenScreen';
-import { DeadScreen } from './src/presentation/screens/DeadScreen';
+import { SignalsScreen } from './src/presentation/screens/SignalsScreen';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -50,10 +49,8 @@ function MainTabs() {
 
           if (route.name === 'Piyasalar') {
             iconName = focused ? 'stats-chart' : 'stats-chart-outline';
-          } else if (route.name === 'Golden Cross') {
-            iconName = focused ? 'trending-up' : 'trending-up-outline';
-          } else if (route.name === 'Dead Cross') {
-            iconName = focused ? 'trending-down' : 'trending-down-outline';
+          } else if (route.name === 'Sinyaller') {
+            iconName = focused ? 'flash' : 'flash-outline';
           } else if (route.name === 'Haberler') {
             iconName = focused ? 'newspaper' : 'newspaper-outline';
           }
@@ -72,8 +69,7 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Piyasalar" component={MarketScreen} />
-      <Tab.Screen name="Golden Cross" component={GoldenScreen} />
-      <Tab.Screen name="Dead Cross" component={DeadScreen} />
+      <Tab.Screen name="Sinyaller" component={SignalsScreen} />
       <Tab.Screen name="Haberler" component={NewsScreen} />
     </Tab.Navigator>
   );
