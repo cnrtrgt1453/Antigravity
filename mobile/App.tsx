@@ -7,12 +7,21 @@ import { RegisterScreen } from './src/presentation/screens/RegisterScreen';
 import { HomeScreen } from './src/presentation/screens/HomeScreen';
 import { NewsScreen } from './src/presentation/screens/NewsScreen';
 import { useAuthStore } from './src/presentation/stores/useAuthStore';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import Constants from 'expo-constants';
 
-GoogleSignin.configure({
-  webClientId: '777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com',
-  offlineAccess: true, // Google refreshToken almak için gerekli olabilir
-});
+// Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
+// Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
+if (Constants.appOwnership !== 'expo') {
+  try {
+    const { GoogleSignin } = require('@react-native-google-signin/google-signin');
+    GoogleSignin.configure({
+      webClientId: '777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com',
+      offlineAccess: true,
+    });
+  } catch (e) {
+    console.warn('Google Sign-in yüklenemedi:', e);
+  }
+}
 
 export type RootStackParamList = {
   Login: undefined;

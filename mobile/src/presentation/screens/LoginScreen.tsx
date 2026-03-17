@@ -14,10 +14,10 @@ import {
   StatusBar,
   Animated,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { RootStackParamList } from '../../../App';
 import { useAuthStore } from '../stores/useAuthStore';
+import Constants from 'expo-constants';
+import { Alert } from 'react-native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -38,8 +38,18 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleGoogleLogin = async () => {
+    if (Constants.appOwnership === 'expo') {
+      Alert.alert(
+        'Expo Go Kısıtlaması',
+        'Google ile giriş özelliği Expo Go uygulamasında çalışmamaktadır. Bunu test etmek için "Development Build" gereklidir. Şimdilik e-posta/şifre ile giriş yapabilirsiniz.',
+        [{ text: 'Tamam' }]
+      );
+      return;
+    }
+
     if (error) clearError();
     try {
+      const { GoogleSignin } = require('@react-native-google-signin/google-signin');
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       const idToken = response.data?.idToken;
@@ -50,8 +60,8 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         throw new Error('Google Sign-In idToken alınamadı.');
       }
     } catch (err: any) {
+      const { statusCodes } = require('@react-native-google-signin/google-signin');
       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
-        // Kullanıcı kendi iptal etti, hataya gerek yok
         console.log('Kullanıcı Google girişini iptal etti');
       } else if (err.code === statusCodes.IN_PROGRESS) {
         // Zaten işlemde
