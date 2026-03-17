@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  FlatList, 
+  ActivityIndicator, 
+  RefreshControl, 
+  TouchableOpacity, 
+  Alert 
+} from 'react-native';
 import { Config } from '../../config';
+import { useGameStore } from '../stores/useGameStore';
+import { Ionicons } from '@expo/vector-icons';
 
 interface MarketData {
   symbol: string;
@@ -22,6 +33,12 @@ export const MarketScreen: React.FC = () => {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [analysisCache, setAnalysisCache] = useState<any[]>([]);
+  
+  const { watchlist, addToWatchlist, removeFromWatchlist, fetchWatchlist } = useGameStore();
+
+  useEffect(() => {
+    fetchWatchlist();
+  }, []);
 
   const fetchAnalysisData = async () => {
     try {
@@ -95,6 +112,19 @@ export const MarketScreen: React.FC = () => {
     fetchData(true);
   };
 
+  const toggleWatch = async (symbol: string) => {
+    const isWatched = watchlist.includes(symbol);
+    try {
+      if (isWatched) {
+        await removeFromWatchlist(symbol);
+      } else {
+        await addToWatchlist(symbol);
+      }
+    } catch (e) {
+      Alert.alert("Hata", "İşlem gerçekleştirilemedi.");
+    }
+  };
+
   const handleLoadMore = () => {
     if (!loading && !loadingMore && hasMore) {
       fetchData();
@@ -106,19 +136,33 @@ export const MarketScreen: React.FC = () => {
     const isUptrend = hasAnalysis ? (item.sma50! > item.sma200!) : null;
     const diff = item.cross_price && item.current_price ? (item.current_price - item.cross_price).toFixed(2) : '-';
     const diffColor = item.cross_price && item.current_price ? (item.current_price >= item.cross_price ? '#3FB950' : '#F85149') : '#8B949E';
+    const isWatched = watchlist.includes(item.symbol);
 
     return (
       <View style={[styles.card, { borderColor: isUptrend === null ? '#30363D' : (isUptrend ? '#238636' : '#DA3633') }]}>
         <View style={styles.cardHeader}>
-          <View>
+          <View style={{ flex: 1 }}>
             <Text style={styles.ticker}>{item.symbol}</Text>
             <Text style={styles.name}>{item.name}</Text>
           </View>
-          {isUptrend !== null && (
-            <View style={[styles.badge, { backgroundColor: isUptrend ? '#238636' : '#DA3633' }]}>
-              <Text style={styles.badgeText}>{isUptrend ? 'Yükseliş' : 'Düşüş'}</Text>
-            </View>
-          )}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {isUptrend !== null && (
+              <View style={[styles.badge, { backgroundColor: isUptrend ? '#238636' : '#DA3633' }]}>
+                <Text style={styles.badgeText}>{isUptrend ? 'Yükseliş' : 'Düşüş'}</Text>
+              </View>
+            )}
+            <TouchableOpacity 
+              style={styles.watchButton} 
+              onPress={() => toggleWatch(item.symbol)}
+              activeOpacity={0.7}
+            >
+              <Ionicons 
+                name={isWatched ? "eye" : "eye-outline"} 
+                size={22} 
+                color={isWatched ? "#F6C90E" : "#8B949E"} 
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         
         <View style={styles.infoRow}>
@@ -147,7 +191,11 @@ export const MarketScreen: React.FC = () => {
   };
 
   if (loading) {
-    return <ActivityIndicator style={styles.loader} color="#58A6FF" />;
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#F6C90E" />
+      </View>
+    );
   }
 
   return (
@@ -158,10 +206,10 @@ export const MarketScreen: React.FC = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.symbol}
         contentContainerStyle={styles.list}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#58A6FF" />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#F6C90E" />}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={loadingMore ? <ActivityIndicator style={{ marginVertical: 20 }} color="#58A6FF" /> : null}
+        ListFooterComponent={loadingMore ? <ActivityIndicator style={{ marginVertical: 20 }} color="#F6C90E" /> : null}
       />
     </View>
   );
@@ -169,6 +217,7 @@ export const MarketScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0D1117', paddingHorizontal: 16, paddingTop: 60 },
+  loaderContainer: { flex: 1, backgroundColor: '#0D1117', justifyContent: 'center', alignItems: 'center' },
   title: { fontSize: 28, fontWeight: '800', color: '#FFFFFF', marginBottom: 20 },
   list: { paddingBottom: 20 },
   loader: { flex: 1, backgroundColor: '#0D1117' },
@@ -189,4 +238,10 @@ const styles = StyleSheet.create({
   value: { color: '#FFFFFF', fontSize: 15, fontWeight: '600' },
   diffContainer: { borderTopWidth: 1, borderTopColor: '#30363D', paddingTop: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   diffValue: { fontSize: 16, fontWeight: '700' },
+  watchButton: {
+    padding: 6,
+    marginLeft: 8,
+    borderRadius: 8,
+    backgroundColor: '#30363D44',
+  },
 });

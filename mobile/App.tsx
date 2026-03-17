@@ -14,6 +14,8 @@ import { Ionicons } from '@expo/vector-icons';
 // Yeni Ekranlar
 import { MarketScreen } from './src/presentation/screens/MarketScreen';
 import { SignalsScreen } from './src/presentation/screens/SignalsScreen';
+import { GameScreen } from './src/presentation/screens/GameScreen';
+import { TradeHistoryScreen } from './src/presentation/screens/TradeHistoryScreen';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -35,6 +37,8 @@ export type RootStackParamList = {
   Home: undefined;
   News: undefined;
   Main: undefined;
+  TradeHistory: undefined;
+  Game: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,20 +47,7 @@ const Tab = createBottomTabNavigator();
 function MainTabs() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: any;
-
-          if (route.name === 'Piyasalar') {
-            iconName = focused ? 'stats-chart' : 'stats-chart-outline';
-          } else if (route.name === 'Sinyaller') {
-            iconName = focused ? 'flash' : 'flash-outline';
-          } else if (route.name === 'Haberler') {
-            iconName = focused ? 'newspaper' : 'newspaper-outline';
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
+      screenOptions={{
         tabBarActiveTintColor: '#F6C90E',
         tabBarInactiveTintColor: '#8B949E',
         tabBarStyle: {
@@ -66,11 +57,44 @@ function MainTabs() {
           paddingBottom: 10,
         },
         headerShown: false,
-      })}
+      }}
     >
-      <Tab.Screen name="Piyasalar" component={MarketScreen} />
-      <Tab.Screen name="Sinyaller" component={SignalsScreen} />
-      <Tab.Screen name="Haberler" component={NewsScreen} />
+      <Tab.Screen
+        name="Piyasalar"
+        component={MarketScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? 'stats-chart' : 'stats-chart-outline'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Sinyaller"
+        component={SignalsScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? 'flash' : 'flash-outline'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Haberler"
+        component={NewsScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? 'newspaper' : 'newspaper-outline'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Oyun"
+        component={GameScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? 'game-controller' : 'game-controller-outline'} size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -83,7 +107,16 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {user ? (
-            <Stack.Screen name="Main" component={MainTabs} />
+            <>
+              <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
+              <Stack.Screen name="TradeHistory" component={TradeHistoryScreen} options={{
+                headerShown: true,
+                title: 'İşlem Geçmişi',
+                headerStyle: { backgroundColor: '#0D1117' },
+                headerTintColor: '#FFFFFF',
+                headerTitleStyle: { fontWeight: '800' }
+              }} />
+            </>
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
