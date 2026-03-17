@@ -34,14 +34,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerUser(UserRegistrationDto registrationDto) {
-        log.info("Yeni kullanıcı kaydı isteği: {}", registrationDto.getEmail());
-
-        if (userRepository.existsByEmail(registrationDto.getEmail())) {
+        String email = registrationDto.getEmail().trim().toLowerCase();
+        if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Bu e-posta adresi kullanımda.");
         }
 
         User newUser = User.builder()
-                .email(registrationDto.getEmail())
+                .email(email)
                 // Şifreyi açık metin olarak değil, BCrypt ile şifrelenmiş (Hashlenmiş) formatta kaydet (Güvenlik)
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
                 .fullName(registrationDto.getFullName())
@@ -56,8 +55,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User loginUser(LoginRequestDto loginRequestDto) {
-        log.info("Kullanıcı giriş isteği: {}", loginRequestDto.getEmail());
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+        String email = loginRequestDto.getEmail().trim().toLowerCase();
+        log.info("Kullanıcı giriş isteği: {}", email);
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı."));
 
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
