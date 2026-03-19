@@ -14,7 +14,8 @@ import {
   StatusBar,
   Animated,
 } from 'react-native';
-import { RootStackParamList } from '../../../App';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
 import { useAuthStore } from '../stores/useAuthStore';
 import Constants from 'expo-constants';
 import { Alert } from 'react-native';

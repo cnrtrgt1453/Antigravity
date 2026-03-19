@@ -1,33 +1,33 @@
-# Python Analysis Engine
+# Python Analiz Motoru (Analysis Engine)
 
-This is the Python-based analysis engine designed to fetch stock data (BIST, Gold, Silver) using `yfinance` and perform Moving Average (SMA50/200) Golden and Dead Cross pattern recognitions.
+Bu modül, `yfinance` kullanarak hisse senedi verilerini (BIST, Altın, Gümüş) çeken ve Hareketli Ortalama (SMA50/200) Golden ve Dead Cross formasyonlarını tespit eden Python tabanlı analiz motorudur.
 
-## Prerequisites
+## Ön Koşullar
 - Python 3.9+
 - pip
 
-## Quickstart
+## Hızlı Başlangıç
 
-1. Clone the repository and navigate to this folder.
-2. Create and activate a virtual environment:
+1. Depoyu klonlayın ve bu dizine gidin.
+2. Sanal ortam (virtual environment) oluşturun ve aktifleştirin:
    ```bash
    py -m venv .venv
    .\.venv\Scripts\Activate.ps1
    ```
-   *(If you get a script execution policy error on Windows, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` as Administrator or run the `python.exe` inside the `.venv` directly.)*
+   *(Eğer Windows'ta script çalıştırma yetkisi hatası alırsanız, PowerShell'i Yönetici olarak açıp `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` komutunu çalıştırın veya doğrudan `.venv` içindeki `python.exe`yi kullanın.)*
 
-3. Install requirements:
+3. Bağımlılıkları yükleyin:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Start the FastAPI development server:
+4. FastAPI geliştirme sunucusunu başlatın:
    ```bash
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
-5. Open your browser and navigate to the Swagger UI to test the endpoints:
+5. Uç noktaları (endpoints) test etmek için tarayıcınızda Swagger UI'yı açın:
    - http://localhost:8000/docs
-   
-## Scheduled Jobs
-The engine is configured to automatically scan the market **every Monday at 07:00 AM** and output the results for BIST stocks, Gold, and Silver.
+    
+## Zamanlanmış Görevler (Scheduled Jobs)
+Analiz motoru, piyasayı **her Pazartesi saat 07:00'de** otomatik olarak tarayacak ve BIST hisseleri, Altın ve Gümüş için sonuçları üretecek şekilde yapılandırılmıştır.

@@ -1,68 +1,86 @@
-// Presentation Layer — Auth Zustand Store (State Management)
-// Sadece Domain UseCase'leri çağırır; Firebase veya veri kaynağı hakkında bilgisi yoktur.
 import { create } from 'zustand';
 import { User } from '../../domain/entities/User';
 import { LoginUseCase } from '../../domain/usecases/LoginUseCase';
 import { RegisterUseCase } from '../../domain/usecases/RegisterUseCase';
 import { ApiAuthRepository } from '../../data/repositories/ApiAuthRepository';
 
-// Dependency Injection: Repository burada bağlanıyor. Java Core API ile çalışacak.
-const authRepository = new ApiAuthRepository();
-const loginUseCase = new LoginUseCase(authRepository);
-const registerUseCase = new RegisterUseCase(authRepository);
-
-export interface AuthState {
+interface AuthState {
   user: User | null;
   isLoading: boolean;
   error: string | null;
-  login: (email?: string, password?: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: (idToken: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   clearError: () => void;
 }
 
+// Lazy-loaded dependencies to avoid top-level side effects in tests
+let _authRepository: ApiAuthRepository | null = null;
+let _loginUseCase: LoginUseCase | null = null;
+let _registerUseCase: RegisterUseCase | null = null;
+
+const getRepo = () => {
+  if (!_authRepository) _authRepository = new ApiAuthRepository();
+  return _authRepository;
+};
+
+const getLoginUseCase = () => {
+  if (!_loginUseCase) _loginUseCase = new LoginUseCase(getRepo());
+  return _loginUseCase;
+};
+
+const getRegisterUseCase = () => {
+  if (!_registerUseCase) _registerUseCase = new RegisterUseCase(getRepo());
+  return _registerUseCase;
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  isLoading: false,
   error: null,
+  isLoading: false,
 
-  login: async (email?: string, password?: string) => {
+  login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
-      if (!email || !password) throw new Error("Email ve şifre zorunludur");
-      const user = await loginUseCase.execute(email, password); // Re-added this line
-      // Başarılı giriş veritabanından döndüğü anda store'a 'user' olarak kazınır
+      const user = await getLoginUseCase().execute(email, password);
       set({ user, isLoading: false });
-    } catch (error: any) {
-      set({ error: error.message || 'Giriş başarısız oldu.', isLoading: false });
+    } catch (err: any) {
+      set({ error: err.message || 'Giriş başarısız oldu.', isLoading: false });
+      throw err;
     }
   },
 
-  loginWithGoogle: async (idToken: string) => {
+  loginWithGoogle: async (idToken) => {
     set({ isLoading: true, error: null });
     try {
-      const user = await authRepository.loginWithGoogle(idToken);
+      const user = await getRepo().loginWithGoogle(idToken);
       set({ user, isLoading: false });
-    } catch (error: any) {
-      set({ error: error.message || 'Google girişi başarısız oldu.', isLoading: false });
+    } catch (err: any) {
+      set({ error: err.message || 'Google girişi başarısız oldu.', isLoading: false });
+      throw err;
     }
   },
 
-  register: async (fullName: string, email: string, password: string) => {
+  register: async (fullName, email, password) => {
     set({ isLoading: true, error: null });
     try {
-      const user = await registerUseCase.execute(fullName, email, password);
-      // Başarılı kayıtta da kullanıcı doğrudan içeri alınır
+      const user = await getRegisterUseCase().execute(fullName, email, password);
       set({ user, isLoading: false });
-    } catch (e: any) {
-      set({ error: e.message, isLoading: false });
+    } catch (err: any) {
+      set({ error: err.message || 'Kayıt başarısız oldu.', isLoading: false });
+      throw err;
     }
   },
 
   logout: async () => {
-    await authRepository.logout();
-    set({ user: null, error: null });
+    try {
+      await getRepo().logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      set({ user: null });
+    }
   },
 
   clearError: () => set({ error: null }),

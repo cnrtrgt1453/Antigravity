@@ -1,17 +1,17 @@
-# Feature: User Registration & Security
+# Özellik: Kullanıcı Kaydı ve Güvenlik
 
-Authentication and user management strategy for the Antigravity platform.
+Antigravity platformu için kimlik doğrulama ve kullanıcı yönetimi stratejisidir.
 
-## Auth Strategy
-- **Hybrid Approach**: Supports local e-mail/password registration and Google Login via Firebase.
-- **Firebase Integration**: Authenticates tokens for mobile security; replicates essential user info to PostgreSQL for internal logic.
+## Kimlik Doğrulama Stratejisi
+- **Hibrit Yaklaşım:** Yerel e-posta/şifre kaydı ve Firebase üzerinden Google Giriş desteği.
+- **Firebase Entegrasyonu:** Mobil güvenlik için token doğrulaması yapar; temel kullanıcı bilgilerini dahili mantık için PostgreSQL'e kopyalar.
 
-## Security Layers
-- **Spring Security**: Protects all private API endpoints.
-- **Firebase Admin SDK**: Used in the backend to verify ID tokens from the mobile app.
-- **Password Protection**: Local passwords are hashed using `BCryptPasswordEncoder`.
+## Güvenlik Katmanları
+- **Spring Security:** Tüm özel API uç noktalarını korur.
+- **Firebase Admin SDK:** Mobil uygulamadan gelen ID token'larını doğrulamak için backend tarafında kullanılır.
+- **Şifre Koruması:** Yerel şifreler `BCryptPasswordEncoder` kullanılarak hash'lenir.
 
-## User Attributes
+## Kullanıcı Öznitelikleri
 - `id`, `email`, `fullName`, `firebaseUid`, `isActive`.
-- `lastLoginAt`, `lastReportDate` (for feature triggers).
-- `createdAt`, `updatedAt` (Auditing).
+- `lastLoginAt`, `lastReportDate` (özellik tetikleyicileri için).
+- `createdAt`, `updatedAt` (Denetim/Auditing).

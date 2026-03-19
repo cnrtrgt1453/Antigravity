@@ -1,24 +1,24 @@
-# Feature: News Module (Haberler)
+# Özellik: Haber Modülü (News)
 
-The News module provides timely financial information and personalized analysis reports for tracked stocks.
+Haber modülü, takip edilen hisseler için zamanında finansal bilgiler ve kişiselleştirilmiş analiz raporları sunar.
 
-## Architecture
+## Mimari
 
-### Scheduling
-- **Frequency**: Weekdays at 18:15 (Cron: `0 15 18 * * MON-FRI`).
-- **Service**: `NewsScheduler`.
-- **Logic**: Incremental updates based on unique news UIDs from providers (e.g., KAP).
+### Zamanlama (Scheduling)
+- **Sıklık:** Hafta içi saat 18:15 (Cron: `0 15 18 * * MON-FRI`).
+- **Servis:** `NewsScheduler`.
+- **Mantık:** Haber sağlayıcılardan (örn. KAP) gelen benzersiz haber UID'lerine göre artımlı güncellemeler.
 
-### News Personalization
-- **Personalized Feed**: Uses SQL JOINs to filter news based on the user's `Watchlist`.
-- **Frontend UI**:
-    - **Tab Toggle**: Switch between "My Watchlist" and "All News".
-    - **Symbol Filters**: Horizontal chips for specific stocks in user watchlist.
-    - **Sorting**: Toggle between Newest/Oldest.
-    - **Pagination**: Optimized with infinite scroll.
+### Haber Kişiselleştirme
+- **Kişiselleştirilmiş Akış:** Kullanıcının `Takip Listesi`ne (Watchlist) göre haberleri filtrelemek için SQL JOIN yapılarını kullanır.
+- **Frontend Arayüzü:**
+    - **Sekme Değiştirme:** "Takip Listem" ve "Tüm Haberler" arasında geçiş.
+    - **Sembol Filtreleri:** Kullanıcı listesindeki belirli hisseler için yatay filtreler.
+    - **Sıralama:** En Yeni/En Eski arasında geçiş.
+    - **Sayfalama:** Sonsuz kaydırma (infinite scroll) ile optimize edilmiştir.
 
-## Weekly Analysis Report
-- **Activation**: Monday only.
-- **Exception**: First-time users can access it any day.
-- **Content**: Summarizes news activity for watchlist stocks over the last 30 days.
-- **Persistence**: Tracks `lastReportDate` on the `User` entity to enforce once-per-week rules.
+## Haftalık Analiz Raporu
+- **Aktivasyon:** Sadece Pazartesi günleri.
+- **İstisna:** Yeni kullanıcılar ilk raporlarına herhangi bir gün erişebilir.
+- **İçerik:** Takip listesindeki hisselerin son 30 gündeki haber hareketliliğini özetler.
+- **Kalıcılık:** Haftada bir kuralını uygulamak için `User` tablosunda `lastReportDate` bilgisini takip eder.

@@ -1,36 +1,44 @@
-# Antigravity - Project Architecture Overview
+# Antigravity - Proje Mimarisi Özeti
 
-This document outlines the hybrid (Polyglot Microservices) architecture for the Antigravity market analysis and signals application.
+Bu belge, Antigravity piyasa analizi ve sinyal uygulaması için hibrit (Polyglot Microservices) mimariyi özetler.
 
-## Technology Stack
+## Teknoloji Yığını
 
-### 1. Analysis Engine (Python)
-- **Role**: Data fetching, mathematical calculations, and signal generation.
-- **Tech**: Python 3.9+, FastAPI, Pandas, TA-Lib, `yfinance`.
-- **Logic**: Performs technical analysis (SMA, Golden/Dead Cross) and exposes results via a REST API.
+### 1. Analiz Motoru (Python)
+- **Rol:** Veri çekme, matematiksel hesaplamalar ve sinyal üretimi.
+- **Teknoloji:** Python 3.9+, FastAPI, Pandas, TA-Lib, `yfinance`.
+- **Mantık:** Teknik analizleri (SMA, Golden/Dead Cross) gerçekleştirir ve sonuçları REST API üzerinden sunar.
 
-### 2. Core API & Orchestration (Java Spring Boot)
-- **Role**: Backend orchestration, security, persistence, and external service coordination.
-- **Tech**: Java 17+, Spring Boot 3, Spring Security, Spring Data JPA.
-- **Communication**: Interacts with the Python engine for analysis results and serves the mobile frontend.
+### 2. Çekirdek API ve Orkestrasyon (Java Spring Boot)
+- **Rol:** Arka plan orkestrasyonu, güvenlik, veri kalıcılığı ve dış servis koordinasyonu.
+- **Teknoloji:** Java 17+, Spring Boot 3, Spring Security, Spring Data JPA.
+- **İletişim:** Analiz sonuçları için Python motoruyla etkileşime girer ve mobil ön yüze hizmet verir.
 
-### 3. Mobile Frontend (React Native)
-- **Role**: User interface for viewing market signals and news.
-- **Tech**: React Native (Expo), TypeScript.
+### 3. Mobil Ön Yüz (React Native)
+- **Rol:** Kullanıcıların piyasa sinyallerini, haberleri ve sanal portföylerini görebileceği arayüz.
+- **Teknoloji:** React Native (Expo), TypeScript, Zustand (State Management).
 
-### 4. Database Layer (PostgreSQL)
-- **Role**: Persistent storage for user data, market signals, and news.
-- **Indices**: Optimized with composite indices for frequent queries (e.g., Watchlist).
+### 4. Oyun ve Portföy Sistemi
+- **Rol:** Kullanıcıların gerçek verilerle sanal alım-satım yapmasını sağlayan modül.
+- **Mantık:** Java tarafında cüzdan ve işlem geçmişi yönetilirken, Python tarafı anlık fiyatlama ve kar/zarar hesaplamalarını sağlar.
 
-## Core Workflows
+### 5. Veritabanı Katmanı (PostgreSQL)
+- **Rol:** Kullanıcı verileri, işlem geçmişi, piyasa sinyalleri ve haberler için kalıcı depolama.
+- **Optimizasyon:** İzleme listesi gibi sık sorgulanan alanlar için kompozit indeksler ile optimize edilmiştir.
 
-### Daily Analysis Cycle
-1. **Trigger**: Scheduled task in Python or manual trigger from mobile.
-2. **Analysis**: Python engine fetches OHLC data and calculates crossovers.
-3. **Persistence**: Results are stored in PostgreSQL for historical tracking.
-4. **Notification**: (Future) Push notifications to users.
+## Temel İş Akışları
 
-### News Synchronization
-1. **Trigger**: Weekday 18:15 cron job in Java.
-2. **Fetch**: Integrates with external financial news providers.
-3. **Smart Updates**: Deduplication based on external UIDs/Links.
+### Günlük Analiz Döngüsü
+1. **Tetikleyici:** Python'daki zamanlanmış görev veya mobilden gelen manuel tetikleme.
+2. **Analiz:** Python motoru OHLC verilerini çeker ve kesişimleri hesaplar.
+3. **Kalıcılık:** Sonuçlar, geçmiş takibi için PostgreSQL'de saklanır.
+
+### Haber Senkronizasyonu
+1. **Tetikleyici:** Java tarafında hafta içi 18:15'te çalışan cron görevi.
+2. **Çekme:** Dış finansal haber kaynakları ile entegrasyon.
+3. **Akıllı Güncelleme:** UID/Link bazlı tekilleştirme ile veri güncelliği.
+
+### Oyun ve Alım-Satım Akışı
+1. **İşlem:** Kullanıcı bir hisseyi almayı veya satmayı onaylar.
+2. **Doğrulama:** Java backend bakiye ve stok miktarını kontrol eder.
+3. **Güncelleme:** İşlem sonucu portföy tablosuna kaydedilir ve işlem geçmişine eklenir.

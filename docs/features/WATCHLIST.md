@@ -1,20 +1,20 @@
-# Feature: Watchlist (Takip Listesi)
+# Özellik: Takip Listesi (Watchlist)
 
-The Watchlist feature allows users to track specific stock symbols and receive personalized results in their news feeds.
+Takip Listesi özelliği, kullanıcıların belirli hisse sembollerini takip etmelerine ve haber akışlarında kişiselleştirilmiş sonuçlar almalarına olanak tanır.
 
-## Technical Details
+## Teknik Detaylar
 
-### Backend Structure
-- **Entity**: `Watchlist`
-- **Relationship**: Many-to-One with `User`.
-- **Database**: PostgreSQL table `watchlist`.
-- **Optimization**: Unique composite index on `(user_id, stock_symbol)`.
+### Backend Yapısı
+- **Varlık (Entity):** `Watchlist`
+- **İlişki:** `User` ile Çok-tan-Bire (Many-to-One).
+- **Veritabanı:** PostgreSQL `watchlist` tablosu.
+- **Optimizasyon:** `(user_id, stock_symbol)` üzerinde benzersiz kompozit indeks.
 
-### Core Operations
-- `POST /api/v1/watchlist/add`: Adds a symbol.
-- `DELETE /api/v1/watchlist/remove`: Removes a symbol.
-- `GET /api/v1/watchlist/list`: Lists user symbols.
+### Temel İşlemler
+- `POST /api/v1/watchlist/add`: Bir sembol ekler.
+- `DELETE /api/v1/watchlist/remove`: Bir sembolü siler.
+- `GET /api/v1/watchlist/list`: Kullanıcının sembollerini listeler.
 
-## SOLID Principles
-- **SRP**: Watchlist logic is isolated from the `User` entity and managed via a dedicated `WatchlistService`.
-- **Relationship**: Decoupled design allows for future scale (e.g., price alerts).
+## SOLID Prensipleri
+- **SRP (Tek Sorumluluk):** Takip listesi mantığı `User` varlığından izole edilmiştir ve özel bir `WatchlistService` üzerinden yönetilir.
+- **İlişki:** Ayrılmış (decoupled) tasarım, gelecekteki ölçeklendirmelere (örn. fiyat alarmları) olanak tanır.

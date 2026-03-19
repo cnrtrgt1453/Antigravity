@@ -1,22 +1,25 @@
-# Antigravity Documentation Index
+# Antigravity Dökümantasyon Dizini
 
-Welcome to the documentation for Antigravity, a market analysis and news tracking platform.
+Antigravity piyasa analizi ve haber takip platformu dökümantasyonuna hoş geldiniz.
 
-## 🏗️ Core Architecture
-- [Architecture Overview](ARCHITECTURE.md) - Technical stack and system design.
+## 🏗️ Çekirdek Mimari
+- [Mimari Genel Bakış](ARCHITECTURE.md) - Teknoloji yığını ve sistem tasarımı.
 
-## ✨ Developed Features
-Detailed technical guides and walkthroughs for each module:
+## ✨ Geliştirilen Özellikler
+Her modül için detaylı teknik rehberler ve incelemeler:
 
-### 📱 User & Security
-- [Registration & Security](features/REGISTRATION.md) - Auth strategy and security layers.
+### 📱 Kullanıcı ve Güvenlik
+- [Kayıt ve Güvenlik](features/REGISTRATION.md) - Kimlik doğrulama stratejisi ve güvenlik katmanları.
 
-### 📊 Market Analysis
-- [Market Signals](features/MARKET_SIGNALS.md) - Golden/Dead Cross analysis and Python integration.
-- [Watchlist](features/WATCHLIST.md) - Personalized stock tracking system.
+### 🕹️ Oyun ve Portföy
+- [Oyun Özelliği](features/GAME_FEATURE.md) - Sanal borsa, portföy yönetimi ve işlem geçmişi.
 
-### 📰 Information & Reporting
-- [News Module](features/NEWS_MODULE.md) - Automated news syncing and weekly analysis reports.
+### 📊 Market Analizi
+- [Market Sinyalleri](features/MARKET_SIGNALS.md) - Golden/Dead Cross analizi ve Python entegrasyonu.
+- [Takip Listesi](features/WATCHLIST.md) - Kişiselleştirilmiş hisse takip sistemi.
+
+### 📰 Bilgi ve Raporlama
+- [Haber Modülü](features/NEWS_MODULE.md) - Otomatik haber senkronizasyonu ve haftalık analiz raporları.
 
 ---
-*Last Updated: March 2026*
+*Son Güncelleme: Mart 2026*

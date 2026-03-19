@@ -31,15 +31,7 @@ if (Constants.appOwnership !== 'expo') {
   }
 }
 
-export type RootStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  Home: undefined;
-  News: undefined;
-  Main: undefined;
-  TradeHistory: undefined;
-  Game: undefined;
-};
+import { RootStackParamList } from './src/types/navigation';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
