@@ -3,8 +3,8 @@ import json
 import time
 from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException
-from app.services.data_client import fetch_historical_data
-from app.services.analyzer import analyze_cross
+from app.services.data_provider import YahooFinanceProvider
+from app.services.analysis_strategy import GoldenCrossStrategy
 from pydantic import BaseModel
 from typing import List, Any, Dict
 
@@ -23,6 +23,7 @@ class AnalysisResult(BaseModel):
     current_price: float | None
     sma50: float | None
     sma200: float | None
+    cross_price: float | None
     last_updated: str | None
 
 def get_last_scan_time():
@@ -45,8 +46,10 @@ def scan_single_instrument(ticker: str):
     Scans a single instrument right now on-demand.
     Example: ?ticker=THYAO.IS OR ?ticker=XAUUSD=X
     """
-    df = fetch_historical_data(ticker, period="2y", interval="1d")
-    result = analyze_cross(df, ticker)
+    provider = YahooFinanceProvider()
+    strategy = GoldenCrossStrategy()
+    df = provider.fetch_historical_data(ticker, period="2y", interval="1d")
+    result = strategy.analyze(df, ticker)
     return result
 
 @router.get("/run_full_scan_now")
@@ -94,7 +97,7 @@ def get_cooldown_status():
 @router.get("/latest_signals")
 def get_latest_signals():
     """
-    Returns the latest scan results from results.json.
+    Returns results for instruments that had a Golden or Dead Cross in the last 7 days.
     """
     if not os.path.exists(RESULTS_FILE):
         return {"golden_signals": [], "dead_signals": []}
@@ -103,12 +106,39 @@ def get_latest_signals():
         with open(RESULTS_FILE, "r") as f:
             results = json.load(f)
             
-        golden = [r for r in results if r.get("signal") == "GOLDEN_CROSS"]
-        dead = [r for r in results if r.get("signal") == "DEAD_CROSS"]
+        seven_days_ago = datetime.now() - timedelta(days=7)
+        
+        filtered_results = []
+        for r in results:
+            if r.get("cross_date"):
+                try:
+                    cross_date = datetime.strptime(r["cross_date"], "%Y-%m-%d")
+                    if cross_date >= seven_days_ago:
+                        filtered_results.append(r)
+                except:
+                    continue
+                    
+        golden = [r for r in filtered_results if r.get("signal") == "GOLDEN_CROSS"]
+        dead = [r for r in filtered_results if r.get("signal") == "DEAD_CROSS"]
         
         return {
             "golden_signals": golden,
             "dead_signals": dead
         }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/all_market_data")
+def get_all_market_data():
+    """
+    Returns results for ALL instruments (for Markets screen).
+    """
+    if not os.path.exists(RESULTS_FILE):
+        return []
+    
+    try:
+        with open(RESULTS_FILE, "r") as f:
+            results = json.load(f)
+        return results
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -4,6 +4,7 @@ import com.antigravity.api.entity.MarketSignal;
 import com.antigravity.api.repository.MarketSignalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,9 +18,10 @@ import java.util.Map;
 public class MarketAnalysisService {
 
     private final MarketSignalRepository marketSignalRepository;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
-    private static final String PYTHON_SERVICE_URL = "http://localhost:8000/api/v1/analysis";
+    @Value("${external.python-analysis-url}")
+    private String pythonServiceUrl;
 
     /**
      * Her Pazartesi saat 07:05'te çalışır.
@@ -38,7 +40,7 @@ public class MarketAnalysisService {
             
             // En son sinyalleri getir
             Map<String, List<Map<String, Object>>> response = restTemplate.getForObject(
-                PYTHON_SERVICE_URL + "/latest_signals", 
+                pythonServiceUrl + "/latest_signals", 
                 Map.class
             );
 

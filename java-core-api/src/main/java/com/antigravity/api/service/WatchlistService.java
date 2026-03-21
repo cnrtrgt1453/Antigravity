@@ -2,6 +2,7 @@ package com.antigravity.api.service;
 
 import com.antigravity.api.entity.User;
 import com.antigravity.api.entity.Watchlist;
+import com.antigravity.api.entity.Stock;
 
 import java.util.List;
 
@@ -10,20 +11,9 @@ import java.util.List;
  */
 public interface WatchlistService {
     
-    /**
-     * Adds a stock symbol to the user's watchlist.
-     * @param user The user entity
-     * @param stockSymbol The symbol of the stock
-     * @return The created Watchlist entry
-     */
-    Watchlist addToWatchlist(User user, String stockSymbol);
+    Watchlist addToWatchlist(User user, Stock stock);
     
-    /**
-     * Removes a stock symbol from the user's watchlist.
-     * @param user The user entity
-     * @param stockSymbol The symbol of the stock
-     */
-    void removeFromWatchlist(User user, String stockSymbol);
+    void removeFromWatchlist(User user, Stock stock);
     
     /**
      * Retrieves all watchlist entries for a specific user.

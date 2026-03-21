@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,7 +36,7 @@ public class NewsController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "publishedAt,desc") String sort,
-            @RequestParam(required = false) String symbol,
+            @RequestParam(required = false) List<String> symbols,
             @RequestParam(defaultValue = "false") boolean watchlistOnly) {
 
         String[] sortParams = sort.split(",");
@@ -43,7 +44,7 @@ public class NewsController {
         Pageable pageable = PageRequest.of(page, size, sortOrder);
 
         User user = getAuthenticatedUser();
-        Page<News> newsPage = newsService.getNews(user, symbol, watchlistOnly, pageable);
+        Page<News> newsPage = newsService.getNews(user, symbols, watchlistOnly, pageable);
         return ResponseEntity.ok(newsPage);
     }
 

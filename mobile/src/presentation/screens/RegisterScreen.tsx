@@ -11,7 +11,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../App';
+import { RootStackParamList } from '../../types/navigation';
 import { useAuthStore } from '../stores/useAuthStore';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Register'>;

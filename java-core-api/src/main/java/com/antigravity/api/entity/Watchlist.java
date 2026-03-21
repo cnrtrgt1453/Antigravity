@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "watchlist", indexes = {
-    @Index(name = "idx_watchlist_user_stock", columnList = "user_id, stock_symbol", unique = true)
+    @Index(name = "idx_watchlist_user_stock", columnList = "user_id, stock_id", unique = true)
 })
 @Getter
 @Setter
@@ -29,8 +29,9 @@ public class Watchlist {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "stock_symbol", nullable = false, length = 20)
-    private String stockSymbol;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stock_id", nullable = false)
+    private Stock stock;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

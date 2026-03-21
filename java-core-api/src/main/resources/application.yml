@@ -9,7 +9,7 @@ spring:
     # Veritabanı URL, Kullanıcı adı ve şifre ".env" dosyasından veya çalışma ortamından gelecek. (Stateless kuralı)
     url: ${DB_URL:jdbc:postgresql://localhost:5432/borsa_db}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:14531923}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -22,7 +22,11 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+
 logging:
   level:
     org.springframework.web: INFO
     com.antigravity.api: DEBUG
+
+external:
+  python-analysis-url: ${PYTHON_ANALYSIS_URL:http://localhost:8000/api/v1/analysis}

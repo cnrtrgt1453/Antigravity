@@ -25,7 +25,6 @@ class GoldenCrossStrategy:
                 "current_price": None
             }
             
-        # Kapanış fiyatları var mı kontrol et
         if 'Close' not in df.columns:
             return {
                 "ticker": ticker,
@@ -36,49 +35,56 @@ class GoldenCrossStrategy:
                 "current_price": None
             }
 
-        price = df['Close'].iloc[-1]
-        
         # Hareketli Ortalamaları Hesapla
         df['SMA_Short'] = df['Close'].rolling(window=self.short_window).mean()
         df['SMA_Long'] = df['Close'].rolling(window=self.long_window).mean()
 
-        # Önceki günün değerleri
-        prev_short = df['SMA_Short'].iloc[-2]
-        prev_long = df['SMA_Long'].iloc[-2]
+        # Son 7 günü kontrol et (Kesişim bir gün önce olmuş olabilir)
+        last_7_days = df.tail(8) # 8 gün alıyoruz çünkü fark (diff) için bir önceki güne de ihtiyacımız var
         
-        # Bugünün değerleri
-        curr_short = df['SMA_Short'].iloc[-1]
-        curr_long = df['SMA_Long'].iloc[-1]
+        signal = 'NO_SIGNAL'
+        message = "Şu an için önemli bir sinyal yok."
+        color = "gray"
+        cross_date = None
         
-        cross_date = str(df.index[-1].date())
-
-        # Golden Cross (50 günlük ortalama, 200 günlüğü yukarı kestiğinde)
-        if prev_short <= prev_long and curr_short > curr_long:
-            return {
-                "ticker": ticker,
-                "signal": "GOLDEN_CROSS",
-                "color": "green",
-                "message": "🔥 GOLDEN CROSS TESPİT EDİLDİ! Yükseliş trendi başlıyor olabilir. 🔥",
-                "cross_date": cross_date,
-                "current_price": float(price)
-            }
+        for i in range(1, len(last_7_days)):
+            prev_row = last_7_days.iloc[i-1]
+            curr_row = last_7_days.iloc[i]
             
-        # Dead Cross (50 günlük ortalama, 200 günlüğü aşağı kestiğinde)
-        elif prev_short >= prev_long and curr_short < curr_long:
-            return {
-                "ticker": ticker,
-                "signal": "DEAD_CROSS",
-                "color": "red",
-                "message": "⚠️ DEAD CROSS TESPİT EDİLDİ! Düşüş trendi başlayabilir. ⚠️",
-                "cross_date": cross_date,
-                "current_price": float(price)
-            }
+            if pd.isna(prev_row['SMA_Long']) or pd.isna(curr_row['SMA_Long']):
+                continue
+
+            # Golden Cross
+            if prev_row['SMA_Short'] <= prev_row['SMA_Long'] and curr_row['SMA_Short'] > curr_row['SMA_Long']:
+                signal = 'GOLDEN_CROSS'
+                message = "🔥 GOLDEN CROSS TESPİT EDİLDİ! Yükseliş trendi başlıyor olabilir. 🔥"
+                color = "green"
+                cross_date = str(curr_row.name.date())
+            
+            # Dead Cross
+            elif prev_row['SMA_Short'] >= prev_row['SMA_Long'] and curr_row['SMA_Short'] < curr_row['SMA_Long']:
+                signal = 'DEAD_CROSS'
+                message = "⚠️ DEAD CROSS TESPİT EDİLDİ! Düşüş trendi başlayabilir. ⚠️"
+                color = "red"
+                cross_date = str(curr_row.name.date())
+
+        # Golden Cross veya Dead Cross olmuşsa o günkü fiyatı da kaydedelim
+        cross_price = None
+        if cross_date:
+             # Kesişim gününün fiyatını bul (Index tarihtir)
+             try:
+                 cross_price = float(df.loc[cross_date]['Close'])
+             except:
+                 cross_price = None
 
         return {
             "ticker": ticker,
-            "signal": "NO_SIGNAL",
-            "color": "gray",
-            "message": "Şu an için önemli bir sinyal yok.",
+            "signal": signal,
+            "color": color,
+            "message": message,
             "cross_date": cross_date,
-            "current_price": float(price)
+            "current_price": float(df['Close'].iloc[-1]),
+            "sma50": float(df['SMA_Short'].iloc[-1]) if not pd.isna(df['SMA_Short'].iloc[-1]) else None,
+            "sma200": float(df['SMA_Long'].iloc[-1]) if not pd.isna(df['SMA_Long'].iloc[-1]) else None,
+            "cross_price": cross_price
         }

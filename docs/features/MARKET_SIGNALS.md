@@ -1,17 +1,17 @@
-# Feature: Market Signals (Golden/Dead Cross)
+# Özellik: Market Sinyalleri (Golden/Dead Cross)
 
-Automated technical analysis to identify potential buying or selling opportunities in the BIST market.
+BIST piyasasındaki potansiyel alım veya satım fırsatlarını belirlemek için kullanılan otomatik teknik analiz modülüdür.
 
-## Analysis Logic
-- **Indicators**: 50-day and 200-day Simple Moving Averages (SMA).
-- **Golden Cross**: 50-day SMA crosses above 200-day SMA.
-- **Dead Cross**: 50-day SMA crosses below 200-day SMA.
+## Analiz Mantığı
+- **Göstergeler:** 50 günlük ve 200 günlük Basit Hareketli Ortalamalar (SMA).
+- **Golden Cross (Altın Kesişim):** 50 günlük SMA'nın 200 günlük SMA'yı yukarı yönlü kesmesi (Alım Sinyali).
+- **Dead Cross (Ölüm Kesişimi):** 50 günlük SMA'nın 200 günlük SMA'yı aşağı yönlü kesmesi (Satım Sinyali).
 
-## System Interaction
-1. **Python Engine**: calculates SMA and identifies crossovers using Pandas.
-2. **Java Backend**: consumes results and persists them to `MarketSignal` table.
-3. **Frontend**: displays signals in the dashboard with price and date info.
+## Sistem Etkileşimi
+1. **Python Motoru:** Pandas kullanarak SMA değerlerini hesaplar ve kesişimleri tespit eder.
+2. **Java Backend:** Sonuçları alır ve `MarketSignal` tablosuna kaydeder.
+3. **Frontend:** Sinyalleri fiyat ve tarih bilgileriyle birlikte kullanıcı panelinde görüntüler.
 
-## Performance & Optimization
-- **Scan Cooldown**: 12-hour wait between manual full scans to reduce server load.
-- **Historical Tracking**: Data is archived weekly in PostgreSQL for trend analysis.
+## Performans ve Optimizasyon
+- **Tarama Bekleme Süresi:** Sunucu yükünü azaltmak için manuel tam taramalar arasında 12 saatlik bekleme süresi uygulanır.
+- **Geçmiş Takibi:** Veriler, trend analizi için PostgreSQL'de haftalık olarak arşivlenir.

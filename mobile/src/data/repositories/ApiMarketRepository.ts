@@ -1,10 +1,49 @@
 import { MarketInstrument } from '../../domain/entities/MarketInstrument';
 import { MarketRepository } from '../../domain/repositories/MarketRepository';
+import { Config } from '../../config';
 
-// We'll use a public API like https://finans.truncgil.com/today.json 
-// to get free Turkish market data for Altın, Gümüş, Dolar, Euro, Sterlin.
+export interface SignalData {
+  ticker: string;
+  signal: string;
+  color: string;
+  message: string;
+  cross_date: string | null;
+  current_price: number | null;
+  last_updated: string | null;
+}
+
+export interface SignalsResponse {
+  golden_signals: SignalData[];
+  dead_signals: SignalData[];
+}
+
+export interface CooldownStatus {
+  can_scan: boolean;
+  remaining_seconds: number;
+}
 
 export class ApiMarketRepository implements MarketRepository {
+  async getLatestSignals(): Promise<SignalsResponse> {
+    const response = await fetch(`${Config.JAVA_API_URL}/api/v1/signals`);
+    if (!response.ok) throw new Error('Sinyaller alınamadı.');
+    return await response.json();
+  }
+
+  async getCooldownStatus(): Promise<CooldownStatus> {
+    const response = await fetch(`${Config.PYTHON_API_URL}/api/v1/analysis/cooldown_status`);
+    if (!response.ok) throw new Error('Cooldown durumu alınamadı.');
+    return await response.json();
+  }
+
+  async triggerFullScan(): Promise<{ success: boolean; message: string }> {
+    const response = await fetch(`${Config.PYTHON_API_URL}/api/v1/analysis/run_full_scan_now`);
+    const result = await response.json();
+    if (!response.ok) {
+        return { success: false, message: result.detail || 'Tarama hatası' };
+    }
+    return { success: true, message: 'Tarama başarıyla başlatıldı.' };
+  }
+
   async getMarketSummary(): Promise<MarketInstrument[]> {
     try {
       const response = await fetch('https://finans.truncgil.com/today.json');

@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 import { useAuthStore } from '../stores/useAuthStore';
 import { NewsCard } from '../components/NewsCard';
+import { Config } from '../../config';
 
-const JAVA_API_URL = 'http://192.168.1.157:8080';
+const JAVA_API_URL = Config.JAVA_API_URL;
 
 interface News {
   id: number;
@@ -138,6 +139,7 @@ export const NewsScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Haberler & Analiz</Text>
         <TouchableOpacity 
+          testID="NewsScreen:ReportButton"
           style={[styles.reportButton, !canShowReport && styles.reportButtonDisabled]} 
           onPress={handleWeeklyReport}
           disabled={reportLoading}
@@ -145,7 +147,7 @@ export const NewsScreen: React.FC = () => {
           {reportLoading ? (
             <ActivityIndicator size="small" color="#FFFFFF" />
           ) : (
-            <Text style={styles.reportButtonText}>📊 Pazartesi Raporu</Text>
+            <Text style={styles.reportButtonText} testID="NewsScreen:ReportButtonText">📊 Pazartesi Raporu</Text>
           )}
         </TouchableOpacity>
       </View>

@@ -22,12 +22,14 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     Page<News> findAllByStockSymbol(String stockSymbol, Pageable pageable);
 
     @Query("SELECT n FROM News n WHERE n.stockSymbol IN " +
-           "(SELECT w.stockSymbol FROM Watchlist w WHERE w.user.id = :userId)")
+           "(SELECT w.stock.symbol FROM Watchlist w WHERE w.user.id = :userId)")
     Page<News> findByUserIdWatchlist(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT n FROM News n WHERE n.stockSymbol = :symbol AND n.stockSymbol IN " +
-           "(SELECT w.stockSymbol FROM Watchlist w WHERE w.user.id = :userId)")
+           "(SELECT w.stock.symbol FROM Watchlist w WHERE w.user.id = :userId)")
     Page<News> findByUserIdWatchlistAndSymbol(@Param("userId") Long userId, @Param("symbol") String symbol, Pageable pageable);
+
+    Page<News> findAllByStockSymbolIn(List<String> symbols, Pageable pageable);
 
     List<News> findAllByStockSymbolInAndPublishedAtAfter(List<String> symbols, LocalDateTime after);
 }
