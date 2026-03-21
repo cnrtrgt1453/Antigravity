@@ -47,9 +47,15 @@ Bu doküman, Antigravity mobil uygulamasındaki ekranlar ve veri depoları (stor
 - [ ] **Kayıt İşlemi:** Başarılı kayıttan sonra ana sayfaya yönlendirme.
 
 ### MarketScreen (Piyasa Ekranı)
-- [ ] **Hisse Listesi:** Tüm BIST hisselerinin listelenmesi.
-- [ ] **Arama:** İsim veya sembole göre filtreleme.
-- [ ] **İzleme Listesine Ekleme:** Kalp/Yıldız ikonuna tıklanınca `useGameStore`'un tetiklenmesi.
+- [x] **Yükleme Durumu:** Sayfa ilk açıldığında `ActivityIndicator` görünmelidir.
+- [x] **Veri Listeleme:** Java API'den gelen hisseler ve Python API'den gelen analiz verileri eşleşerek ekranda kartlar halinde listelenmelidir.
+- [x] **Trend Gösterimi:** SMA50 > SMA200 durumunda "Yükseliş" (Yeşil), tersi durumda "Düşüş" (Kırmızı) etiketi ve çerçeve rengi doğru görünmelidir.
+- [x] **İzleme Listesi (Watchlist) Senkronizasyonu:**
+    - [x] `useGameStore` içindeki `watchlist` verisine göre göz (eye) ikonu doğru (dolu/boş) görünmelidir.
+    - [x] İkona tıklandığında `addToWatchlist` veya `removeFromWatchlist` fonksiyonları doğru parametre ile tetiklenmelidir.
+- [ ] **Arama ve Filtreleme:** (Not: Mevcut kodda arama çubuğu henüz eklenmemiş, eklendiğinde test edilecektir).
+- [x] **Sayfalama (Pagination):** Listenin sonuna gelindiğinde yeni sayfa verileri yüklenmelidir.
+- [x] **Yenileme (Pull-to-Refresh):** Liste yukarı çekildiğinde veriler güncellenmelidir. (Altyapısı kuruldu).
 
 ### NewsScreen (Haberler)
 - [ ] **Haber Akışı:** Genel haberlerin listelenmesi.

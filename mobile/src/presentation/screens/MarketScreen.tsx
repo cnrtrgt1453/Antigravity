@@ -155,6 +155,7 @@ export const MarketScreen: React.FC = () => {
               style={styles.watchButton} 
               onPress={() => toggleWatch(item.symbol)}
               activeOpacity={0.7}
+              testID={`MarketScreen:WatchButton:${item.symbol}`}
             >
               <Ionicons 
                 name={isWatched ? "eye" : "eye-outline"} 
@@ -193,7 +194,7 @@ export const MarketScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#F6C90E" />
+        <ActivityIndicator size="large" color="#F6C90E" testID="MarketScreen:Loader" />
       </View>
     );
   }
@@ -202,6 +203,7 @@ export const MarketScreen: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Piyasalar</Text>
       <FlatList
+        testID="MarketScreen:FlatList"
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.symbol}
