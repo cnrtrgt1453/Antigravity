@@ -58,9 +58,18 @@ Bu doküman, Antigravity mobil uygulamasındaki ekranlar ve veri depoları (stor
 - [x] **Yenileme (Pull-to-Refresh):** Liste yukarı çekildiğinde veriler güncellenmelidir. (Altyapısı kuruldu).
 
 ### NewsScreen (Haberler)
-- [ ] **Haber Akışı:** Genel haberlerin listelenmesi.
-- [ ] **Kişiselleştirme:** "Takip Listem" sekmesinin doğru filtreleme yapması.
-- [ ] **Detay Görünümü:** Habere tıklandığında içeriğin açılması.
+- [x] **Yükleme Durumu:** Sayfa ilk açıldığında `ActivityIndicator` görünmelidir.
+- [x] **Haber Listeleme:** API'den gelen haberler `NewsCard` bileşenleri kullanılarak listelenmelidir.
+- [x] **Tab Değişimi (Filtreleme):**
+    - [x] "Takiplerim" sekmesi seçildiğinde sadece izleme listesindeki hisselerin haberleri gelmelidir.
+    - [x] "Tümü" sekmesi seçildiğinde genel haber akışı görünmelidir.
+- [x] **Sembol Filtreleme:** Üstteki sembol çiplerine tıklandığında sadece o sembole ait haberler filtrelenmelidir.
+- [x] **Sıralama Değişimi:** "En Yeni" / "En Eski" butonu ile haberlerin sıralaması güncellenmelidir. (Altyapısı hazır, test edildi).
+- [x] **Pazartesi Raporu (Haftalık Analiz):**
+    - [x] Pazartesi günü değilse buton pasif/uyarı verir durumda olmalıdır.
+    - [x] Butona tıklandığında AI tarafından hazırlanan haftalık özet raporu Alert içinde gösterilmelidir.
+- [x] **Boş Liste:** Haber bulunamadığında "Haber bulunamadı." metni görünmelidir.
+- [x] **Yenileme ve Sayfalama:** Pull-to-refresh ve onEndReached fonksiyonları doğru çalışmalıdır.
 
 ### SignalsScreen (Sinyaller)
 - [ ] **Sinyal Kartları:** Golden Cross ve Dead Cross sinyallerinin renk kodlarıyla (Yeşil/Kırmızı) gösterimi.
