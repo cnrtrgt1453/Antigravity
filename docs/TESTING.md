@@ -25,8 +25,8 @@ Eğer veritabanına bağlanamazsanız, önce servisin çalışıp çalışmadı�
 
 ## 3. Python Analysis Engine (Analiz Laboratuvarı)
 1. Yeni bir terminal açın ve ana dizine gidin: `cd python-analysis-engine`
-2. Bağımlılıkları yükleyin: `pip install -r requirements.txt`
-3. Analiz motorunu başlatın: `python -m uvicorn app.main:app --host 0.0.0.0 --port 8000`
+2. Bağımlılıkları yükleyin: `py -m pip install -r requirements.txt`
+3. Analiz motorunu başlatın: `py -m uvicorn app.main:app --host 0.0.0.0 --port 8000`
 
 ## 4. Mobil Uygulama (React Native & Development Build) 📱
 

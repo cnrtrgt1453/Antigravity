@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+apscheduler
+pandas
+numpy
+yfinance
+sqlalchemy
+python-dotenv
+pydantic
