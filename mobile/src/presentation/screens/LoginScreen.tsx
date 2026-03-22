@@ -27,16 +27,8 @@ interface Props {
 }
 
 export const LoginScreen: React.FC<Props> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const { login, loginWithSocial, isLoading, error, clearError } = useAuthStore();
-
-  const handleLogin = async () => {
-    if (error) clearError();
-    await login(email, password);
-  };
+  const { loginWithSocial, isLoading, error, clearError } = useAuthStore();
 
   const handleGoogleLogin = async () => {
     if (Constants.appOwnership === 'expo') {
@@ -74,42 +66,6 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const handleFacebookLogin = async () => {
-    if (Constants.appOwnership === 'expo') {
-      Alert.alert(
-        'Expo Go Kısıtlaması',
-        'Facebook ile giriş özelliği Expo Go uygulamasında çalışmamaktadır. Bunu test etmek için "Development Build" gereklidir.',
-        [{ text: 'Tamam' }]
-      );
-      return;
-    }
-
-    if (error) clearError();
-    try {
-      const { LoginManager, AccessToken } = require('react-native-fbsdk-next');
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-
-      if (result.isCancelled) {
-        console.log('Kullanıcı Facebook girişini iptal etti');
-        return;
-      }
-
-      const data = await AccessToken.getCurrentAccessToken();
-      if (!data) {
-        throw new Error('Facebook erişim tokenı alınamadı.');
-      }
-
-      // Facebook tokenını Firebase'e veya doğrudan backend'e gönderebiliriz.
-      // Firebase kullanıyorsak önce Firebase'i bununla yetkilendirmeliyiz.
-      // Şimdilik backend'in bunu Firebase tokenı olarak beklediğini varsayıyoruz (çünkü verifyIdToken kullanıyor).
-      // Facebook için Firebase Auth entegrasyonu tamamlandığında buradan bir Firebase ID Token döner.
-      // Bu mock/akış taslağıdır.
-      await loginWithSocial(data.accessToken, 'FACEBOOK');
-    } catch (err: any) {
-      console.error('Facebook Login Error:', err);
-      Alert.alert('Hata', 'Facebook ile giriş yapılamadı.');
-    }
-  };
 
   return (
     <KeyboardAvoidingView
@@ -129,91 +85,29 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
       {/* Kart Alanı */}
       <View style={styles.card}>
-        {/* E-posta */}
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>E-posta</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="ornek@email.com"
-            placeholderTextColor="#4A5568"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={email}
-            onChangeText={setEmail}
-            onFocus={clearError}
-          />
-        </View>
-
-        {/* Şifre */}
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Şifre</Text>
-          <View style={styles.passwordRow}>
-            <TextInput
-              style={[styles.input, styles.passwordInput]}
-              placeholder="••••••••"
-              placeholderTextColor="#4A5568"
-              secureTextEntry={!showPassword}
-              value={password}
-              onChangeText={setPassword}
-              onFocus={clearError}
-            />
-            <TouchableOpacity
-              style={styles.eyeButton}
-              onPress={() => setShowPassword(!showPassword)}
-            >
-              <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Hata Mesajı */}
-        {error ? (
-          <View style={styles.errorBox}>
-            <Text style={styles.errorText}>⚠️  {error}</Text>
-          </View>
-        ) : null}
-
-        {/* Giriş Butonu */}
+        {/* Google ile Giriş Butonu */}
         <TouchableOpacity
-          style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}
-          onPress={handleLogin}
+          style={styles.googleButton}
+          onPress={handleGoogleLogin}
           disabled={isLoading}
           activeOpacity={0.8}
         >
           {isLoading ? (
             <ActivityIndicator color="#0D1117" />
           ) : (
-            <Text style={styles.loginButtonText}>Giriş Yap</Text>
+            <>
+              <Text style={styles.googleIcon}>G</Text>
+              <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
+            </>
           )}
         </TouchableOpacity>
 
-        {/* Veya Ayracı */}
-        <View style={styles.dividerContainer}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>VEYA</Text>
-          <View style={styles.dividerLine} />
-        </View>
-
-        {/* Google ile Giriş Butonu */}
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={handleGoogleLogin}
-          disabled={isLoading}
-        >
-          <Text style={styles.googleIcon}>G</Text>
-          <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
-        </TouchableOpacity>
-
-        {/* Facebook ile Giriş Butonu */}
-        <TouchableOpacity
-          style={styles.facebookButton}
-          onPress={handleFacebookLogin}
-          disabled={isLoading}
-        >
-          <Text style={styles.facebookIcon}>f</Text>
-          <Text style={styles.facebookButtonText}>Facebook ile Devam Et</Text>
-        </TouchableOpacity>
+        {/* Hata Mesajı (Google Girişi Sırasında Oluşursa) */}
+        {error ? (
+          <View style={[styles.errorBox, { marginTop: 16, width: '100%' }]}>
+            <Text style={styles.errorText}>⚠️  {error}</Text>
+          </View>
+        ) : null}
       </View>
 
       {/* Alt Bilgi */}
@@ -268,15 +162,8 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    backgroundColor: '#161B22',
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: '#21262D',
-    shadowColor: '#000',
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
     elevation: 10,
+    alignItems: 'center',
   },
   inputWrapper: {
     marginBottom: 16,
@@ -390,26 +277,6 @@ const styles = StyleSheet.create({
   },
   googleButtonText: {
     color: '#000000',
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  facebookButton: {
-    flexDirection: 'row',
-    backgroundColor: '#1877F2',
-    borderRadius: 14,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8,
-  },
-  facebookIcon: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginRight: 10,
-  },
-  facebookButtonText: {
-    color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '600',
   },

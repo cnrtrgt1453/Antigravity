@@ -30,17 +30,6 @@ jest.mock('@react-native-google-signin/google-signin', () => {
   };
 });
 
-// Mocking react-native-fbsdk-next
-jest.mock('react-native-fbsdk-next', () => {
-  return {
-    LoginManager: {
-      logInWithPermissions: jest.fn(() => Promise.resolve({ isCancelled: false })),
-    },
-    AccessToken: {
-      getCurrentAccessToken: jest.fn(() => Promise.resolve({ accessToken: 'fb-test-token' })),
-    },
-  };
-}, { virtual: true });
 
 describe('LoginScreen', () => {
   const mockNavigation = {
@@ -70,27 +59,9 @@ describe('LoginScreen', () => {
     );
 
     expect(screen.getByText('Borsa Analiz')).toBeTruthy();
-    expect(screen.getByPlaceholderText('ornek@email.com')).toBeTruthy();
-    expect(screen.getByPlaceholderText('••••••••')).toBeTruthy();
+    expect(screen.getByText('Google ile Devam Et')).toBeTruthy();
   });
 
-  it('Giriş Yap butonuna tıklandığında login fonksiyonunu çağırmalıdır', async () => {
-    render(
-      <NavigationContainer>
-        <LoginScreen navigation={mockNavigation as any} />
-      </NavigationContainer>
-    );
-
-    const emailInput = screen.getByPlaceholderText('ornek@email.com');
-    const passwordInput = screen.getByPlaceholderText('••••••••');
-    const loginButton = screen.getByText('Giriş Yap');
-
-    fireEvent.changeText(emailInput, 'test@example.com');
-    fireEvent.changeText(passwordInput, 'password123');
-    fireEvent.press(loginButton);
-
-    expect(mockAuthState.login).toHaveBeenCalledWith('test@example.com', 'password123');
-  });
 
   it('Hata oluştuğunda hata mesajını göstermelidir', () => {
     (useAuthStore as any).mockReturnValue({
@@ -122,18 +93,4 @@ describe('LoginScreen', () => {
     });
   });
 
-  it('Facebook ile Giriş butonuna tıklandığında loginWithSocial (FACEBOOK) fonksiyonunu çağırmalıdır', async () => {
-    render(
-      <NavigationContainer>
-        <LoginScreen navigation={mockNavigation as any} />
-      </NavigationContainer>
-    );
-
-    const facebookButton = screen.getByText('Facebook ile Devam Et');
-    fireEvent.press(facebookButton);
-
-    await waitFor(() => {
-      expect(mockAuthState.loginWithSocial).toHaveBeenCalledWith('fb-test-token', 'FACEBOOK');
-    });
-  });
 });
