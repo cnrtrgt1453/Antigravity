@@ -59,7 +59,7 @@ describe('LoginScreen', () => {
     );
 
     expect(screen.getByText('Borsa Analiz')).toBeTruthy();
-    expect(screen.getByText('Google ile Devam Et')).toBeTruthy();
+    expect(screen.getByText('GOOGLE İLE BAĞLAN')).toBeTruthy();
   });
 
 
@@ -85,7 +85,7 @@ describe('LoginScreen', () => {
       </NavigationContainer>
     );
 
-    const googleButton = screen.getByText('Google ile Devam Et');
+    const googleButton = screen.getByText('GOOGLE İLE BAĞLAN');
     fireEvent.press(googleButton);
 
     await waitFor(() => {

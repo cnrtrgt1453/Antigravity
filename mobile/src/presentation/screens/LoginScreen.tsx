@@ -13,6 +13,7 @@ import {
   Platform,
   StatusBar,
   Animated,
+  Image,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
@@ -87,18 +88,28 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.card}>
         {/* Google ile Giriş Butonu */}
         <TouchableOpacity
-          style={styles.googleButton}
+          style={styles.googleButtonStyled}
           onPress={handleGoogleLogin}
           disabled={isLoading}
           activeOpacity={0.8}
         >
           {isLoading ? (
-            <ActivityIndicator color="#0D1117" />
+            <ActivityIndicator color="#4285F4" />
           ) : (
-            <>
-              <Text style={styles.googleIcon}>G</Text>
-              <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
-            </>
+            <View style={styles.googleButtonContentStyled}>
+              <View style={styles.googleIconContainerStyled}>
+                {/* Renkli G Logosu (Imaj yuklenmezse diye Views ile yapilan garanti yapi) */}
+                <View style={{ width: 24, height: 24, position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* Dort renkli ceyrek daireler/kareler ile Google renklerini simgeliyoruz */}
+                  <View style={{ position: 'absolute', top: 0, left: 0, width: 12, height: 12, backgroundColor: '#EA4335', borderTopLeftRadius: 12 }} />
+                  <View style={{ position: 'absolute', top: 0, right: 0, width: 12, height: 12, backgroundColor: '#FBBC05', borderTopRightRadius: 12 }} />
+                  <View style={{ position: 'absolute', bottom: 0, left: 0, width: 12, height: 12, backgroundColor: '#34A853', borderBottomLeftRadius: 12 }} />
+                  <View style={{ position: 'absolute', bottom: 0, right: 0, width: 12, height: 12, backgroundColor: '#4285F4', borderBottomRightRadius: 12 }} />
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }}>G</Text>
+                </View>
+              </View>
+              <Text style={styles.googleButtonTextStyled}>GOOGLE İLE BAĞLAN</Text>
+            </View>
           )}
         </TouchableOpacity>
 
@@ -260,25 +271,41 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  googleButton: {
+  googleButtonStyled: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 2,
+    width: '100%',
+    height: 48,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  googleButtonContentStyled: {
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
-    paddingVertical: 14,
+    alignItems: 'center',
+    paddingHorizontal: 8,
+  },
+  googleIconContainerStyled: {
+    width: 32,
+    height: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 8,
-  },
-  googleIcon: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#4285F4',
     marginRight: 10,
   },
-  googleButtonText: {
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: '600',
+  googleButtonTextStyled: {
+    color: '#3B5998', // Google butonu icin mavi tonu (Facebook mavisine yakin ama daha acik)
+    color: '#4285F4',
+    fontSize: 14,
+    fontWeight: '700',
+    flex: 1,
+    textAlign: 'center',
+    marginRight: 32,
+    letterSpacing: 0.5,
   },
   registerLinkButton: {
     alignItems: 'center',
