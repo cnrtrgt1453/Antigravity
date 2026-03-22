@@ -58,7 +58,7 @@ describe('LoginScreen', () => {
       </NavigationContainer>
     );
 
-    expect(screen.getByText('Borsa Analiz')).toBeTruthy();
+    expect(screen.getByText('cotx Trade')).toBeTruthy();
     expect(screen.getByText('GOOGLE İLE BAĞLAN')).toBeTruthy();
   });
 

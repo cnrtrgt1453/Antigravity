@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mobile",
+    "name": "cotx Trade",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,7 +39,7 @@
         {
           "appID": "1234567890",
           "clientToken": "dummy_token",
-          "displayName": "Borsa Analiz",
+          "displayName": "cotx Trade",
           "scheme": "fb1234567890"
         }
       ],

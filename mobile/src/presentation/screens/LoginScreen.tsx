@@ -80,7 +80,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         <View style={styles.logoWrapper}>
           <Text style={styles.logoIcon}>📈</Text>
         </View>
-        <Text style={styles.title}>Borsa Analiz</Text>
+        <Text style={styles.title}>cotx Trade</Text>
         <Text style={styles.subtitle}>Golden Cross & Dead Cross Takip Sistemi</Text>
       </View>
 

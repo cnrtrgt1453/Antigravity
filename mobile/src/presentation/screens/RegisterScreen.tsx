@@ -59,7 +59,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.backIcon}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Kayıt Ol</Text>
-        <Text style={styles.subtitle}>Borsa Analiz Özel Dünyasına Katılın</Text>
+        <Text style={styles.subtitle}>cotx Trade Özel Dünyasına Katılın</Text>
       </View>
 
       {/* Kart Alanı */}
