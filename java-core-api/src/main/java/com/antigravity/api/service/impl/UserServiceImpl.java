@@ -10,6 +10,8 @@ import com.antigravity.api.service.UserService;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.antigravity.api.service.FirebaseAuthService;
+import com.antigravity.api.service.GoogleAuthService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final FirebaseAuthService firebaseAuthService;
+    private final GoogleAuthService googleAuthService;
 
     @Override
     @Transactional
@@ -89,11 +92,26 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User loginWithSocial(SocialLoginRequestDto socialLoginRequestDto) {
         try {
-            FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
-            String email = decodedToken.getEmail();
-            String fullName = (String) decodedToken.getClaims().get("name");
-            String profilePictureUrl = decodedToken.getPicture();
-            String firebaseUid = decodedToken.getUid();
+            String email;
+            String fullName;
+            String profilePictureUrl;
+            String firebaseUid;
+
+            if ("GOOGLE".equalsIgnoreCase(socialLoginRequestDto.getPlatform())) {
+                // Google ID Token doğrulaması
+                GoogleIdToken.Payload payload = googleAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
+                email = payload.getEmail();
+                fullName = (String) payload.get("name");
+                profilePictureUrl = (String) payload.get("picture");
+                firebaseUid = payload.getSubject(); // Google için sub alanı
+            } else {
+                // Firebase Token doğrulaması (Diğer platformlar için varsayılan)
+                FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
+                email = decodedToken.getEmail();
+                fullName = (String) decodedToken.getClaims().get("name");
+                profilePictureUrl = decodedToken.getPicture();
+                firebaseUid = decodedToken.getUid();
+            }
 
             log.info("Sosyal login isteği ({}): {}", socialLoginRequestDto.getPlatform(), email);
 
@@ -120,12 +138,9 @@ public class UserServiceImpl implements UserService {
                                 .build();
                         return userRepository.save(newUser);
                     });
-        } catch (FirebaseAuthException e) {
-            log.error("Firebase token doğrulama hatası: {}", e.getMessage());
-            throw new RuntimeException("Firebase token doğrulama hatası: " + e.getMessage());
         } catch (Exception e) {
-            log.error("Sosyal login hatası: {}", e.getMessage());
-            throw new RuntimeException("Sosyal login işlemi sırasında hata oluştu: " + e.getMessage());
+            log.error("Sosyal login hatası ({}): {}", socialLoginRequestDto.getPlatform(), e.getMessage());
+            throw new RuntimeException(socialLoginRequestDto.getPlatform() + " giriş işlemi başarısız oldu: " + e.getMessage());
         }
     }
 
