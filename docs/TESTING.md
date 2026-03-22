@@ -28,20 +28,40 @@ Eğer veritabanına bağlanamazsanız, önce servisin çalışıp çalışmadı�
 2. Bağımlılıkları yükleyin: `pip install -r requirements.txt`
 3. Analiz motorunu başlatın: `python -m uvicorn app.main:app --host 0.0.0.0 --port 8000`
 
-## 4. Mobil Uygulama (React Native & Expo)
-1. `mobile/src/config/index.ts` dosyasındaki IP adresinin bilgisayarınızın yerel IP'si ile aynı olduğundan emin olun.
-2. Terminalde `mobile` dizinine gidin.
-3. `npm install` ile paketleri yükleyin.
-4. `npx expo start` ile Expo'yu başlatın.
-5. Telefonunuzdaki **Expo Go** uygulamasıyla QR kodu tarayın.
+## 4. Mobil Uygulama (React Native & Development Build) 📱
 
-## 5. Otomatik Testlerin Çalıştırılması (Yeni)
-QR kod tarama ihtiyacını azaltmak ve uygulama mantığını hızlıca doğrulamak için:
-1. Terminalde `mobile` dizinine gidin.
-2. `npm test` komutunu çalıştırın.
-3. Bu komut, Jest ve React Native Testing Library kullanarak tüm birim (unit) ve bileşen (component) testlerini koşturacaktır.
+Google ile Giriş gibi native (yerel) özelliklerin çalışması için **Expo Go kullanılamaz.** Bunun yerine bir "Development Build" (Geliştirme Yapısı) kurmanız gerekir.
 
-### 💡 Önemli İpuçları
-- **Aynı Ağ:** Bilgisayarınız ve telefonunuzun aynı Wi-Fi ağına bağlı olması gerekir.
-- **Firewall:** Windows Defender'ın 8080 ve 8000 portlarını engellemediğinden emin olun.
-- **Google Login:** Google ile girişin çalışması için Development Build kullanılması veya Jest üzerinde mock edilmesi önerilir.
+### Adım 1: IP Adresini Güncelleyin
+`mobile/src/config/index.ts` dosyasındaki `JAVA_API_URL` ve `PYTHON_API_URL` adreslerinin bilgisayarınızın güncel yerel IP'si (örn: `192.168.1.132`) ile aynı olduğundan emin olun.
+
+### Adım 2: Fiziksel Cihazı Bağlayın
+1. Telefonunuzda **Geliştirici Seçenekleri**'ni ve **USB Hata Ayıklama**'yı (USB Debugging) aktif edin.
+2. Telefonu USB ile bilgisayara bağlayın.
+3. Bilgisayarda ve telefonda çıkan "Hata ayıklamaya izin verilsin mi?" uyarılarına **Evet** deyin.
+
+### Adım 3: Uygulamayı Telefona Kurun
+Üçüncü bir terminal açın ve şu komutları çalıştırın:
+```powershell
+cd mobile
+npx expo run:android --no-build-cache
+```
+*Not: Bu işlem ilk seferde birkaç dakika sürebilir. İşlem bittiğinde uygulama telefonunuzda otomatik olarak açılacaktır.*
+
+## 5. Tam Sistem Testi (Dashboard)
+Uygulamanın tam kapasite çalışması için şu 3 terminalin de **aynı anda** açık ve çalışır olduğundan emin olun:
+- **Terminal 1:** Java Backend (Port 8080)
+- **Terminal 2:** Python Backend (Port 8000)
+- **Terminal 3:** Mobil Uygulama (Geliştirme Sunucusu)
+
+## 6. Otomatik Testlerin Çalıştırılması
+Birim testlerini hızlıca doğrulamak için:
+```powershell
+cd mobile
+npm test
+```
+
+### 💡 Kritik İpuçları
+- **Aynı Ağ:** Telefon ve bilgisayar **aynı Wi-Fi** ağına bağlı olmalıdır.
+- **Python Hatası:** Eğer `python` komutu hata verirse `python3` veya `py` komutlarını deneyin.
+- **Google Login:** `DEVELOPER_ERROR` alırsanız, Firebase'deki SHA-1 parmak izinin projenin içindeki `debug.keystore` ile eşleştiğinden emin olun.
