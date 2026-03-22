@@ -38,17 +38,21 @@ export class ApiAuthRepository implements AuthRepository {
   }
 
   async loginWithGoogle(idToken: string): Promise<User> {
+    return this.loginWithSocial(idToken, 'GOOGLE');
+  }
+
+  async loginWithSocial(idToken: string, platform: string): Promise<User> {
     try {
-      const response = await fetch(`${API_BASE_URL}/login/google`, {
+      const response = await fetch(`${API_BASE_URL}/login/social`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ idToken, platform }),
       });
 
       if (!response.ok) {
-        throw new Error('Google giriş işlemi başarısız oldu.');
+        throw new Error(`${platform} giriş işlemi başarısız oldu.`);
       }
 
       const data = await response.json();
@@ -59,7 +63,7 @@ export class ApiAuthRepository implements AuthRepository {
         profilePictureUrl: data.profilePictureUrl,
       };
     } catch (error) {
-      console.error('Google Login Error:', error);
+      console.error(`${platform} Login Error:`, error);
       throw error;
     }
   }

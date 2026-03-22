@@ -31,7 +31,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login, loginWithGoogle, isLoading, error, clearError } = useAuthStore();
+  const { login, loginWithSocial, isLoading, error, clearError } = useAuthStore();
 
   const handleLogin = async () => {
     if (error) clearError();
@@ -56,7 +56,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       const idToken = response.data?.idToken;
 
       if (idToken) {
-        await loginWithGoogle(idToken);
+        await loginWithSocial(idToken, 'GOOGLE');
       } else {
         throw new Error('Google Sign-In idToken alınamadı.');
       }
@@ -71,6 +71,43 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       } else {
         console.error('Bazı Google hataları oluştu:', err);
       }
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    if (Constants.appOwnership === 'expo') {
+      Alert.alert(
+        'Expo Go Kısıtlaması',
+        'Facebook ile giriş özelliği Expo Go uygulamasında çalışmamaktadır. Bunu test etmek için "Development Build" gereklidir.',
+        [{ text: 'Tamam' }]
+      );
+      return;
+    }
+
+    if (error) clearError();
+    try {
+      const { LoginManager, AccessToken } = require('react-native-fbsdk-next');
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+      if (result.isCancelled) {
+        console.log('Kullanıcı Facebook girişini iptal etti');
+        return;
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+      if (!data) {
+        throw new Error('Facebook erişim tokenı alınamadı.');
+      }
+
+      // Facebook tokenını Firebase'e veya doğrudan backend'e gönderebiliriz.
+      // Firebase kullanıyorsak önce Firebase'i bununla yetkilendirmeliyiz.
+      // Şimdilik backend'in bunu Firebase tokenı olarak beklediğini varsayıyoruz (çünkü verifyIdToken kullanıyor).
+      // Facebook için Firebase Auth entegrasyonu tamamlandığında buradan bir Firebase ID Token döner.
+      // Bu mock/akış taslağıdır.
+      await loginWithSocial(data.accessToken, 'FACEBOOK');
+    } catch (err: any) {
+      console.error('Facebook Login Error:', err);
+      Alert.alert('Hata', 'Facebook ile giriş yapılamadı.');
     }
   };
 
@@ -151,10 +188,6 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.forgotButton}>
-          <Text style={styles.forgotText}>Şifreni mi unuttun?</Text>
-        </TouchableOpacity>
-
         {/* Veya Ayracı */}
         <View style={styles.dividerContainer}>
           <View style={styles.dividerLine} />
@@ -172,9 +205,14 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
         </TouchableOpacity>
 
-        {/* Kayıt Ol Linki */}
-        <TouchableOpacity style={styles.registerLinkButton} onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerLinkText}>Hesabınız yok mu? <Text style={{ fontWeight: '700', color: '#F6C90E' }}>Kayıt Olun</Text></Text>
+        {/* Facebook ile Giriş Butonu */}
+        <TouchableOpacity
+          style={styles.facebookButton}
+          onPress={handleFacebookLogin}
+          disabled={isLoading}
+        >
+          <Text style={styles.facebookIcon}>f</Text>
+          <Text style={styles.facebookButtonText}>Facebook ile Devam Et</Text>
         </TouchableOpacity>
       </View>
 
@@ -352,6 +390,26 @@ const styles = StyleSheet.create({
   },
   googleButtonText: {
     color: '#000000',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  facebookButton: {
+    flexDirection: 'row',
+    backgroundColor: '#1877F2',
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  facebookIcon: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginRight: 10,
+  },
+  facebookButtonText: {
+    color: '#FFFFFF',
     fontSize: 15,
     fontWeight: '600',
   },

@@ -3,6 +3,7 @@ package com.antigravity.api.service.impl;
 import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
+import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.repository.UserRepository;
 import com.antigravity.api.service.UserService;
@@ -77,17 +78,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto) {
+        SocialLoginRequestDto socialDto = SocialLoginRequestDto.builder()
+                .idToken(googleLoginRequestDto.getIdToken())
+                .platform("GOOGLE")
+                .build();
+        return loginWithSocial(socialDto);
+    }
+
+    @Override
+    @Transactional
+    public User loginWithSocial(SocialLoginRequestDto socialLoginRequestDto) {
         try {
-            FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(googleLoginRequestDto.getIdToken());
+            FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
             String email = decodedToken.getEmail();
             String fullName = (String) decodedToken.getClaims().get("name");
             String profilePictureUrl = decodedToken.getPicture();
             String firebaseUid = decodedToken.getUid();
 
+            log.info("Sosyal login isteği ({}): {}", socialLoginRequestDto.getPlatform(), email);
+
             return userRepository.findByEmail(email)
                     .map(user -> {
                         user.setFirebaseUid(firebaseUid);
                         user.setLastLoginAt(java.time.LocalDateTime.now());
+                        if (user.getFullName() == null || user.getFullName().isEmpty()) {
+                            user.setFullName(fullName);
+                        }
+                        if (user.getProfilePictureUrl() == null || user.getProfilePictureUrl().isEmpty()) {
+                            user.setProfilePictureUrl(profilePictureUrl);
+                        }
                         return userRepository.save(user);
                     })
                     .orElseGet(() -> {
@@ -97,13 +116,16 @@ public class UserServiceImpl implements UserService {
                                 .profilePictureUrl(profilePictureUrl)
                                 .firebaseUid(firebaseUid)
                                 .lastLoginAt(java.time.LocalDateTime.now())
+                                .isActive(true)
                                 .build();
                         return userRepository.save(newUser);
                     });
         } catch (FirebaseAuthException e) {
+            log.error("Firebase token doğrulama hatası: {}", e.getMessage());
             throw new RuntimeException("Firebase token doğrulama hatası: " + e.getMessage());
         } catch (Exception e) {
-            throw new RuntimeException("Google login işlemi sırasında hata oluştu: " + e.getMessage());
+            log.error("Sosyal login hatası: {}", e.getMessage());
+            throw new RuntimeException("Sosyal login işlemi sırasında hata oluştu: " + e.getMessage());
         }
     }
 

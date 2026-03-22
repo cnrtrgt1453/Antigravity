@@ -20,6 +20,18 @@ export class MockAuthRepository implements AuthRepository {
     throw new Error('E-posta veya şifre hatalı.');
   }
 
+  async loginWithGoogle(idToken: string): Promise<User> {
+    return this.loginWithSocial(idToken, 'GOOGLE');
+  }
+
+  async loginWithSocial(idToken: string, platform: string): Promise<User> {
+    if (idToken === 'mock-token') {
+      this.currentUser = MOCK_USER;
+      return MOCK_USER;
+    }
+    throw new Error(`${platform} girişi başarısız oldu.`);
+  }
+
   async register(fullName: string, email: string, password: string): Promise<User> {
     this.currentUser = { id: 'mock-new-002', email, fullName };
     return this.currentUser;

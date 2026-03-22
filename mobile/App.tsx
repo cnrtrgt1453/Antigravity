@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LoginScreen } from './src/presentation/screens/LoginScreen';
-import { RegisterScreen } from './src/presentation/screens/RegisterScreen';
 import { HomeScreen } from './src/presentation/screens/HomeScreen';
 import { NewsScreen } from './src/presentation/screens/NewsScreen';
 import { useAuthStore } from './src/presentation/stores/useAuthStore';
@@ -112,7 +111,6 @@ export default function App() {
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Register" component={RegisterScreen} />
             </>
           )}
         </Stack.Navigator>

@@ -10,6 +10,7 @@ interface AuthState {
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: (idToken: string) => Promise<void>;
+  loginWithSocial: (idToken: string, platform: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
@@ -35,7 +36,7 @@ const getRegisterUseCase = () => {
   return _registerUseCase;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   error: null,
   isLoading: false,
@@ -52,12 +53,16 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   loginWithGoogle: async (idToken) => {
+    return get().loginWithSocial(idToken, 'GOOGLE');
+  },
+
+  loginWithSocial: async (idToken, platform) => {
     set({ isLoading: true, error: null });
     try {
-      const user = await getRepo().loginWithGoogle(idToken);
+      const user = await getRepo().loginWithSocial(idToken, platform);
       set({ user, isLoading: false });
     } catch (err: any) {
-      set({ error: err.message || 'Google girişi başarısız oldu.', isLoading: false });
+      set({ error: err.message || `${platform} girişi başarısız oldu.`, isLoading: false });
       throw err;
     }
   },

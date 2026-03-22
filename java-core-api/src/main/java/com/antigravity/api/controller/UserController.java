@@ -3,6 +3,7 @@ package com.antigravity.api.controller;
 import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
+import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.service.UserService;
 import jakarta.validation.Valid;
@@ -45,6 +46,12 @@ public class UserController {
     @PostMapping("/login/google")
     public ResponseEntity<User> loginWithGoogle(@Valid @RequestBody GoogleLoginRequestDto googleLoginRequestDto) {
         User user = userService.loginWithGoogle(googleLoginRequestDto);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/login/social")
+    public ResponseEntity<User> loginWithSocial(@Valid @RequestBody SocialLoginRequestDto socialLoginRequestDto) {
+        User user = userService.loginWithSocial(socialLoginRequestDto);
         return ResponseEntity.ok(user);
     }
 }

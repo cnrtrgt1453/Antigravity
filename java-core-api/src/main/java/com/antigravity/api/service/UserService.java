@@ -2,6 +2,7 @@ package com.antigravity.api.service;
 
 import com.antigravity.api.dto.LoginRequestDto;
 import com.antigravity.api.dto.UserRegistrationDto;
+import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.entity.User;
 
@@ -28,8 +29,10 @@ public interface UserService {
     User getUserByFirebaseUid(String firebaseUid);
 
     /**
-     * Kullanıcının platforma girme tarihini günceller.
+     * Sosyal ağlar (Google/Facebook) ile giriş yapar ve gerekirse otomatik kayıt oluşturur.
      */
+    User loginWithSocial(SocialLoginRequestDto socialLoginRequestDto);
+
     User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto);
 
     void updateLastLogin(String email);

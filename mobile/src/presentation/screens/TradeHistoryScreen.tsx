@@ -67,7 +67,7 @@ export const TradeHistoryScreen: React.FC = () => {
   if (isLoading && history.length === 0) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color="#F6C90E" />
+        <ActivityIndicator size="large" color="#F6C90E" testID="loading-indicator" />
       </View>
     );
   }
@@ -78,11 +78,12 @@ export const TradeHistoryScreen: React.FC = () => {
         <Text style={styles.title}>İşlem Geçmişi</Text>
       </View>
       <FlatList
+        testID="trade-history-list"
         data={history}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
-        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchHistory} tintColor="#F6C90E" />}
+        refreshControl={<RefreshControl testID="refresh-control" refreshing={isLoading} onRefresh={fetchHistory} tintColor="#F6C90E" />}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Ionicons name="receipt-outline" size={64} color="#30363D" />
