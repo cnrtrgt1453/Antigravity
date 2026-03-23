@@ -57,7 +57,8 @@ public class WebSecurityConfig {
                         .requestMatchers(
                                 "/api/v1/users/register",
                                 "/api/v1/users/login",
-                                "/api/v1/users/login/google"
+                                "/api/v1/users/login/google",
+                                "/api/v1/users/login/social"
                         ).permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/actuator/health").permitAll()

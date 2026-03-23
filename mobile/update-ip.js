@@ -10,7 +10,7 @@ function getLocalIp() {
     for (const iface of interfaces[name]) {
       if (iface.family === 'IPv4' && !iface.internal) {
         // Skip common virtual network ranges (VirtualBox, VMware)
-        if (iface.address.startsWith('192.168.56.') || iface.address.startsWith('169.254.')) {
+        if (iface.address.startsWith('192.168.56.') || iface.address.startsWith('192.168.17.') || iface.address.startsWith('192.168.200.') || iface.address.startsWith('169.254.')) {
           continue;
         }
         addresses.push(iface.address);

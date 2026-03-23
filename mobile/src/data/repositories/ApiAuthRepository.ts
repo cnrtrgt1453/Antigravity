@@ -52,7 +52,8 @@ export class ApiAuthRepository implements AuthRepository {
       });
 
       if (!response.ok) {
-        throw new Error(`${platform} giriş işlemi başarısız oldu.`);
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `${platform} giriş işlemi başarısız oldu.`);
       }
 
       const data = await response.json();

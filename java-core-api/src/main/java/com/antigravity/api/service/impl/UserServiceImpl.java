@@ -1,14 +1,11 @@
 package com.antigravity.api.service.impl;
 
-import com.antigravity.api.dto.LoginRequestDto;
-import com.antigravity.api.dto.UserRegistrationDto;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.entity.User;
 import com.antigravity.api.repository.UserRepository;
 import com.antigravity.api.service.UserService;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.antigravity.api.service.FirebaseAuthService;
 import com.antigravity.api.service.GoogleAuthService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -16,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDateTime;
 
 /**
@@ -31,46 +26,8 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final FirebaseAuthService firebaseAuthService;
     private final GoogleAuthService googleAuthService;
-
-    @Override
-    @Transactional
-    public User registerUser(UserRegistrationDto registrationDto) {
-        String email = registrationDto.getEmail().trim().toLowerCase();
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Bu e-posta adresi kullanımda.");
-        }
-
-        User newUser = User.builder()
-                .email(email)
-                // Şifreyi açık metin olarak değil, BCrypt ile şifrelenmiş (Hashlenmiş) formatta kaydet (Güvenlik)
-                .password(passwordEncoder.encode(registrationDto.getPassword()))
-                .fullName(registrationDto.getFullName())
-                .profilePictureUrl(registrationDto.getProfilePictureUrl())
-                // Kayıt olan kullanıcının son girişi "şu an"dır
-                .lastLoginAt(LocalDateTime.now())
-                .build();
-
-        return userRepository.save(newUser);
-    }
-
-    @Override
-    @Transactional
-    public User loginUser(LoginRequestDto loginRequestDto) {
-        String email = loginRequestDto.getEmail().trim().toLowerCase();
-        log.info("Kullanıcı giriş isteği: {}", email);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı."));
-
-        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Hatalı şifre.");
-        }
-
-        updateLastLogin(user.getEmail());
-        return user;
-    }
 
     @Override
     @Transactional(readOnly = true)
