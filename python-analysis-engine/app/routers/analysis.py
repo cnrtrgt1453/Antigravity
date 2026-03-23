@@ -3,6 +3,7 @@ import json
 import time
 from datetime import datetime, timedelta
 import pandas as pd
+import traceback
 from fastapi import APIRouter, HTTPException
 from app.services.data_provider import YahooFinanceProvider
 from app.services.analysis_strategy import GoldenCrossStrategy
@@ -11,9 +12,13 @@ from typing import List, Any, Dict
 
 router = APIRouter()
 
-COOLDOWN_FILE = "last_scan.json"
+# Get the absolute path to the directory where this file located (app/routers)
+# Then go up two levels to the root directory (python-analysis-engine)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+COOLDOWN_FILE = os.path.join(BASE_DIR, "last_scan.json")
 COOLDOWN_HOURS = 12
-RESULTS_FILE = "results.json"
+RESULTS_FILE = os.path.join(BASE_DIR, "results.json")
 
 class AnalysisResult(BaseModel):
     ticker: str
@@ -134,14 +139,18 @@ def get_all_market_data():
     """
     Returns results for ALL instruments (for Markets screen).
     """
-    if not os.path.exists(RESULTS_FILE):
-        return []
-    
     try:
-        with open(RESULTS_FILE, "r") as f:
+        if not os.path.exists(RESULTS_FILE):
+            print(f"HATA: {RESULTS_FILE} bulunamadı!")
+            return []
+            
+        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
             results = json.load(f)
         return results
     except Exception as e:
+        print("--- Python API Hatası ---")
+        traceback.print_exc()
+        print("-------------------------")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/ohlc")
