@@ -142,27 +142,43 @@ export const MarketScreen: React.FC = () => {
   };
 
   const renderItem = ({ item }: { item: MarketData }) => {
-    const hasAnalysis = item.sma50 !== undefined && item.sma200 !== undefined;
-    const isUptrend = hasAnalysis ? (item.sma50! > item.sma200!) : null;
+    // 1. Sembol Tıraşlama:
+    const displaySymbol = item.symbol.split('.')[0];
+    const isWatched = watchlist.includes(item.symbol); // API/Watchlist işlemleri için orijinal 'item.symbol' kullanmaya devam ediyoruz
+    
+    // 2. Renklendirme Mantığı (Backend'den gelen en güncel sinyale göre):
+    let borderColor = '#30363D'; // NO_SIGNAL veya NOT_ENOUGH_DATA (Gri)
+    let badgeText = null;
+    let badgeBgColor = '#30363D';
+
+    if (item.signal === 'GOLDEN_CROSS') {
+        borderColor = '#238636'; // Yeşil Kalın Çerçeve
+        badgeText = 'Golden Cross';
+        badgeBgColor = '#238636'; 
+    } else if (item.signal === 'DEAD_CROSS') {
+        borderColor = '#DA3633'; // Kırmızı Kalın Çerçeve
+        badgeText = 'Dead Cross';
+        badgeBgColor = '#DA3633';
+    }
+
     const diff = item.cross_price && item.current_price ? (item.current_price - item.cross_price).toFixed(2) : '-';
     const diffColor = item.cross_price && item.current_price ? (item.current_price >= item.cross_price ? '#3FB950' : '#F85149') : '#8B949E';
-    const isWatched = watchlist.includes(item.symbol);
 
     return (
       <TouchableOpacity 
-        style={[styles.card, { borderColor: isUptrend === null ? '#30363D' : (isUptrend ? '#238636' : '#DA3633') }]}
+        style={[styles.card, { borderColor: borderColor, borderWidth: item.signal === 'NO_SIGNAL' ? 1 : 2 }]}
         onPress={() => handleOpenChart(item.symbol, item.name)}
         activeOpacity={0.8}
       >
         <View style={styles.cardHeader}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.ticker}>{item.symbol}</Text>
+            <Text style={styles.ticker}>{displaySymbol}</Text>
             <Text style={styles.name}>{item.name}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {isUptrend !== null && (
-              <View style={[styles.badge, { backgroundColor: isUptrend ? '#238636' : '#DA3633' }]}>
-                <Text style={styles.badgeText}>{isUptrend ? 'Yükseliş' : 'Düşüş'}</Text>
+            {badgeText && (
+              <View style={[styles.badge, { backgroundColor: badgeBgColor }]}>
+                <Text style={styles.badgeText}>{badgeText}</Text>
               </View>
             )}
             <TouchableOpacity 
