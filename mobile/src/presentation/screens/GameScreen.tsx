@@ -17,6 +17,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
+import { Skeleton } from '../components/Skeleton';
+import { StatusMessage } from '../components/StatusMessage';
 
 export const GameScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -163,8 +165,25 @@ export const GameScreen: React.FC = () => {
 
   if (isLoading && !refreshing) {
     return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color="#F6C90E" />
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+          <Text style={styles.title}>Oyun Paneli</Text>
+          <View style={styles.walletCard}>
+            <Skeleton width="40%" height={14} style={{ marginBottom: 12 }} />
+            <Skeleton width="60%" height={32} />
+          </View>
+          <View style={styles.sectionHeader}>
+            <Skeleton width={100} height={20} />
+          </View>
+          {[1, 2].map(i => (
+            <View key={i} style={styles.stockCard}>
+              <View style={styles.cardInfo}>
+                <Skeleton width="60%" height={16} />
+                <Skeleton width="40%" height={12} style={{ marginTop: 8 }} />
+              </View>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     );
   }
@@ -195,7 +214,14 @@ export const GameScreen: React.FC = () => {
         {portfolio?.items && portfolio.items.length > 0 ? (
           portfolio.items.map(renderPortfolioItem)
         ) : (
-          <Text style={styles.emptyText}>Henüz bir yatırımınız bulunmuyor.</Text>
+          <View style={styles.emptyCard}>
+            <StatusMessage 
+              type="empty"
+              title="Portföy Boş"
+              message="Henüz bir yatırımınız bulunmuyor. İzleme listenizdeki hisselerden alım yaparak başlayabilirsiniz."
+              icon="briefcase-outline"
+            />
+          </View>
         )}
 
         {/* Watchlist Section */}
@@ -206,7 +232,14 @@ export const GameScreen: React.FC = () => {
         {watchlist.length > 0 ? (
           watchlist.map(renderWatchlistItem)
         ) : (
-          <Text style={styles.emptyText}>İzleme listesi boş. Piyasalar ekranından hisse ekleyebilirsiniz.</Text>
+          <View style={styles.emptyCard}>
+            <StatusMessage 
+              type="empty"
+              title="İzleme Listesi Boş"
+              message="Piyasalar ekranından hisse ekleyerek hızlı al-sat işlemlerine başlayabilirsiniz."
+              icon="eye-outline"
+            />
+          </View>
         )}
 
         <TouchableOpacity 
@@ -329,6 +362,15 @@ const styles = StyleSheet.create({
   },
   historyBtnText: { color: '#FFFFFF', fontWeight: '700', marginLeft: 10 },
   emptyText: { color: '#8B949E', textAlign: 'center', paddingVertical: 20, fontStyle: 'italic' },
+  emptyCard: {
+    backgroundColor: '#161B22',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#30363D',
+    minHeight: 200,
+  },
 
   // Modal Styles
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.8)', justifyContent: 'center', padding: 20 },

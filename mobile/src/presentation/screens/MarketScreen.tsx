@@ -7,12 +7,15 @@ import {
   ActivityIndicator, 
   RefreshControl, 
   TouchableOpacity, 
-  Alert 
+  Alert,
+  ScrollView,
 } from 'react-native';
 import { Config } from '../../config';
 import { useGameStore } from '../stores/useGameStore';
 import { Ionicons } from '@expo/vector-icons';
 import { ChartBottomSheet } from '../components/ChartBottomSheet';
+import { MarketCardSkeleton } from '../components/CardSkeleton';
+import { StatusMessage } from '../components/StatusMessage';
 
 interface MarketData {
   symbol: string;
@@ -102,8 +105,12 @@ export const MarketScreen: React.FC = () => {
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false);
-      setLoadingMore(false);
+      // For UX: Keep skeleton visible for at least 600ms if it was a reset
+      if (reset) {
+        setTimeout(() => setLoading(false), 600);
+      } else {
+        setLoadingMore(false);
+      }
       setRefreshing(false);
     }
   };
@@ -223,8 +230,11 @@ export const MarketScreen: React.FC = () => {
 
   if (loading) {
     return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#F6C90E" testID="MarketScreen:Loader" />
+      <View style={styles.container}>
+        <Text style={styles.title}>Piyasalar</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {[1, 2, 3, 4, 5].map(i => <MarketCardSkeleton key={i} />)}
+        </ScrollView>
       </View>
     );
   }
@@ -232,17 +242,26 @@ export const MarketScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Piyasalar</Text>
-      <FlatList
-        testID="MarketScreen:FlatList"
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.symbol}
-        contentContainerStyle={styles.list}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#F6C90E" />}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={loadingMore ? <ActivityIndicator style={{ marginVertical: 20 }} color="#F6C90E" /> : null}
-      />
+      {data.length === 0 ? (
+        <StatusMessage 
+          type="empty" 
+          title="Veri Bulunamadı" 
+          message="Şu an piyasada görüntülenecek herhangi bir veri bulunmuyor. Lütfen daha sonra tekrar deneyin."
+          onRetry={() => fetchData(true)}
+        />
+      ) : (
+        <FlatList
+          testID="MarketScreen:FlatList"
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.symbol}
+          contentContainerStyle={styles.list}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#F6C90E" />}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loadingMore ? <ActivityIndicator style={{ marginVertical: 20 }} color="#F6C90E" /> : null}
+        />
+      )}
 
       {/* Hisse Grafiği Alt Paneli */}
       <ChartBottomSheet
