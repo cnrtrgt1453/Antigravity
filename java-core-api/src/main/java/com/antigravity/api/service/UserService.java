@@ -34,4 +34,9 @@ public interface UserService {
      * Kullanıcıyı ve ilişkili tüm verilerini siler.
      */
     void deleteUser(User user);
+
+    /**
+     * Kullanıcının Push Token'ını günceller.
+     */
+    void updatePushToken(User user, String pushToken);
 }

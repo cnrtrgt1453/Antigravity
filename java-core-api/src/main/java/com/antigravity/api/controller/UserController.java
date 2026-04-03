@@ -48,4 +48,12 @@ public class UserController {
         userService.deleteUser(user);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/push-token")
+    public ResponseEntity<Void> updatePushToken(@RequestBody String pushToken) {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        User user = userService.getUserByEmail(email);
+        userService.updatePushToken(user, pushToken);
+        return ResponseEntity.ok().build();
+    }
 }

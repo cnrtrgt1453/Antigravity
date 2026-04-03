@@ -138,4 +138,14 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         log.info("Kullanıcı başarıyla silindi: {}", user.getEmail());
     }
+
+    @Override
+    @Transactional
+    public void updatePushToken(User user, String pushToken) {
+        if (pushToken != null && !pushToken.equals(user.getPushToken())) {
+            user.setPushToken(pushToken);
+            userRepository.save(user);
+            log.info("Kullanıcı Push Token güncellendi: {}", user.getEmail());
+        }
+    }
 }

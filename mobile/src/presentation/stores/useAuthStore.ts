@@ -4,6 +4,7 @@ import { LoginUseCase } from '../../domain/usecases/LoginUseCase';
 import { RegisterUseCase } from '../../domain/usecases/RegisterUseCase';
 import { ApiAuthRepository } from '../../data/repositories/ApiAuthRepository';
 import { useGameStore } from './useGameStore';
+import { Config } from '../../config';
 
 interface AuthState {
   user: User | null;
@@ -15,6 +16,7 @@ interface AuthState {
   register: (fullName: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   deleteAccount: () => Promise<void>;
+  updatePushToken: (token: string) => Promise<void>;
   clearError: () => void;
 }
 
@@ -115,6 +117,22 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } catch (err: any) {
       set({ error: err.message || 'Hesap silme işlemi başarısız oldu.', isLoading: false });
       throw err;
+    }
+  },
+
+  updatePushToken: async (token: string) => {
+    if (!get().user) return;
+    try {
+      await fetch(`${Config.JAVA_API_URL}/api/v1/users/push-token`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(token),
+      });
+      console.log('Push Token backende gönderildi');
+    } catch (err) {
+      console.error('Push Token update error:', err);
     }
   },
 

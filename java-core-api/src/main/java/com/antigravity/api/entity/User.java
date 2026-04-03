@@ -58,4 +58,7 @@ public class User {
 
     @Column(name = "last_report_date")
     private LocalDateTime lastReportDate;
+
+    @Column(name = "push_token", length = 255)
+    private String pushToken;
 }
