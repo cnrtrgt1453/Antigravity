@@ -86,6 +86,7 @@ export const SignalsScreen: React.FC = () => {
         activeFilter === type && type === 'DEAD' && styles.activeDeadChip
       ]} 
       onPress={() => setActiveFilter(type)}
+      testID={`chip-${type}`}
     >
       <Text style={[styles.chipText, activeFilter === type && styles.activeChipText]}>
         {label}
@@ -135,7 +136,7 @@ export const SignalsScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#F6C90E" />
+        <ActivityIndicator size="large" color="#F6C90E" testID="loading-indicator" />
       </View>
     );
   }
@@ -156,12 +157,14 @@ export const SignalsScreen: React.FC = () => {
       </View>
 
       <FlatList
+        testID="signals-list"
         data={filteredSignals}
         renderItem={renderItem}
         keyExtractor={(item, index) => `${item.ticker}-${index}`}
         contentContainerStyle={styles.list}
         refreshControl={
           <RefreshControl 
+            testID="refresh-control"
             refreshing={refreshing} 
             onRefresh={onRefresh} 
             tintColor="#F6C90E" 

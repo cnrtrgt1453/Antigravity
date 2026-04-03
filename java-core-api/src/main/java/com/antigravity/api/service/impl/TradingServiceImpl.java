@@ -4,19 +4,16 @@ import com.antigravity.api.entity.*;
 import com.antigravity.api.repository.*;
 import com.antigravity.api.service.TradingService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class TradingServiceImpl implements TradingService {
 
     private final PortfolioRepository portfolioRepository;
@@ -43,7 +40,7 @@ public class TradingServiceImpl implements TradingService {
     @Transactional
     public Portfolio buyStock(User user, String symbol, Long quantity, BigDecimal price) {
         Portfolio portfolio = getOrCreatePortfolio(user);
-        
+
         BigDecimal totalVolume = price.multiply(BigDecimal.valueOf(quantity));
         BigDecimal commission = totalVolume.multiply(COMMISSION_RATE).setScale(4, RoundingMode.HALF_UP);
         BigDecimal totalDeduction = totalVolume.add(commission);
@@ -83,7 +80,7 @@ public class TradingServiceImpl implements TradingService {
     @Transactional
     public Portfolio sellStock(User user, String symbol, Long quantity, BigDecimal price) {
         Portfolio portfolio = getOrCreatePortfolio(user);
-        
+
         PortfolioItem item = portfolioItemRepository.findByPortfolioAndStockSymbol(portfolio, symbol)
                 .orElseThrow(() -> new RuntimeException("Bu hisse portföyünüzde bulunmuyor."));
 
@@ -143,7 +140,8 @@ public class TradingServiceImpl implements TradingService {
                 .collect(Collectors.toList());
     }
 
-    private void saveHistory(User user, String symbol, TradeHistory.TradeType type, Long quantity, BigDecimal price, BigDecimal commission, BigDecimal totalAmount) {
+    private void saveHistory(User user, String symbol, TradeHistory.TradeType type, Long quantity, BigDecimal price,
+            BigDecimal commission, BigDecimal totalAmount) {
         TradeHistory history = TradeHistory.builder()
                 .user(user)
                 .stockSymbol(symbol)

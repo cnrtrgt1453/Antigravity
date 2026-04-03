@@ -39,43 +39,48 @@ class GoldenCrossStrategy:
         df['SMA_Short'] = df['Close'].rolling(window=self.short_window).mean()
         df['SMA_Long'] = df['Close'].rolling(window=self.long_window).mean()
 
-        # Son 7 günü kontrol et (Kesişim bir gün önce olmuş olabilir)
-        last_7_days = df.tail(8) # 8 gün alıyoruz çünkü fark (diff) için bir önceki güne de ihtiyacımız var
+        # SMA'ların boş (NaN) olduğu ilk 200 günü dışarıda bırakıp kalan valid veriler üzerinden işlem yapıyoruz
+        valid_df = df.dropna(subset=['SMA_Short', 'SMA_Long'])
         
         signal = 'NO_SIGNAL'
-        message = "Şu an için önemli bir sinyal yok."
+        message = "Son 2 yılda herhangi bir kesişim bulunamadı."
         color = "gray"
         cross_date = None
-        
-        for i in range(1, len(last_7_days)):
-            prev_row = last_7_days.iloc[i-1]
-            curr_row = last_7_days.iloc[i]
-            
-            if pd.isna(prev_row['SMA_Long']) or pd.isna(curr_row['SMA_Long']):
-                continue
-
-            # Golden Cross
-            if prev_row['SMA_Short'] <= prev_row['SMA_Long'] and curr_row['SMA_Short'] > curr_row['SMA_Long']:
-                signal = 'GOLDEN_CROSS'
-                message = "🔥 GOLDEN CROSS TESPİT EDİLDİ! Yükseliş trendi başlıyor olabilir. 🔥"
-                color = "green"
-                cross_date = str(curr_row.name.date())
-            
-            # Dead Cross
-            elif prev_row['SMA_Short'] >= prev_row['SMA_Long'] and curr_row['SMA_Short'] < curr_row['SMA_Long']:
-                signal = 'DEAD_CROSS'
-                message = "⚠️ DEAD CROSS TESPİT EDİLDİ! Düşüş trendi başlayabilir. ⚠️"
-                color = "red"
-                cross_date = str(curr_row.name.date())
-
-        # Golden Cross veya Dead Cross olmuşsa o günkü fiyatı da kaydedelim
         cross_price = None
-        if cross_date:
-             # Kesişim gününün fiyatını bul (Index tarihtir)
-             try:
-                 cross_price = float(df.loc[cross_date]['Close'])
-             except:
-                 cross_price = None
+
+        if not valid_df.empty:
+            diff = valid_df['SMA_Short'] - valid_df['SMA_Long']
+            
+            # Kesişim noktalarını bul:
+            # Golden Cross: Diff şu an pozitif ve bir önceki adımda negatif/sıfır ise
+            golden_crosses = (diff > 0) & (diff.shift(1) <= 0)
+            # Dead Cross: Diff şu an negatif ve bir önceki adımda pozitif/sıfır ise
+            dead_crosses = (diff < 0) & (diff.shift(1) >= 0)
+            
+            # Tüm kesişimleri içeren dataframe
+            all_crosses = valid_df[golden_crosses | dead_crosses]
+            
+            if not all_crosses.empty:
+                # Sadece EN SON gerçekleşen kesişime odaklanıyoruz
+                last_cross = all_crosses.iloc[-1]
+                last_cross_idx = all_crosses.index[-1]
+                
+                cross_date = str(last_cross_idx.date() if hasattr(last_cross_idx, 'date') else last_cross_idx)
+                
+                try:
+                    cross_price = float(last_cross['Close'])
+                except:
+                    cross_price = None
+
+                # En son kesişim hangisi?
+                if last_cross['SMA_Short'] > last_cross['SMA_Long']:
+                    signal = 'GOLDEN_CROSS'
+                    message = "🔥 Son 2 yıl içindeki en güncel kesişim: GOLDEN CROSS 🔥"
+                    color = "green"
+                else:
+                    signal = 'DEAD_CROSS'
+                    message = "⚠️ Son 2 yıl içindeki en güncel kesişim: DEAD CROSS ⚠️"
+                    color = "red"
 
         return {
             "ticker": ticker,

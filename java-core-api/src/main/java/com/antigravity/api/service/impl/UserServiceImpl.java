@@ -1,20 +1,21 @@
 package com.antigravity.api.service.impl;
 
-import com.antigravity.api.dto.LoginRequestDto;
-import com.antigravity.api.dto.UserRegistrationDto;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
+import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.entity.User;
+import com.antigravity.api.repository.PortfolioRepository;
+import com.antigravity.api.repository.TradeHistoryRepository;
 import com.antigravity.api.repository.UserRepository;
+import com.antigravity.api.repository.WatchlistRepository;
 import com.antigravity.api.service.UserService;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.antigravity.api.service.FirebaseAuthService;
+import com.antigravity.api.service.GoogleAuthService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDateTime;
 
 /**
@@ -28,45 +29,11 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PortfolioRepository portfolioRepository;
+    private final WatchlistRepository watchlistRepository;
+    private final TradeHistoryRepository tradeHistoryRepository;
     private final FirebaseAuthService firebaseAuthService;
-
-    @Override
-    @Transactional
-    public User registerUser(UserRegistrationDto registrationDto) {
-        String email = registrationDto.getEmail().trim().toLowerCase();
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Bu e-posta adresi kullanımda.");
-        }
-
-        User newUser = User.builder()
-                .email(email)
-                // Şifreyi açık metin olarak değil, BCrypt ile şifrelenmiş (Hashlenmiş) formatta kaydet (Güvenlik)
-                .password(passwordEncoder.encode(registrationDto.getPassword()))
-                .fullName(registrationDto.getFullName())
-                .profilePictureUrl(registrationDto.getProfilePictureUrl())
-                // Kayıt olan kullanıcının son girişi "şu an"dır
-                .lastLoginAt(LocalDateTime.now())
-                .build();
-
-        return userRepository.save(newUser);
-    }
-
-    @Override
-    @Transactional
-    public User loginUser(LoginRequestDto loginRequestDto) {
-        String email = loginRequestDto.getEmail().trim().toLowerCase();
-        log.info("Kullanıcı giriş isteği: {}", email);
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı."));
-
-        if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Hatalı şifre.");
-        }
-
-        updateLastLogin(user.getEmail());
-        return user;
-    }
+    private final GoogleAuthService googleAuthService;
 
     @Override
     @Transactional(readOnly = true)
@@ -77,17 +44,50 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginWithGoogle(GoogleLoginRequestDto googleLoginRequestDto) {
+        SocialLoginRequestDto socialDto = SocialLoginRequestDto.builder()
+                .idToken(googleLoginRequestDto.getIdToken())
+                .platform("GOOGLE")
+                .build();
+        return loginWithSocial(socialDto);
+    }
+
+    @Override
+    @Transactional
+    public User loginWithSocial(SocialLoginRequestDto socialLoginRequestDto) {
         try {
-            FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(googleLoginRequestDto.getIdToken());
-            String email = decodedToken.getEmail();
-            String fullName = (String) decodedToken.getClaims().get("name");
-            String profilePictureUrl = decodedToken.getPicture();
-            String firebaseUid = decodedToken.getUid();
+            String email;
+            String fullName;
+            String profilePictureUrl;
+            String firebaseUid;
+
+            if ("GOOGLE".equalsIgnoreCase(socialLoginRequestDto.getPlatform())) {
+                // Google ID Token doğrulaması
+                GoogleIdToken.Payload payload = googleAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
+                email = payload.getEmail();
+                fullName = (String) payload.get("name");
+                profilePictureUrl = (String) payload.get("picture");
+                firebaseUid = payload.getSubject(); // Google için sub alanı
+            } else {
+                // Firebase Token doğrulaması (Diğer platformlar için varsayılan)
+                FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
+                email = decodedToken.getEmail();
+                fullName = (String) decodedToken.getClaims().get("name");
+                profilePictureUrl = decodedToken.getPicture();
+                firebaseUid = decodedToken.getUid();
+            }
+
+            log.info("Sosyal login isteği ({}): {}", socialLoginRequestDto.getPlatform(), email);
 
             return userRepository.findByEmail(email)
                     .map(user -> {
                         user.setFirebaseUid(firebaseUid);
                         user.setLastLoginAt(java.time.LocalDateTime.now());
+                        if (user.getFullName() == null || user.getFullName().isEmpty()) {
+                            user.setFullName(fullName);
+                        }
+                        if (user.getProfilePictureUrl() == null || user.getProfilePictureUrl().isEmpty()) {
+                            user.setProfilePictureUrl(profilePictureUrl);
+                        }
                         return userRepository.save(user);
                     })
                     .orElseGet(() -> {
@@ -97,13 +97,13 @@ public class UserServiceImpl implements UserService {
                                 .profilePictureUrl(profilePictureUrl)
                                 .firebaseUid(firebaseUid)
                                 .lastLoginAt(java.time.LocalDateTime.now())
+                                .isActive(true)
                                 .build();
                         return userRepository.save(newUser);
                     });
-        } catch (FirebaseAuthException e) {
-            throw new RuntimeException("Firebase token doğrulama hatası: " + e.getMessage());
         } catch (Exception e) {
-            throw new RuntimeException("Google login işlemi sırasında hata oluştu: " + e.getMessage());
+            log.error("Sosyal login hatası ({}): {}", socialLoginRequestDto.getPlatform(), e.getMessage());
+            throw new RuntimeException(socialLoginRequestDto.getPlatform() + " giriş işlemi başarısız oldu: " + e.getMessage());
         }
     }
 
@@ -122,5 +122,20 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı: " + email));
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(User user) {
+        log.info("Kullanıcı silme işlemi başlatıldı: {}", user.getEmail());
+        
+        // 1. İlişkili verileri temizle
+        tradeHistoryRepository.deleteByUser(user);
+        watchlistRepository.deleteByUser(user);
+        portfolioRepository.deleteByUser(user);
+        
+        // 2. Kullanıcıyı sil
+        userRepository.delete(user);
+        log.info("Kullanıcı başarıyla silindi: {}", user.getEmail());
     }
 }

@@ -33,16 +33,20 @@ public class MarketAnalysisService {
         fetchAndSaveSignals();
     }
 
+    @SuppressWarnings("unchecked")
     public void fetchAndSaveSignals() {
         try {
             // Önce Python tarafında taramayı tetikle (cooldown nedeniyle gerekmeyebilir ama garanti olsun)
             // restTemplate.getForObject(PYTHON_SERVICE_URL + "/run_full_scan_now", Map.class);
             
             // En son sinyalleri getir
-            Map<String, List<Map<String, Object>>> response = restTemplate.getForObject(
+            // RestTemplate can only accept a raw Map.class — the unchecked cast is intentional.
+            Map<?, ?> rawResponse = restTemplate.getForObject(
                 pythonServiceUrl + "/latest_signals", 
                 Map.class
             );
+            Map<String, List<Map<String, Object>>> response = 
+                (Map<String, List<Map<String, Object>>>) rawResponse;
 
             if (response != null) {
                 saveSignals(response.get("golden_signals"), "GOLDEN_CROSS");

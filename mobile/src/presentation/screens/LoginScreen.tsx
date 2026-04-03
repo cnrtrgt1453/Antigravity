@@ -13,6 +13,7 @@ import {
   Platform,
   StatusBar,
   Animated,
+  Image,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation';
@@ -27,16 +28,8 @@ interface Props {
 }
 
 export const LoginScreen: React.FC<Props> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const { login, loginWithGoogle, isLoading, error, clearError } = useAuthStore();
-
-  const handleLogin = async () => {
-    if (error) clearError();
-    await login(email, password);
-  };
+  const { loginWithSocial, isLoading, error, clearError } = useAuthStore();
 
   const handleGoogleLogin = async () => {
     if (Constants.appOwnership === 'expo') {
@@ -56,7 +49,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       const idToken = response.data?.idToken;
 
       if (idToken) {
-        await loginWithGoogle(idToken);
+        await loginWithSocial(idToken, 'GOOGLE');
       } else {
         throw new Error('Google Sign-In idToken alınamadı.');
       }
@@ -74,6 +67,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -86,96 +80,45 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         <View style={styles.logoWrapper}>
           <Text style={styles.logoIcon}>📈</Text>
         </View>
-        <Text style={styles.title}>Borsa Analiz</Text>
+        <Text style={styles.title}>cotx Trade</Text>
         <Text style={styles.subtitle}>Golden Cross & Dead Cross Takip Sistemi</Text>
       </View>
 
       {/* Kart Alanı */}
       <View style={styles.card}>
-        {/* E-posta */}
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>E-posta</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="ornek@email.com"
-            placeholderTextColor="#4A5568"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={email}
-            onChangeText={setEmail}
-            onFocus={clearError}
-          />
-        </View>
-
-        {/* Şifre */}
-        <View style={styles.inputWrapper}>
-          <Text style={styles.label}>Şifre</Text>
-          <View style={styles.passwordRow}>
-            <TextInput
-              style={[styles.input, styles.passwordInput]}
-              placeholder="••••••••"
-              placeholderTextColor="#4A5568"
-              secureTextEntry={!showPassword}
-              value={password}
-              onChangeText={setPassword}
-              onFocus={clearError}
-            />
-            <TouchableOpacity
-              style={styles.eyeButton}
-              onPress={() => setShowPassword(!showPassword)}
-            >
-              <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Hata Mesajı */}
-        {error ? (
-          <View style={styles.errorBox}>
-            <Text style={styles.errorText}>⚠️  {error}</Text>
-          </View>
-        ) : null}
-
-        {/* Giriş Butonu */}
+        {/* Google ile Giriş Butonu */}
         <TouchableOpacity
-          style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}
-          onPress={handleLogin}
+          style={styles.googleButtonStyled}
+          onPress={handleGoogleLogin}
           disabled={isLoading}
           activeOpacity={0.8}
         >
           {isLoading ? (
-            <ActivityIndicator color="#0D1117" />
+            <ActivityIndicator color="#4285F4" />
           ) : (
-            <Text style={styles.loginButtonText}>Giriş Yap</Text>
+            <View style={styles.googleButtonContentStyled}>
+              <View style={styles.googleIconContainerStyled}>
+                {/* Renkli G Logosu (Imaj yuklenmezse diye Views ile yapilan garanti yapi) */}
+                <View style={{ width: 24, height: 24, position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* Dort renkli ceyrek daireler/kareler ile Google renklerini simgeliyoruz */}
+                  <View style={{ position: 'absolute', top: 0, left: 0, width: 12, height: 12, backgroundColor: '#EA4335', borderTopLeftRadius: 12 }} />
+                  <View style={{ position: 'absolute', top: 0, right: 0, width: 12, height: 12, backgroundColor: '#FBBC05', borderTopRightRadius: 12 }} />
+                  <View style={{ position: 'absolute', bottom: 0, left: 0, width: 12, height: 12, backgroundColor: '#34A853', borderBottomLeftRadius: 12 }} />
+                  <View style={{ position: 'absolute', bottom: 0, right: 0, width: 12, height: 12, backgroundColor: '#4285F4', borderBottomRightRadius: 12 }} />
+                  <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }}>G</Text>
+                </View>
+              </View>
+              <Text style={styles.googleButtonTextStyled}>GOOGLE İLE BAĞLAN</Text>
+            </View>
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.forgotButton}>
-          <Text style={styles.forgotText}>Şifreni mi unuttun?</Text>
-        </TouchableOpacity>
-
-        {/* Veya Ayracı */}
-        <View style={styles.dividerContainer}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>VEYA</Text>
-          <View style={styles.dividerLine} />
-        </View>
-
-        {/* Google ile Giriş Butonu */}
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={handleGoogleLogin}
-          disabled={isLoading}
-        >
-          <Text style={styles.googleIcon}>G</Text>
-          <Text style={styles.googleButtonText}>Google ile Devam Et</Text>
-        </TouchableOpacity>
-
-        {/* Kayıt Ol Linki */}
-        <TouchableOpacity style={styles.registerLinkButton} onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerLinkText}>Hesabınız yok mu? <Text style={{ fontWeight: '700', color: '#F6C90E' }}>Kayıt Olun</Text></Text>
-        </TouchableOpacity>
+        {/* Hata Mesajı (Google Girişi Sırasında Oluşursa) */}
+        {error ? (
+          <View style={[styles.errorBox, { marginTop: 16, width: '100%' }]}>
+            <Text style={styles.errorText}>⚠️  {error}</Text>
+          </View>
+        ) : null}
       </View>
 
       {/* Alt Bilgi */}
@@ -230,15 +173,8 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    backgroundColor: '#161B22',
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: '#21262D',
-    shadowColor: '#000',
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
     elevation: 10,
+    alignItems: 'center',
   },
   inputWrapper: {
     marginBottom: 16,
@@ -335,25 +271,41 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-  googleButton: {
+  googleButtonStyled: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 2,
+    width: '100%',
+    height: 48,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  googleButtonContentStyled: {
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
-    paddingVertical: 14,
+    alignItems: 'center',
+    paddingHorizontal: 8,
+  },
+  googleIconContainerStyled: {
+    width: 32,
+    height: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 8,
-  },
-  googleIcon: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#4285F4',
     marginRight: 10,
   },
-  googleButtonText: {
-    color: '#000000',
-    fontSize: 15,
-    fontWeight: '600',
+  googleButtonTextStyled: {
+    color: '#3B5998', // Google butonu icin mavi tonu (Facebook mavisine yakin ama daha acik)
+    color: '#4285F4',
+    fontSize: 14,
+    fontWeight: '700',
+    flex: 1,
+    textAlign: 'center',
+    marginRight: 32,
+    letterSpacing: 0.5,
   },
   registerLinkButton: {
     alignItems: 'center',

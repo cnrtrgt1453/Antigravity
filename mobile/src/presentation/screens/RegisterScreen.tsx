@@ -59,7 +59,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.backIcon}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Kayıt Ol</Text>
-        <Text style={styles.subtitle}>Borsa Analiz Özel Dünyasına Katılın</Text>
+        <Text style={styles.subtitle}>cotx Trade Özel Dünyasına Katılın</Text>
       </View>
 
       {/* Kart Alanı */}
@@ -76,6 +76,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             value={fullName}
             onChangeText={setFullName}
             onFocus={() => { setLocalError(null); clearError(); }}
+            testID="register-fullname-input"
           />
         </View>
 
@@ -92,6 +93,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
             onFocus={() => { setLocalError(null); clearError(); }}
+            testID="register-email-input"
           />
         </View>
 
@@ -107,6 +109,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
               value={password}
               onChangeText={setPassword}
               onFocus={() => { setLocalError(null); clearError(); }}
+              testID="register-password-input"
             />
             <TouchableOpacity
               style={styles.eyeButton}
@@ -119,7 +122,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
 
         {/* Hata Mesajı */}
         {error ? (
-          <View style={styles.errorBox}>
+          <View style={styles.errorBox} testID="register-error-box">
             <Text style={styles.errorText}>⚠️  {error}</Text>
           </View>
         ) : null}
@@ -130,6 +133,7 @@ export const RegisterScreen: React.FC<Props> = ({ navigation }) => {
           onPress={handleRegister}
           disabled={isLoading}
           activeOpacity={0.8}
+          testID="register-submit-button"
         >
           {isLoading ? (
             <ActivityIndicator color="#0D1117" />

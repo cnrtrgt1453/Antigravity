@@ -38,17 +38,22 @@ export class ApiAuthRepository implements AuthRepository {
   }
 
   async loginWithGoogle(idToken: string): Promise<User> {
+    return this.loginWithSocial(idToken, 'GOOGLE');
+  }
+
+  async loginWithSocial(idToken: string, platform: string): Promise<User> {
     try {
-      const response = await fetch(`${API_BASE_URL}/login/google`, {
+      const response = await fetch(`${API_BASE_URL}/login/social`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ idToken, platform }),
       });
 
       if (!response.ok) {
-        throw new Error('Google giriş işlemi başarısız oldu.');
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `${platform} giriş işlemi başarısız oldu.`);
       }
 
       const data = await response.json();
@@ -59,7 +64,7 @@ export class ApiAuthRepository implements AuthRepository {
         profilePictureUrl: data.profilePictureUrl,
       };
     } catch (error) {
-      console.error('Google Login Error:', error);
+      console.error(`${platform} Login Error:`, error);
       throw error;
     }
   }
@@ -105,5 +110,26 @@ export class ApiAuthRepository implements AuthRepository {
   getCurrentUser(): User | null {
     // Mobil tarafta state yönetimi Zustand üzerinden yapıldığı için, repository kendi State'ini tutmuyor.
     return null;
+  }
+
+  async deleteAccount(): Promise<void> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/me`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // Note: Auth token is usually handled by a wrapper or interceptor, 
+          // but here we assume the fetch call in context of an authenticated session.
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || 'Hesap silme işlemi başarısız oldu.');
+      }
+    } catch (error) {
+      console.error('Delete Account Error:', error);
+      throw error;
+    }
   }
 }

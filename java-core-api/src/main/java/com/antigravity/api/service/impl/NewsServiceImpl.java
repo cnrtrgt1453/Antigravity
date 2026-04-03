@@ -2,7 +2,6 @@ package com.antigravity.api.service.impl;
 
 import com.antigravity.api.entity.News;
 import com.antigravity.api.entity.User;
-import com.antigravity.api.entity.Watchlist;
 import com.antigravity.api.repository.NewsRepository;
 import com.antigravity.api.repository.UserRepository;
 import com.antigravity.api.repository.WatchlistRepository;
@@ -34,7 +33,8 @@ public class NewsServiceImpl implements NewsService {
     public Page<News> getNews(User user, List<String> symbols, boolean watchlistOnly, Pageable pageable) {
         if (watchlistOnly) {
             if (symbols != null && !symbols.isEmpty()) {
-                // Not: Repository'de InAndWatchlist metodu yok, şimdilik sadece ilki için veya logic geliştirilmeli.
+                // Not: Repository'de InAndWatchlist metodu yok, şimdilik sadece ilki için veya
+                // logic geliştirilmeli.
                 // Basitlik adına tekli hali koruyabiliriz veya IN sorgusu yazabiliriz.
                 return newsRepository.findByUserIdWatchlistAndSymbol(user.getId(), symbols.get(0), pageable);
             }
@@ -52,7 +52,7 @@ public class NewsServiceImpl implements NewsService {
     public Map<String, Object> generateWeeklyReport(User user) {
         LocalDateTime now = LocalDateTime.now();
         boolean isFirstTime = user.getLastReportDate() == null;
-        
+
         // 1. Pazartesi kısıtlaması (İlk kez alanlar için esnetildi)
         if (now.getDayOfWeek() != DayOfWeek.MONDAY && !isFirstTime) {
             throw new IllegalStateException("Haftalık analiz raporu sadece Pazartesi günleri alınabilir.");
@@ -62,7 +62,8 @@ public class NewsServiceImpl implements NewsService {
         if (!isFirstTime) {
             long daysSinceLastReport = ChronoUnit.DAYS.between(user.getLastReportDate(), now);
             if (daysSinceLastReport < 7) {
-                throw new IllegalStateException("Bu haftalık raporu zaten aldınız. Bir sonraki Pazartesi tekrar deneyin.");
+                throw new IllegalStateException(
+                        "Bu haftalık raporu zaten aldınız. Bir sonraki Pazartesi tekrar deneyin.");
             }
         }
 
@@ -78,21 +79,23 @@ public class NewsServiceImpl implements NewsService {
 
         // 4. Son 1 Ayın Haberlerini Çekme
         LocalDateTime oneMonthAgo = now.minusMonths(1);
-        List<News> monthlyNews = newsRepository.findAllByStockSymbolInAndPublishedAtAfter(watchlistSymbols, oneMonthAgo);
+        List<News> monthlyNews = newsRepository.findAllByStockSymbolInAndPublishedAtAfter(watchlistSymbols,
+                oneMonthAgo);
 
         // 5. Rapor Oluşturma (Mock Analiz)
         Map<String, Object> report = new HashMap<>();
         report.put("generationDate", now);
         report.put("watchlistCount", watchlistSymbols.size());
         report.put("newsCount", monthlyNews.size());
-        
+
         Map<String, Integer> newsPerSymbol = new HashMap<>();
         for (String symbol : watchlistSymbols) {
             long count = monthlyNews.stream().filter(n -> n.getStockSymbol().equals(symbol)).count();
             newsPerSymbol.put(symbol, (int) count);
         }
         report.put("details", newsPerSymbol);
-        report.put("summary", "Takip listenizdeki " + watchlistSymbols.size() + " hisse için son 1 ayda toplam " + monthlyNews.size() + " haber analiz edildi.");
+        report.put("summary", "Takip listenizdeki " + watchlistSymbols.size() + " hisse için son 1 ayda toplam "
+                + monthlyNews.size() + " haber analiz edildi.");
 
         // 6. lastReportDate Güncelleme
         user.setLastReportDate(now);

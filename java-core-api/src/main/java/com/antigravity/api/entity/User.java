@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 /**
  * Kullanıcı varlık (Entity) sınıfı.
  * Veritabanında (PostgreSQL) "users" tablosuna karşılık gelir.
- * Sadece durum(state) barındırır, iş mantığı(logic) barındırmaz. (SRP - Single Responsibility Principle)
+ * Sadece durum(state) barındırır, iş mantığı(logic) barındırmaz. (SRP - Single
+ * Responsibility Principle)
  */
 @Entity
 @Table(name = "users")
@@ -26,11 +27,8 @@ public class User {
     private Long id;
 
     // Firebase Authentication Opsiyonel Kullanım İçin
-    @Column(name = "firebase_uid", unique = true, length = 128)
+    @Column(name = "firebase_uid", unique = true, nullable = false, length = 128)
     private String firebaseUid;
-
-    @Column(nullable = false, length = 255)
-    private String password;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
