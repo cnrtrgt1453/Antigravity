@@ -57,6 +57,23 @@ export const HomeScreen: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Çıkış Yap',
+      'Hesabınızdan çıkmak istediğinize emin misiniz?',
+      [
+        { text: 'İptal', style: 'cancel' },
+        {
+          text: 'Çıkış Yap',
+          style: 'destructive',
+          onPress: () => {
+            logout().catch(console.error);
+          },
+        },
+      ]
+    );
+  };
+
   const handleManualScan = async () => {
     if (!cooldown.can_scan) {
       Alert.alert("Beklemeniz Gerekiyor", `Bir sonraki tarama için kalan süre: ${formatCooldown(cooldown.remaining_seconds)}`);
@@ -192,7 +209,7 @@ export const HomeScreen: React.FC = () => {
           )}
         </View>
 
-        <TouchableOpacity style={styles.logoutButton} onPress={logout} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} activeOpacity={0.8} testID="HomeScreen:LogoutButton">
           <Text style={styles.logoutText}>Çıkış Yap</Text>
         </TouchableOpacity>
       </ScrollView>

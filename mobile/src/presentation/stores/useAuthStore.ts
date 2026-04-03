@@ -3,6 +3,7 @@ import { User } from '../../domain/entities/User';
 import { LoginUseCase } from '../../domain/usecases/LoginUseCase';
 import { RegisterUseCase } from '../../domain/usecases/RegisterUseCase';
 import { ApiAuthRepository } from '../../data/repositories/ApiAuthRepository';
+import { useGameStore } from './useGameStore';
 
 interface AuthState {
   user: User | null;
@@ -84,7 +85,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
+      // Auth state'i temizle
       set({ user: null });
+      // Oyun verilerini temizle (eski kullanıcı verisi kalmasın)
+      useGameStore.setState({
+        portfolio: null,
+        history: [],
+        watchlist: [],
+        isLoading: false,
+        error: null,
+      });
     }
   },
 

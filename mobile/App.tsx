@@ -15,6 +15,7 @@ import { MarketScreen } from './src/presentation/screens/MarketScreen';
 import { SignalsScreen } from './src/presentation/screens/SignalsScreen';
 import { GameScreen } from './src/presentation/screens/GameScreen';
 import { TradeHistoryScreen } from './src/presentation/screens/TradeHistoryScreen';
+import { ProfileScreen } from './src/presentation/screens/ProfileScreen';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -83,6 +84,15 @@ function MainTabs() {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name={focused ? 'game-controller' : 'game-controller-outline'} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profil"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color} />
           ),
         }}
       />
