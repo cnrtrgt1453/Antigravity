@@ -29,4 +29,9 @@ public interface UserService {
      * E-posta adresi ile kullanıcıyı getirir.
      */
     User getUserByEmail(String email);
+
+    /**
+     * Kullanıcıyı ve ilişkili tüm verilerini siler.
+     */
+    void deleteUser(User user);
 }

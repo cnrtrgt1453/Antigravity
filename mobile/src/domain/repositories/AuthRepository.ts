@@ -9,4 +9,5 @@ export interface AuthRepository {
   register(fullName: string, email: string, password: string): Promise<User>;
   logout(): Promise<void>;
   getCurrentUser(): User | null;
+  deleteAccount(): Promise<void>;
 }

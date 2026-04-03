@@ -7,6 +7,7 @@ import com.antigravity.api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -38,5 +39,13 @@ public class UserController {
     public ResponseEntity<User> loginWithSocial(@Valid @RequestBody SocialLoginRequestDto socialLoginRequestDto) {
         User user = userService.loginWithSocial(socialLoginRequestDto);
         return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteMe() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        User user = userService.getUserByEmail(email);
+        userService.deleteUser(user);
+        return ResponseEntity.noContent().build();
     }
 }

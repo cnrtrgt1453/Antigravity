@@ -16,6 +16,7 @@ import { SignalsScreen } from './src/presentation/screens/SignalsScreen';
 import { GameScreen } from './src/presentation/screens/GameScreen';
 import { TradeHistoryScreen } from './src/presentation/screens/TradeHistoryScreen';
 import { ProfileScreen } from './src/presentation/screens/ProfileScreen';
+import { PrivacyPolicyScreen } from './src/presentation/screens/PrivacyPolicyScreen';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -117,6 +118,7 @@ export default function App() {
                 headerTintColor: '#FFFFFF',
                 headerTitleStyle: { fontWeight: '800' }
               }} />
+              <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} options={{ headerShown: false }} />
             </>
           ) : (
             <>

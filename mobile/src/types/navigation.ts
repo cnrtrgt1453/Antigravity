@@ -6,4 +6,5 @@ export type RootStackParamList = {
   TradeHistory: undefined;
   Game: undefined;
   Profile: undefined;
+  PrivacyPolicy: undefined;
 };

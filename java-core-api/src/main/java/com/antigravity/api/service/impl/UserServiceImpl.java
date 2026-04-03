@@ -3,7 +3,10 @@ package com.antigravity.api.service.impl;
 import com.antigravity.api.dto.GoogleLoginRequestDto;
 import com.antigravity.api.dto.SocialLoginRequestDto;
 import com.antigravity.api.entity.User;
+import com.antigravity.api.repository.PortfolioRepository;
+import com.antigravity.api.repository.TradeHistoryRepository;
 import com.antigravity.api.repository.UserRepository;
+import com.antigravity.api.repository.WatchlistRepository;
 import com.antigravity.api.service.UserService;
 import com.google.firebase.auth.FirebaseToken;
 import com.antigravity.api.service.FirebaseAuthService;
@@ -26,6 +29,9 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PortfolioRepository portfolioRepository;
+    private final WatchlistRepository watchlistRepository;
+    private final TradeHistoryRepository tradeHistoryRepository;
     private final FirebaseAuthService firebaseAuthService;
     private final GoogleAuthService googleAuthService;
 
@@ -116,5 +122,20 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı: " + email));
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(User user) {
+        log.info("Kullanıcı silme işlemi başlatıldı: {}", user.getEmail());
+        
+        // 1. İlişkili verileri temizle
+        tradeHistoryRepository.deleteByUser(user);
+        watchlistRepository.deleteByUser(user);
+        portfolioRepository.deleteByUser(user);
+        
+        // 2. Kullanıcıyı sil
+        userRepository.delete(user);
+        log.info("Kullanıcı başarıyla silindi: {}", user.getEmail());
     }
 }

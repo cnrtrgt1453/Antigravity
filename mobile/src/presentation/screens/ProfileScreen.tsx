@@ -9,14 +9,20 @@ import {
   ScrollView,
   Alert,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useGameStore } from '../stores/useGameStore';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
 
 export const ProfileScreen: React.FC = () => {
-  const { user, logout } = useAuthStore();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { user, logout, deleteAccount } = useAuthStore();
   const { portfolio, watchlist, history } = useGameStore();
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -29,6 +35,31 @@ export const ProfileScreen: React.FC = () => {
           style: 'destructive',
           onPress: async () => {
             await logout();
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'HESABI SİL',
+      'Tüm verileriniz (portföy, takip listesi ve geçmiş) kalıcı olarak silinecektir. Bu işlem geri alınamaz! Emin misiniz?',
+      [
+        { text: 'İptal', style: 'cancel' },
+        {
+          text: 'EVET, SİL',
+          style: 'destructive',
+          onPress: async () => {
+            setIsDeleting(true);
+            try {
+              await deleteAccount();
+              Alert.alert('Hesap Silindi', 'Hesabınız ve tüm verileriniz başarıyla silindi.');
+            } catch (err: any) {
+              Alert.alert('Hata', err.message || 'Hesap silinirken bir hata oluştu.');
+            } finally {
+              setIsDeleting(false);
+            }
           },
         },
       ]
@@ -117,6 +148,14 @@ export const ProfileScreen: React.FC = () => {
             Sinyaller yatırım tavsiyesi değildir.
           </Text>
         </View>
+        <TouchableOpacity 
+          style={[styles.infoRow, styles.infoRowBorder]}
+          onPress={() => navigation.navigate('PrivacyPolicy')}
+        >
+          <Ionicons name="document-text-outline" size={18} color="#58A6FF" />
+          <Text style={[styles.infoText, { color: '#58A6FF' }]}>Gizlilik Politikası</Text>
+          <Ionicons name="chevron-forward" size={16} color="#8B949E" />
+        </TouchableOpacity>
       </View>
 
       {/* Çıkış Yap */}
@@ -128,6 +167,20 @@ export const ProfileScreen: React.FC = () => {
       >
         <Ionicons name="log-out-outline" size={20} color="#F85149" />
         <Text style={styles.logoutText}>Çıkış Yap</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={handleDeleteAccount}
+        activeOpacity={0.8}
+        disabled={isDeleting}
+        testID="ProfileScreen:DeleteButton"
+      >
+        {isDeleting ? (
+          <ActivityIndicator size="small" color="#8B949E" />
+        ) : (
+          <Text style={styles.deleteText}>Hesabımı Sil</Text>
+        )}
       </TouchableOpacity>
     </ScrollView>
   );
@@ -299,5 +352,15 @@ const styles = StyleSheet.create({
     color: '#F85149',
     fontSize: 16,
     fontWeight: '700',
+  },
+  deleteButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  deleteText: {
+    color: '#8B949E',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
 });

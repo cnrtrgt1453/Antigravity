@@ -14,6 +14,7 @@ interface AuthState {
   loginWithSocial: (idToken: string, platform: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   clearError: () => void;
 }
 
@@ -95,6 +96,25 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         isLoading: false,
         error: null,
       });
+    }
+  },
+
+  deleteAccount: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await getRepo().deleteAccount();
+      // Başarılıysa tüm verileri sil ve çıkış yap
+      set({ user: null, isLoading: false });
+      useGameStore.setState({
+        portfolio: null,
+        history: [],
+        watchlist: [],
+        isLoading: false,
+        error: null,
+      });
+    } catch (err: any) {
+      set({ error: err.message || 'Hesap silme işlemi başarısız oldu.', isLoading: false });
+      throw err;
     }
   },
 

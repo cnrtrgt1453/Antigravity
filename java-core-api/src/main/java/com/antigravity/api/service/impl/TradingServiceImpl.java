@@ -4,7 +4,6 @@ import com.antigravity.api.entity.*;
 import com.antigravity.api.repository.*;
 import com.antigravity.api.service.TradingService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class TradingServiceImpl implements TradingService {
 
     private final PortfolioRepository portfolioRepository;

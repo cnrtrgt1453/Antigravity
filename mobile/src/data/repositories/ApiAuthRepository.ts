@@ -111,4 +111,25 @@ export class ApiAuthRepository implements AuthRepository {
     // Mobil tarafta state yönetimi Zustand üzerinden yapıldığı için, repository kendi State'ini tutmuyor.
     return null;
   }
+
+  async deleteAccount(): Promise<void> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/me`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // Note: Auth token is usually handled by a wrapper or interceptor, 
+          // but here we assume the fetch call in context of an authenticated session.
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || 'Hesap silme işlemi başarısız oldu.');
+      }
+    } catch (error) {
+      console.error('Delete Account Error:', error);
+      throw error;
+    }
+  }
 }
