@@ -13,6 +13,8 @@ import {
 import { useAuthStore } from '../stores/useAuthStore';
 import { NewsCard } from '../components/NewsCard';
 import { Config } from '../../config';
+import { NewsCardSkeleton } from '../components/CardSkeleton';
+import { StatusMessage } from '../components/StatusMessage';
 
 const JAVA_API_URL = Config.JAVA_API_URL;
 
@@ -83,7 +85,12 @@ export const NewsScreen: React.FC = () => {
     } catch (error) {
       console.error("Failed to fetch news", error);
     } finally {
-      setLoading(false);
+      // For UX: Delay hiding skeleton just a bit for smooth transition
+      if (resetPage) {
+        setTimeout(() => setLoading(false), 600);
+      } else {
+        setLoading(false);
+      }
       setRefreshing(false);
     }
   }, [page, loading, hasMore, watchlistOnly, selectedSymbol, sortOrder]);
@@ -195,18 +202,31 @@ export const NewsScreen: React.FC = () => {
         </View>
       </View>
 
-      <FlatList
-        data={news}
-        renderItem={({ item }) => <NewsCard news={item} />}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.listContent}
-        onRefresh={handleRefresh}
-        refreshing={refreshing}
-        onEndReached={() => fetchNews()}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={loading ? <ActivityIndicator style={{ marginVertical: 20 }} color="#58A6FF" /> : null}
-        ListEmptyComponent={!loading ? <Text style={styles.emptyText}>Haber bulunamadı.</Text> : null}
-      />
+      {loading && news.length === 0 ? (
+        <ScrollView contentContainerStyle={styles.listContent} showsVerticalScrollIndicator={false}>
+          {[1, 2, 3, 4].map(i => <NewsCardSkeleton key={i} />)}
+        </ScrollView>
+      ) : (
+        <FlatList
+          data={news}
+          renderItem={({ item }) => <NewsCard news={item} />}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={styles.listContent}
+          onRefresh={handleRefresh}
+          refreshing={refreshing}
+          onEndReached={() => fetchNews()}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loading ? <ActivityIndicator style={{ marginVertical: 20 }} color="#58A6FF" /> : null}
+          ListEmptyComponent={
+            <StatusMessage 
+              type="empty"
+              title="Haber Bulunamadı"
+              message={watchlistOnly ? "Takip listenizdeki hisseler için son dönemde herhangi bir haber/analiz paylaşılmamış." : "Şu an için görüntülenecek herhangi bir haber bulunmuyor."}
+              onRetry={handleRefresh}
+            />
+          }
+        />
+      )}
     </View>
   );
 };

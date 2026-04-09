@@ -17,6 +17,9 @@ import { GameScreen } from './src/presentation/screens/GameScreen';
 import { TradeHistoryScreen } from './src/presentation/screens/TradeHistoryScreen';
 import { ProfileScreen } from './src/presentation/screens/ProfileScreen';
 import { PrivacyPolicyScreen } from './src/presentation/screens/PrivacyPolicyScreen';
+import { useNotifications } from './src/presentation/hooks/useNotifications';
+import { useEffect } from 'react';
+import { Alert } from 'react-native';
 
 // Google Sign-in sadece gerçek native buildler'de veya development buildler'de çalışır.
 // Expo Go içindeyken bu kütüphane çökmemesi için sadece uygun ortamda yüklenir.
@@ -102,7 +105,21 @@ function MainTabs() {
 }
 
 export default function App() {
-  const { user } = useAuthStore();
+  const { user, updatePushToken } = useAuthStore();
+  const { expoPushToken, notification } = useNotifications();
+
+  useEffect(() => {
+    if (user && expoPushToken) {
+      updatePushToken(expoPushToken);
+    }
+  }, [user, expoPushToken]);
+
+  useEffect(() => {
+    if (notification) {
+      // Bildirim geldiğinde (foreground) bir uyarı veya işlem yapabiliriz
+      console.log('Foreground notification:', notification);
+    }
+  }, [notification]);
 
   return (
     <SafeAreaProvider>

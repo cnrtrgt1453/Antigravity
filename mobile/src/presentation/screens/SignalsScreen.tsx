@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { Config } from '../../config';
 import { Ionicons } from '@expo/vector-icons';
+import { MarketCardSkeleton } from '../components/CardSkeleton';
+import { StatusMessage } from '../components/StatusMessage';
 
 interface SignalData {
   ticker: string;
@@ -49,7 +51,8 @@ export const SignalsScreen: React.FC = () => {
     } catch (e) {
       console.error(e);
     } finally {
-      setLoading(false);
+      // For UX: Keep skeleton visible for a bit
+      setTimeout(() => setLoading(false), 600);
       setRefreshing(false);
     }
   };
@@ -135,8 +138,14 @@ export const SignalsScreen: React.FC = () => {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#F6C90E" testID="loading-indicator" />
+      <View style={styles.container}>
+        <View style={styles.header}>
+            <Text style={styles.title}>Sinyaller</Text>
+            <Text style={styles.subtitle}>Teknik analiz al-sat sinyalleri</Text>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: 16 }}>
+          {[1, 2, 3, 4, 5].map(i => <MarketCardSkeleton key={i} />)}
+        </ScrollView>
       </View>
     );
   }
@@ -172,10 +181,12 @@ export const SignalsScreen: React.FC = () => {
           />
         }
         ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Ionicons name="filter-outline" size={48} color="#30363D" />
-            <Text style={styles.emptyText}>Bu filtreye uygun sinyal bulunamadı.</Text>
-          </View>
+          <StatusMessage 
+            type="empty"
+            title="Sinyal Bulunamadı"
+            message={activeFilter === 'ALL' ? "Son 7 gün içerisinde herhangi bir Golden veya Dead Cross sinyali oluşmadı." : "Bu filtreye uygun herhangi bir sinyal bulunamadı."}
+            onRetry={onRefresh}
+          />
         }
       />
     </View>
