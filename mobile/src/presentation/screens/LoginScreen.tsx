@@ -80,7 +80,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
         <View style={styles.logoWrapper}>
           <Text style={styles.logoIcon}>📈</Text>
         </View>
-        <Text style={styles.title}>cotx Trade</Text>
+        <Text style={styles.title}>FinanceUp</Text>
         <Text style={styles.subtitle}>Golden Cross & Dead Cross Takip Sistemi</Text>
       </View>
 
@@ -298,7 +298,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   googleButtonTextStyled: {
-    color: '#3B5998', // Google butonu icin mavi tonu (Facebook mavisine yakin ama daha acik)
     color: '#4285F4',
     fontSize: 14,
     fontWeight: '700',
@@ -306,15 +305,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginRight: 32,
     letterSpacing: 0.5,
-  },
-  registerLinkButton: {
-    alignItems: 'center',
-    marginTop: 16,
-    padding: 4,
-  },
-  registerLinkText: {
-    color: '#9CA3AF',
-    fontSize: 14,
   },
   footer: {
     marginTop: 28,

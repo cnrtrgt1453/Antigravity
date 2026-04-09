@@ -32,16 +32,15 @@ export class MockAuthRepository implements AuthRepository {
     throw new Error(`${platform} girişi başarısız oldu.`);
   }
 
-  async register(fullName: string, email: string, password: string): Promise<User> {
-    this.currentUser = { id: 'mock-new-002', email, fullName };
-    return this.currentUser;
-  }
-
   async logout(): Promise<void> {
     this.currentUser = null;
   }
 
   getCurrentUser(): User | null {
     return this.currentUser;
+  }
+
+  async deleteAccount(): Promise<void> {
+    this.currentUser = null;
   }
 }

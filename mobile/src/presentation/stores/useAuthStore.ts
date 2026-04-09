@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { User } from '../../domain/entities/User';
 import { LoginUseCase } from '../../domain/usecases/LoginUseCase';
-import { RegisterUseCase } from '../../domain/usecases/RegisterUseCase';
 import { ApiAuthRepository } from '../../data/repositories/ApiAuthRepository';
 import { useGameStore } from './useGameStore';
 import { Config } from '../../config';
@@ -13,7 +12,6 @@ interface AuthState {
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: (idToken: string) => Promise<void>;
   loginWithSocial: (idToken: string, platform: string) => Promise<void>;
-  register: (fullName: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   deleteAccount: () => Promise<void>;
   updatePushToken: (token: string) => Promise<void>;
@@ -23,7 +21,6 @@ interface AuthState {
 // Lazy-loaded dependencies to avoid top-level side effects in tests
 let _authRepository: ApiAuthRepository | null = null;
 let _loginUseCase: LoginUseCase | null = null;
-let _registerUseCase: RegisterUseCase | null = null;
 
 const getRepo = () => {
   if (!_authRepository) _authRepository = new ApiAuthRepository();
@@ -33,11 +30,6 @@ const getRepo = () => {
 const getLoginUseCase = () => {
   if (!_loginUseCase) _loginUseCase = new LoginUseCase(getRepo());
   return _loginUseCase;
-};
-
-const getRegisterUseCase = () => {
-  if (!_registerUseCase) _registerUseCase = new RegisterUseCase(getRepo());
-  return _registerUseCase;
 };
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -67,17 +59,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ user, isLoading: false });
     } catch (err: any) {
       set({ error: err.message || `${platform} girişi başarısız oldu.`, isLoading: false });
-      throw err;
-    }
-  },
-
-  register: async (fullName, email, password) => {
-    set({ isLoading: true, error: null });
-    try {
-      const user = await getRegisterUseCase().execute(fullName, email, password);
-      set({ user, isLoading: false });
-    } catch (err: any) {
-      set({ error: err.message || 'Kayıt başarısız oldu.', isLoading: false });
       throw err;
     }
   },

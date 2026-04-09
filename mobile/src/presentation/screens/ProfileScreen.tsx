@@ -134,7 +134,7 @@ export const ProfileScreen: React.FC = () => {
       <View style={styles.infoCard}>
         <View style={styles.infoRow}>
           <Ionicons name="information-circle-outline" size={18} color="#8B949E" />
-          <Text style={styles.infoText}>cotx Trade</Text>
+          <Text style={styles.infoText}>FinanceUp</Text>
           <Text style={styles.infoValue}>v1.0.0</Text>
         </View>
         <View style={[styles.infoRow, styles.infoRowBorder]}>

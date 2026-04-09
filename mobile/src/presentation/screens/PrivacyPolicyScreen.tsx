@@ -29,7 +29,7 @@ export const PrivacyPolicyScreen: React.FC = () => {
         
         <Text style={styles.sectionTitle}>1. Giriş</Text>
         <Text style={styles.paragraph}>
-          cotx Trade ("biz", "tarafımız" veya "uygulama"), kullanıcılarımızın gizliliğine önem vermektedir. 
+          FinanceUp ("biz", "tarafımız" veya "uygulama"), kullanıcılarımızın gizliliğine önem vermektedir. 
           Bu Gizlilik Politikası, uygulamamızı kullandığınızda bilgilerinizin nasıl toplandığını, 
           kullanıldığını ve korunduğunu açıklar.
         </Text>
