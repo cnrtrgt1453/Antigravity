@@ -2,17 +2,17 @@ import { jest, describe, it, expect, beforeEach } from '@jest/globals';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
 import { HomeScreen } from '../HomeScreen';
-import { useAuthStore } from '../../presentation/stores/useAuthStore';
-import { ApiMarketRepository } from '../../data/repositories/ApiMarketRepository';
+import { useAuthStore } from '../../stores/useAuthStore';
+import { ApiMarketRepository } from '../../../data/repositories/ApiMarketRepository';
 import { NavigationContainer } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 // Mocking stores and repositories
-jest.mock('../../presentation/stores/useAuthStore');
-jest.mock('../../data/repositories/ApiMarketRepository');
+jest.mock('../../stores/useAuthStore');
+jest.mock('../../../data/repositories/ApiMarketRepository');
 
 // Mocking components
-jest.mock('../../presentation/components/MarketTrendCard', () => {
+jest.mock('../../components/MarketTrendCard', () => {
   const { Text } = require('react-native');
   return {
     MarketTrendCard: ({ instrument }: any) => <Text>{instrument.name}: {instrument.currentPrice}</Text>,
@@ -21,7 +21,7 @@ jest.mock('../../presentation/components/MarketTrendCard', () => {
 
 describe('HomeScreen', () => {
   const mockUser = { id: '1', email: 'test@example.com', fullName: 'Caner' };
-  const mockLogout = jest.fn();
+  const mockLogout = jest.fn().mockResolvedValue(undefined);
   
   const mockMarketData = [
     { id: 'USD', name: 'Dolar', symbol: 'USD/TRY', currentPrice: 34.25, isUpwardTrend: true },
@@ -94,6 +94,13 @@ describe('HomeScreen', () => {
   });
 
   it('çıkış yap butonuna basıldığında logout fonksiyonunu çağırmalıdır', async () => {
+    jest.spyOn(Alert, 'alert').mockImplementation((_title, _msg, buttons) => {
+      const confirmButton = buttons?.find((b: any) => b.style === 'destructive');
+      if (confirmButton?.onPress) {
+        confirmButton.onPress();
+      }
+    });
+
     render(
       <NavigationContainer>
         <HomeScreen />

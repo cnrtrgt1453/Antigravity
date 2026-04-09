@@ -31,10 +31,10 @@ describe('GameScreen', () => {
 
   beforeEach(() => {
     (useGameStore as any).mockReturnValue(mockState);
-    global.fetch = jest.fn().mockResolvedValue({
+    global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
       ok: true,
       json: async () => [{ ticker: 'THYAO', current_price: 250 }],
-    });
+    })) as any;
   });
 
   it('başlığı ve bakiyeyi doğru göstermelidir', async () => {
@@ -66,6 +66,6 @@ describe('GameScreen', () => {
       </NavigationContainer>
     );
 
-    expect(screen.getByText('Henüz bir yatırımınız bulunmuyor.')).toBeTruthy();
+    expect(screen.getByText('Portföy Boş')).toBeTruthy();
   });
 });

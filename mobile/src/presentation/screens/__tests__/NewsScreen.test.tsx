@@ -37,15 +37,16 @@ describe('NewsScreen', () => {
       user: mockUser,
     });
 
-    global.fetch = jest.fn().mockImplementation((url: string) => {
-      if (url.includes('/api/v1/watchlist/list')) {
+    global.fetch = jest.fn().mockImplementation((url: any) => {
+      const urlStr = url.toString();
+      if (urlStr.includes('/api/v1/watchlist/list')) {
         return Promise.resolve({ ok: true, json: async () => mockWatchlist });
       }
-      if (url.includes('/api/v1/news')) {
+      if (urlStr.includes('/api/v1/news')) {
         return Promise.resolve({ ok: true, json: async () => mockNewsData });
       }
       return Promise.resolve({ ok: true, json: async () => ({ summary: 'Haftalık rapor özeti.' }) });
-    });
+    }) as any;
 
     jest.spyOn(Alert, 'alert');
   });
@@ -81,13 +82,22 @@ describe('NewsScreen', () => {
       </NavigationContainer>
     );
 
-    // "Tümü" butonunu bekle ve tıkla
+    // Haberlerin yüklenmesini bekle, bu sayede fetchNews ilk çalışması tamamlanmış olur
+    await waitFor(() => screen.getByText('THYAO Haber'));
+    // setLoading 600ms timeout bekleyelim
+    await new Promise(resolve => setTimeout(resolve, 700));
+
+    // "Tümü" butonunu tıkla
     const allTab = await screen.findByText(/Tümü/);
+    (global.fetch as any).mockClear();
     fireEvent.press(allTab);
 
     // watchlistOnly=false ile tekrar fetch çağırılmalı
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('watchlistOnly=false'));
+      const calls = (global.fetch as any).mock.calls;
+      expect(calls.length).toBeGreaterThan(0);
+      const isFetchFalse = calls.some((c: any) => c[0] && c[0].toString().includes('watchlistOnly=false'));
+      expect(isFetchFalse).toBe(true);
     });
   });
 

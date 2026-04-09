@@ -1,6 +1,8 @@
 import { jest, describe, it, expect, beforeEach } from '@jest/globals';
 import { useAuthStore } from '../useAuthStore';
-import { ApiAuthRepository } from '../../data/repositories/ApiAuthRepository';
+import { ApiAuthRepository } from '../../../data/repositories/ApiAuthRepository';
+
+jest.mock('../../../data/repositories/ApiAuthRepository');
 
 describe('useAuthStore', () => {
   beforeEach(() => {
@@ -24,8 +26,8 @@ describe('useAuthStore', () => {
     
     // Global mock üzerinden metodun davranışını belirle
     // Not: ApiAuthRepository artık bir mock fonksiyonu döndüren mock'lanmış bir modüldür.
-    const repositoryInstance = new ApiAuthRepository();
-    (repositoryInstance.login as any).mockResolvedValue(mockUser);
+    // Sınıfın prototipini mocklayarak methodun dönüş değerini ayarla
+    (ApiAuthRepository.prototype.login as jest.Mock).mockResolvedValue(mockUser);
 
     await useAuthStore.getState().login('test@example.com', 'password123');
 

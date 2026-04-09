@@ -31,7 +31,7 @@ describe('StockChart', () => {
     const webview = screen.getByTestId('mock-webview');
     
     // Basit bir kontrol: HTML string'i içinde verilerimiz var mı?
-    expect(webview.props.source.html).toContain('JSON.stringify');
+    expect(webview.props.source.html).toContain(JSON.stringify(mockOhlc));
     
     const newOhlc = [...mockOhlc, { time: 1672704000, open: 110, high: 120, low: 110, close: 115 }];
     rerender(<StockChart ohlc={newOhlc} />);

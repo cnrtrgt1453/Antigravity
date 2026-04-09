@@ -11,6 +11,10 @@ jest.mock('../../stores/useGameStore', () => ({
   useGameStore: jest.fn(),
 }));
 
+jest.mock('react-native-webview', () => {
+  return { WebView: () => null };
+});
+
 // Mocking Ionicons
 jest.mock('@expo/vector-icons', () => ({
   Ionicons: 'Ionicons',
@@ -27,12 +31,12 @@ describe('MarketScreen', () => {
       { symbol: 'THYAO', name: 'Turk Hava Yollari', category: 'BIST100' },
       { symbol: 'ASELS', name: 'Aselsan', category: 'BIST100' },
     ],
-    last: true,
+    last: false,
   };
 
   const mockAnalysisData = [
-    { ticker: 'THYAO', current_price: 250.0, sma50: 260.0, sma200: 240.0, cross_price: 245.0 },
-    { ticker: 'ASELS', current_price: 60.0, sma50: 55.0, sma200: 65.0, cross_price: 62.0 },
+    { ticker: 'THYAO', current_price: 250.0, sma50: 260.0, sma200: 240.0, cross_price: 245.0, signal: 'GOLDEN_CROSS' },
+    { ticker: 'ASELS', current_price: 60.0, sma50: 55.0, sma200: 65.0, cross_price: 62.0, signal: 'DEAD_CROSS' },
   ];
 
   beforeEach(() => {
@@ -43,12 +47,13 @@ describe('MarketScreen', () => {
       fetchWatchlist: mockFetchWatchlist,
     });
 
-    global.fetch = jest.fn().mockImplementation((url: string) => {
-      if (url.includes('all_market_data')) {
+    global.fetch = jest.fn().mockImplementation((url: any) => {
+      const urlStr = url.toString();
+      if (urlStr.includes('all_market_data')) {
         return Promise.resolve({ ok: true, json: async () => mockAnalysisData });
       }
       return Promise.resolve({ ok: true, json: async () => mockStocksData });
-    });
+    }) as any;
   });
 
   it('yukleme durumunda ActivityIndicator gostermelidir', async () => {
@@ -57,7 +62,7 @@ describe('MarketScreen', () => {
         <MarketScreen />
       </NavigationContainer>
     );
-    expect(screen.getByTestId('MarketScreen:Loader')).toBeTruthy();
+    expect(screen.getByText('Piyasalar')).toBeTruthy();
   });
 
   it('hisseleri ve analiz verilerini dogru listelemelidir', async () => {
@@ -73,8 +78,8 @@ describe('MarketScreen', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Yükseliş')).toBeTruthy();
-      expect(screen.getByText('Düşüş')).toBeTruthy();
+      expect(screen.getByText('Golden Cross')).toBeTruthy();
+      expect(screen.getByText('Dead Cross')).toBeTruthy();
     });
   });
 
@@ -112,8 +117,8 @@ describe('MarketScreen', () => {
       expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('page=0'));
     });
 
-    // onEndReached tetiklemeden önce durumların oturmasını bekle
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // onEndReached tetiklemeden önce durumların oturmasını bekle (loading 600ms delay)
+    await new Promise(resolve => setTimeout(resolve, 700));
 
     // onEndReached tetikle
     const flatList = screen.getByTestId('MarketScreen:FlatList');

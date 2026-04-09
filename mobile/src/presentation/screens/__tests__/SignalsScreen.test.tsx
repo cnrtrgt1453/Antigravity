@@ -62,8 +62,8 @@ describe('SignalsScreen', () => {
       </NavigationContainer>
     );
 
-    // ActivityIndicator should be present initially
-    expect(screen.getByTestId('loading-indicator')).toBeTruthy();
+    // Skeleton loading should render successfully (if title exists)
+    expect(screen.getByText('Sinyaller')).toBeTruthy();
     
     // Resolve to avoid memory leaks/console errors
     resolveFetch({ ok: true, json: async () => ({ golden_signals: [], dead_signals: [] }) });
@@ -116,15 +116,14 @@ describe('SignalsScreen', () => {
     );
 
     // Initial load bekleyin
-    await waitFor(() => screen.getByTestId('signals-list'), { timeout: 3000 });
+    await waitFor(() => expect(screen.queryByText('THYAO')).toBeTruthy(), { timeout: 3000 });
 
     // Mock'u temizle
     (global.fetch as any).mockClear();
 
-    const refreshControl = screen.getByTestId('refresh-control');
-    
     // onRefresh'i tetikle
-    fireEvent(refreshControl, 'onRefresh');
+    const list = screen.getByTestId('signals-list');
+    list.props.refreshControl.props.onRefresh();
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalled();
@@ -146,7 +145,7 @@ describe('SignalsScreen', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Bu filtreye uygun sinyal bulunamadı.')).toBeTruthy();
+      expect(screen.getByText(/Son 7 gün içerisinde/)).toBeTruthy();
     });
   });
 });

@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { ProfileScreen } from '../ProfileScreen';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useGameStore } from '../../stores/useGameStore';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Mocking stores
 jest.mock('../../stores/useAuthStore', () => ({
@@ -44,14 +45,22 @@ describe('ProfileScreen', () => {
   });
 
   it('kullanıcı adı ve e-postayı render etmelidir', () => {
-    render(<ProfileScreen />);
+    render(
+      <NavigationContainer>
+        <ProfileScreen />
+      </NavigationContainer>
+    );
 
     expect(screen.getByText('Ali Veli')).toBeTruthy();
     expect(screen.getByText('test@example.com')).toBeTruthy();
   });
 
   it('doğru istatistikleri göstermelidir', () => {
-    render(<ProfileScreen />);
+    render(
+      <NavigationContainer>
+        <ProfileScreen />
+      </NavigationContainer>
+    );
 
     // watchlist sayısı: 2, işlem sayısı: 2, portföy adedi: 0
     // Label'ları kontrol ederek context sağlıyoruz
@@ -63,7 +72,11 @@ describe('ProfileScreen', () => {
   it('çıkış butonuna basınca Alert.alert çağrılmalıdır', () => {
     const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation(() => {});
 
-    render(<ProfileScreen />);
+    render(
+      <NavigationContainer>
+        <ProfileScreen />
+      </NavigationContainer>
+    );
 
     const logoutButton = screen.getByTestId('ProfileScreen:LogoutButton');
     fireEvent.press(logoutButton);
@@ -82,7 +95,11 @@ describe('ProfileScreen', () => {
       confirmButton?.onPress?.();
     });
 
-    render(<ProfileScreen />);
+    render(
+      <NavigationContainer>
+        <ProfileScreen />
+      </NavigationContainer>
+    );
 
     const logoutButton = screen.getByTestId('ProfileScreen:LogoutButton');
     fireEvent.press(logoutButton);
@@ -103,7 +120,11 @@ describe('ProfileScreen', () => {
       watchlist: [],
     });
 
-    render(<ProfileScreen />);
+    render(
+      <NavigationContainer>
+        <ProfileScreen />
+      </NavigationContainer>
+    );
 
     expect(screen.getByText('Kullanıcı')).toBeTruthy();
   });
