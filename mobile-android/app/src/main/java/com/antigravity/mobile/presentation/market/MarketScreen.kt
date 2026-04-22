@@ -3,7 +3,7 @@ package com.antigravity.mobile.presentation.market
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.antigravity.mobile.presentation.components.StockDetailsBottomSheet
 import com.antigravity.mobile.presentation.components.StockListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,6 +20,9 @@ fun MarketScreen(
     viewModel: MarketViewModel = hiltViewModel()
 ) {
     val stocks = viewModel.stocksPagingData.collectAsLazyPagingItems()
+    val selectedStock by viewModel.selectedStock.collectAsState()
+    val chartData by viewModel.chartData.collectAsState()
+    val isChartLoading by viewModel.isChartLoading.collectAsState()
 
     Column(
         modifier = Modifier
@@ -41,7 +45,7 @@ fun MarketScreen(
                 stock?.let {
                     StockListItem(
                         stock = it,
-                        onItemClick = { /* Navigate to Details */ },
+                        onItemClick = { viewModel.selectStock(it) },
                         onWatchlistToggle = { s -> viewModel.toggleWatchlist(s) }
                     )
                 }
@@ -70,5 +74,15 @@ fun MarketScreen(
                 else -> {}
             }
         }
+    }
+
+    if (selectedStock != null) {
+        StockDetailsBottomSheet(
+            symbol = selectedStock?.symbol,
+            name = selectedStock?.name,
+            ohlcData = chartData,
+            isLoading = isChartLoading,
+            onDismiss = { viewModel.selectStock(null) }
+        )
     }
 }

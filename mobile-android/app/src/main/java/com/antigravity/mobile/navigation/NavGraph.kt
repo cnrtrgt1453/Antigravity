@@ -7,11 +7,13 @@ import androidx.navigation.compose.composable
 import com.antigravity.mobile.presentation.auth.LoginScreen
 import com.antigravity.mobile.presentation.main.MainScreen
 import com.antigravity.mobile.presentation.history.TradeHistoryScreen
+import com.antigravity.mobile.presentation.privacy.PrivacyPolicyScreen
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Main : Screen("main")
     object TradeHistory : Screen("trade_history")
+    object PrivacyPolicy : Screen("privacy_policy")
 }
 
 @Composable
@@ -39,12 +41,21 @@ fun RootNavigation(navController: NavHostController) {
                 },
                 onNavigateToHistory = {
                     navController.navigate(Screen.TradeHistory.route)
+                },
+                onNavigateToPrivacy = {
+                    navController.navigate(Screen.PrivacyPolicy.route)
                 }
             )
         }
 
         composable(Screen.TradeHistory.route) {
             TradeHistoryScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.PrivacyPolicy.route) {
+            PrivacyPolicyScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

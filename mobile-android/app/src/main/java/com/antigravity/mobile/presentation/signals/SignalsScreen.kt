@@ -1,5 +1,6 @@
 package com.antigravity.mobile.presentation.signals
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,9 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.antigravity.mobile.domain.model.MarketSignal
+import com.antigravity.mobile.presentation.components.StockDetailsBottomSheet
 import com.antigravity.mobile.ui.theme.SuccessGreen
 import com.antigravity.mobile.ui.theme.ErrorRed
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignalsScreen(
     viewModel: SignalsViewModel = hiltViewModel()
@@ -83,22 +86,36 @@ fun SignalsScreen(
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
                 items(uiState.filteredResults) { signal ->
-                    SignalCard(signal = signal)
+                    SignalCard(
+                        signal = signal,
+                        onClick = { viewModel.selectSymbol(signal.ticker) }
+                    )
                 }
             }
         }
     }
+
+    if (uiState.selectedSymbol != null) {
+        StockDetailsBottomSheet(
+            symbol = uiState.selectedSymbol,
+            name = uiState.filteredResults.find { it.ticker == uiState.selectedSymbol }?.message?.take(20) + "...",
+            ohlcData = uiState.chartData,
+            isLoading = uiState.isChartLoading,
+            onDismiss = { viewModel.selectSymbol(null) }
+        )
+    }
 }
 
 @Composable
-fun SignalCard(signal: MarketSignal) {
+fun SignalCard(signal: MarketSignal, onClick: () -> Unit) {
     val isGolden = signal.signal == "GOLDEN_CROSS"
     val color = if (isGolden) SuccessGreen else ErrorRed
 
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable { onClick() },
         colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -143,7 +160,7 @@ fun SignalCard(signal: MarketSignal) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column {
                     Text("Mevcut Fiyat", style = MaterialTheme.typography.labelSmall)
-                    Text(signal.current_price.toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(signal.current_price.toString() + " ₺", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                 }
                 Column {
                     Text("Kesişim Fiyatı", style = MaterialTheme.typography.labelSmall)

@@ -77,9 +77,43 @@ fun StockListItem(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                PriceItem("Fiyat", stock.currentPrice?.toString() ?: "-")
-                PriceItem("Sinyal", stock.signal ?: "YOK")
-                PriceItem("Kesişim", stock.crossPrice?.toString() ?: "-")
+                PriceItem("Fiyat", String.format("%.2f", stock.currentPrice ?: 0.0))
+                PriceItem("SMA50", String.format("%.2f", stock.sma50 ?: 0.0))
+                PriceItem("SMA200", String.format("%.2f", stock.sma200 ?: 0.0))
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Kesişimden Beri Fark:",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                )
+                
+                val diff = if (stock.currentPrice != null && stock.crossPrice != null) {
+                    stock.currentPrice - stock.crossPrice
+                } else null
+                
+                val diffColor = when {
+                    diff == null -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    diff > 0 -> SuccessGreen
+                    diff < 0 -> ErrorRed
+                    else -> MaterialTheme.colorScheme.onSurface
+                }
+
+                Text(
+                    text = if (diff != null) String.format("%+.2f", diff) else "-",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = diffColor
+                )
             }
         }
     }

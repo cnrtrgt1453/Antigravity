@@ -30,13 +30,17 @@ class StockPagingSource(
 ) : PagingSource<Int, Stock>() {
 
     private var analysisCache: List<MarketSignal>? = null
+    private var watchlistCache: List<String>? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Stock> {
         val page = params.key ?: 0
         return try {
-            // 1. Fetch Analysis once per first page or if cache is empty
+            // 1. Fetch Cache once per first page or if cache is empty
             if (page == 0 || analysisCache == null) {
                 analysisCache = client.get("$pythonBaseUrl/api/v1/analysis/all_market_data").body<List<MarketSignal>>()
+            }
+            if (page == 0 || watchlistCache == null) {
+                watchlistCache = client.get("$javaBaseUrl/api/game/watchlist").body<List<String>>()
             }
 
             // 2. Fetch Stocks from Java
@@ -51,9 +55,10 @@ class StockPagingSource(
                     category = dto.category,
                     signal = analysis?.signal ?: "NO_SIGNAL",
                     currentPrice = analysis?.current_price,
-                    sma50 = null, // Can be added to DTO or Analysis if needed
-                    sma200 = null,
-                    crossPrice = analysis?.cross_price
+                    sma50 = analysis?.sma50,
+                    sma200 = analysis?.sma200,
+                    crossPrice = analysis?.cross_price,
+                    isWatched = watchlistCache?.contains(dto.symbol) == true
                 )
             }
 

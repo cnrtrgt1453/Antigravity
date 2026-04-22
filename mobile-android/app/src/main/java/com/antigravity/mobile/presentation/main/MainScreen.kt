@@ -2,8 +2,10 @@ package com.antigravity.mobile.presentation.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material3.*
@@ -19,6 +21,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.antigravity.mobile.presentation.home.HomeScreen
 import com.antigravity.mobile.presentation.market.MarketScreen
+import com.antigravity.mobile.presentation.news.NewsScreen
+import com.antigravity.mobile.presentation.profile.ProfileScreen
 import com.antigravity.mobile.presentation.signals.SignalsScreen
 
 sealed class BottomBarScreen(
@@ -29,13 +33,16 @@ sealed class BottomBarScreen(
     object Home : BottomBarScreen("home", "Ana Sayfa", Icons.Default.Home)
     object Market : BottomBarScreen("market", "Piyasalar", Icons.Default.ShowChart)
     object Signals : BottomBarScreen("signals", "Sinyaller", Icons.Default.Analytics)
+    object News : BottomBarScreen("news", "Haberler", Icons.Default.Newspaper)
     object Game : BottomBarScreen("game", "Portföy", Icons.Default.AccountBalanceWallet)
+    object Profile : BottomBarScreen("profile", "Profil", Icons.Default.Person)
 }
 
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
-    onNavigateToHistory: () -> Unit
+    onNavigateToHistory: () -> Unit,
+    onNavigateToPrivacy: () -> Unit
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -49,9 +56,16 @@ fun MainScreen(
             composable(BottomBarScreen.Home.route) { HomeScreen() }
             composable(BottomBarScreen.Market.route) { MarketScreen() }
             composable(BottomBarScreen.Signals.route) { SignalsScreen() }
+            composable(BottomBarScreen.News.route) { NewsScreen() }
             composable(BottomBarScreen.Game.route) {
                 com.antigravity.mobile.presentation.game.GameScreen(
                     onNavigateToHistory = onNavigateToHistory
+                )
+            }
+            composable(BottomBarScreen.Profile.route) {
+                ProfileScreen(
+                    onLogout = onLogout,
+                    onNavigateToPrivacy = onNavigateToPrivacy
                 )
             }
         }
@@ -64,7 +78,9 @@ fun BottomBar(navController: NavHostController) {
         BottomBarScreen.Home,
         BottomBarScreen.Market,
         BottomBarScreen.Signals,
-        BottomBarScreen.Game
+        BottomBarScreen.News,
+        BottomBarScreen.Game,
+        BottomBarScreen.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

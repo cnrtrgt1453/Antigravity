@@ -2,6 +2,7 @@ package com.antigravity.mobile.presentation.signals
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antigravity.mobile.domain.model.OHLCData
 import com.antigravity.mobile.domain.model.MarketSignal
 import com.antigravity.mobile.domain.repository.MarketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,10 @@ data class SignalsState(
     val results: List<MarketSignal> = emptyList(),
     val filteredResults: List<MarketSignal> = emptyList(),
     val isLoading: Boolean = false,
-    val activeFilter: SignalFilter = SignalFilter.ALL
+    val activeFilter: SignalFilter = SignalFilter.ALL,
+    val selectedSymbol: String? = null,
+    val chartData: OHLCData = OHLCData(),
+    val isChartLoading: Boolean = false
 )
 
 enum class SignalFilter { ALL, GOLDEN, DEAD }
@@ -27,8 +31,25 @@ class SignalsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignalsState())
     val uiState = _uiState.asStateFlow()
 
+    private var refreshJob: kotlinx.coroutines.Job? = null
+
     init {
-        fetchSignals()
+        startAutoRefresh()
+    }
+
+    private fun startAutoRefresh() {
+        refreshJob?.cancel()
+        refreshJob = viewModelScope.launch {
+            while (true) {
+                fetchSignals()
+                kotlinx.coroutines.delay(60000) // 60 seconds
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        refreshJob?.cancel()
     }
 
     fun fetchSignals() {
@@ -52,5 +73,25 @@ class SignalsViewModel @Inject constructor(
             SignalFilter.DEAD -> _uiState.value.results.filter { it.signal == "DEAD_CROSS" }
         }
         _uiState.value = _uiState.value.copy(activeFilter = filter, filteredResults = filtered)
+    }
+
+    fun selectSymbol(symbol: String?) {
+        _uiState.value = _uiState.value.copy(selectedSymbol = symbol)
+        if (symbol != null) {
+            loadChartData(symbol)
+        }
+    }
+
+    private fun loadChartData(symbol: String) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isChartLoading = true)
+            repository.getOHLCData(symbol)
+                .onSuccess { data ->
+                    _uiState.value = _uiState.value.copy(chartData = data, isChartLoading = false)
+                }
+                .onFailure {
+                    _uiState.value = _uiState.value.copy(isChartLoading = false)
+                }
+        }
     }
 }

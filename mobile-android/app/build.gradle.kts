@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.services)
     kotlin("plugin.serialization") version "2.0.0"
 }
 
@@ -65,6 +66,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
+    implementation(libs.play.services.auth)
 
     // Hilt
     implementation(libs.hilt.android)

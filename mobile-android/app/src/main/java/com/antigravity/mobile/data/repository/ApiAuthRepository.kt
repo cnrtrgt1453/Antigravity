@@ -44,4 +44,13 @@ class ApiAuthRepository @Inject constructor(
         // Future implementation with local storage
         return null
     }
+
+    override suspend fun deleteAccount(): Result<Unit> {
+        return try {
+            client.post("$baseUrl/me/delete")
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

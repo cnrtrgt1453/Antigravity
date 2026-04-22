@@ -23,6 +23,8 @@ data class MarketSignal(
     val current_price: Double,
     val cross_price: Double?,
     val cross_date: String?,
+    val sma50: Double? = null,
+    val sma200: Double? = null,
     val message: String?
 )
 
