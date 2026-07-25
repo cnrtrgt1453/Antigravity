@@ -7,6 +7,8 @@ import androidx.paging.cachedIn
 import com.antigravity.mobile.domain.model.Stock
 import com.antigravity.mobile.domain.model.OHLCData
 import com.antigravity.mobile.domain.repository.MarketRepository
+import com.antigravity.mobile.domain.usecase.GetOHLCDataUseCase
+import com.antigravity.mobile.domain.usecase.ToggleWatchlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MarketViewModel @Inject constructor(
-    private val repository: MarketRepository
+    private val repository: MarketRepository,
+    private val getOHLCDataUseCase: GetOHLCDataUseCase,
+    private val toggleWatchlistUseCase: ToggleWatchlistUseCase
 ) : ViewModel() {
 
     val stocksPagingData: Flow<PagingData<Stock>> = repository
@@ -34,7 +38,7 @@ class MarketViewModel @Inject constructor(
 
     fun toggleWatchlist(stock: Stock) {
         viewModelScope.launch {
-            repository.toggleWatchlist(stock.symbol, !stock.isWatched)
+            toggleWatchlistUseCase(stock.symbol, !stock.isWatched)
         }
     }
 
@@ -48,7 +52,7 @@ class MarketViewModel @Inject constructor(
     private fun loadChartData(symbol: String) {
         viewModelScope.launch {
             _isChartLoading.value = true
-            repository.getOHLCData(symbol)
+            getOHLCDataUseCase(symbol)
                 .onSuccess { data ->
                     _chartData.value = data
                 }

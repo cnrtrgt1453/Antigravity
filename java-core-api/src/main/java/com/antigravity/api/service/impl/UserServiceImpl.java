@@ -32,8 +32,7 @@ public class UserServiceImpl implements UserService {
     private final PortfolioRepository portfolioRepository;
     private final WatchlistRepository watchlistRepository;
     private final TradeHistoryRepository tradeHistoryRepository;
-    private final FirebaseAuthService firebaseAuthService;
-    private final GoogleAuthService googleAuthService;
+    private final com.antigravity.api.security.social.SocialAuthProviderFactory socialAuthProviderFactory;
 
     @Override
     @Transactional(readOnly = true)
@@ -55,26 +54,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User loginWithSocial(SocialLoginRequestDto socialLoginRequestDto) {
         try {
-            String email;
-            String fullName;
-            String profilePictureUrl;
-            String firebaseUid;
+            com.antigravity.api.security.social.SocialAuthProvider provider =
+                    socialAuthProviderFactory.getProvider(socialLoginRequestDto.getPlatform());
+            com.antigravity.api.security.social.SocialUserInfo userInfo =
+                    provider.verifyToken(socialLoginRequestDto.getIdToken());
 
-            if ("GOOGLE".equalsIgnoreCase(socialLoginRequestDto.getPlatform())) {
-                // Google ID Token doğrulaması
-                GoogleIdToken.Payload payload = googleAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
-                email = payload.getEmail();
-                fullName = (String) payload.get("name");
-                profilePictureUrl = (String) payload.get("picture");
-                firebaseUid = payload.getSubject(); // Google için sub alanı
-            } else {
-                // Firebase Token doğrulaması (Diğer platformlar için varsayılan)
-                FirebaseToken decodedToken = firebaseAuthService.verifyIdToken(socialLoginRequestDto.getIdToken());
-                email = decodedToken.getEmail();
-                fullName = (String) decodedToken.getClaims().get("name");
-                profilePictureUrl = decodedToken.getPicture();
-                firebaseUid = decodedToken.getUid();
-            }
+            String email = userInfo.getEmail();
+            String fullName = userInfo.getFullName();
+            String profilePictureUrl = userInfo.getProfilePictureUrl();
+            String firebaseUid = userInfo.getProviderUid();
 
             log.info("Sosyal login isteği ({}): {}", socialLoginRequestDto.getPlatform(), email);
 

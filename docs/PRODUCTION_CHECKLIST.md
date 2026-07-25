@@ -27,30 +27,23 @@ Mobil uygulamada Google ve Facebook ile giriş yapabilmek için `app.json` dosya
    ]
    ```
 
-### B. Google Girişi (@react-native-google-signin)
+### B. Google Girişi (Firebase Google Sign-In)
 1. **Firebase Console** (veya Google Cloud Console) üzerinden yeni bir proje (veya mevcut projenizi) açın.
 2. Projeye Android uygulamasını ekleyin. Paket adını `com.antigravity.mobile` olarak tanımlayın.
-3. EAS'in ürettiği **SHA-1** parmak izinizi kaydedin (`eas credentials` üzerinden görülebilir).
+3. Uygulama **SHA-1** parmak izinizi kaydedin.
 4. Kayıt işlemi tamamlandıktan sonra Firebase panelinin size verdiği **`google-services.json`** adlı dosyayı indirin.
-5. İndirdiğiniz bu dosyayı projedeki kök dizine (yani `mobile/` klasörünün tam içine) kopyalayın.
-6. `app.json` içerisinde Android ayarlarının olduğu kısma bu dosyanın yolunu aşağıdaki gibi tanımlayın:
-   ```json
-   "android": {
-     "package": "com.antigravity.mobile",
-     "googleServicesFile": "./google-services.json"
-   }
-   ```
+5. İndirdiğiniz bu dosyayı `mobile-android/app/` klasörünün içine kopyalayın.
 
 ## 2. API ve Backend Bağlantıları (Environment Variables)
-Uygulamanız canlı ortama çıktığında, geliştirme sürecinde kullanılan `localhost` veya ev içi Wi-Fi IP adresleri erişilemez olacaktır.
-1. `mobile/update-ip.js` gibi yerel test süreçlerine yarayan otomatizasyon dosyaları yerine `.env` üzerinden gerçek internet sunucunuzun (VPS, VDS, AWS, Heroku vb.) adreslerini kullanmalısınız.
-2. Expo üzerinde derleme yaparken EAS ortamlarına `.env` şifrelerinizi `eas.json` dosyanızda belirtebilir veya Expo web sitesi üzerinden "Secrets" olarak kaydedebilirsiniz.
+Uygulamanız canlı ortama çıktığında, geliştirme sürecinde kullanılan `localhost` veya yerel IP adresleri erişilemez olacaktır.
+1. `mobile-android/app/build.gradle.kts` veya `BuildConfig` üzerinden canlı sunucu (VPS, AWS vb.) URL adreslerinizi yapılandırın.
 
-## 3. Yeni Derleme ve Test (Pre-Production Build)
-Tüm ayarlarınızı gerçek versiyonlarıyla değiştirdikten sonra canlı sürüm hatası yapıp yapmadığınızı test etmek için bir kez AAB/APK oluşturun.
+## 3. Canlı Derleme ve Yayınlama (Production Release Build)
+Tüm ayarlarınızı doğruladıktan sonra Google Play Store için AAB (Android App Bundle) veya imzalı APK çıktısı alın.
 ```bash
-eas build -p android --profile production
+cd mobile-android
+.\gradlew bundleRelease
 ```
-Play Store'a **APK dosyası yerine her zaman AAB dosyası** (Android App Bundle) yüklemeniz gerektiğini unutmayın. `eas.json` içindeki `"production"` build türü bu işlemi otomatik olarak ayarlamaktadır.
+Play Store'a **APK dosyası yerine her zaman AAB dosyası** (`app-release.aab`) yüklemeniz gerektiğini unutmayın.
 
-> **Son Kontrol:** Her şeyden eminseniz Firebase ve Facebook panellerinden sosyal girişlerinizi "Test/Development" modundan "Live" veya "Production" moduna almayı (Onaylamayı) unutmayın. Aksi takdirde uygulamanızın Google ve Facebook girişleri sadece geliştirici hesaplarına açık kalır.
+> **Son Kontrol:** Her şeyden eminseniz Firebase panellerinden sosyal girişlerinizi "Live" moduna almayı unutmayın. Aksi takdirde uygulamanızın Google girişleri sadece geliştirici hesaplarına açık kalır.
