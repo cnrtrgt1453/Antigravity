@@ -20,8 +20,8 @@ public class TradingServiceImpl implements TradingService {
     private final PortfolioItemRepository portfolioItemRepository;
     private final TradeHistoryRepository tradeHistoryRepository;
     private final GameWatchlistRepository gameWatchlistRepository;
-
-    private static final BigDecimal COMMISSION_RATE = new BigDecimal("0.01"); // %1
+    private final com.antigravity.api.service.trading.CommissionCalculator commissionCalculator;
+    private final com.antigravity.api.service.trading.OrderPriceValidator orderPriceValidator;
 
     @Override
     @Transactional
@@ -39,10 +39,11 @@ public class TradingServiceImpl implements TradingService {
     @Override
     @Transactional
     public Portfolio buyStock(User user, String symbol, Long quantity, BigDecimal price) {
+        orderPriceValidator.validatePrice(symbol, price);
         Portfolio portfolio = getOrCreatePortfolio(user);
 
         BigDecimal totalVolume = price.multiply(BigDecimal.valueOf(quantity));
-        BigDecimal commission = totalVolume.multiply(COMMISSION_RATE).setScale(4, RoundingMode.HALF_UP);
+        BigDecimal commission = commissionCalculator.calculateCommission(quantity, price);
         BigDecimal totalDeduction = totalVolume.add(commission);
 
         if (portfolio.getBalance().compareTo(totalDeduction) < 0) {
@@ -79,6 +80,7 @@ public class TradingServiceImpl implements TradingService {
     @Override
     @Transactional
     public Portfolio sellStock(User user, String symbol, Long quantity, BigDecimal price) {
+        orderPriceValidator.validatePrice(symbol, price);
         Portfolio portfolio = getOrCreatePortfolio(user);
 
         PortfolioItem item = portfolioItemRepository.findByPortfolioAndStockSymbol(portfolio, symbol)
@@ -89,7 +91,7 @@ public class TradingServiceImpl implements TradingService {
         }
 
         BigDecimal totalVolume = price.multiply(BigDecimal.valueOf(quantity));
-        BigDecimal commission = totalVolume.multiply(COMMISSION_RATE).setScale(4, RoundingMode.HALF_UP);
+        BigDecimal commission = commissionCalculator.calculateCommission(quantity, price);
         BigDecimal netProceeds = totalVolume.subtract(commission);
 
         // 1. Update Balance

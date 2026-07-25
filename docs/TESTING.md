@@ -28,36 +28,33 @@ Eğer veritabanına bağlanamazsanız, önce servisin çalışıp çalışmadı�
 2. Bağımlılıkları yükleyin: `py -m pip install -r requirements.txt`
 3. Analiz motorunu başlatın: `py -m uvicorn app.main:app --host 0.0.0.0 --port 8000`
 
-## 4. Mobil Uygulama (React Native & Development Build) 📱
+## 4. Mobil Uygulama (Android Native & Gradle) 📱
 
-Google ile Giriş gibi native (yerel) özelliklerin çalışması için **Expo Go kullanılamaz.** Bunun yerine bir "Development Build" (Geliştirme Yapısı) kurmanız gerekir.
+Android uygulamasını çalıştırmak ve test etmek için Android Studio veya Gradle CLI kullanılabilir.
 
-### Adım 1: IP Adresini Güncelleyin
-`mobile/src/config/index.ts` dosyasındaki `JAVA_API_URL` ve `PYTHON_API_URL` adreslerinin bilgisayarınızın güncel yerel IP'si (örn: `192.168.1.132`) ile aynı olduğundan emin olun.
-
-### Adım 2: Fiziksel Cihazı Bağlayın
-1. Telefonunuzda **Geliştirici Seçenekleri**'ni ve **USB Hata Ayıklama**'yı (USB Debugging) aktif edin.
+### Adım 1: Fiziksel Cihazı veya Emülatörü Bağlayın
+1. Telefonunuzda **Geliştirici Seçenekleri**'ni ve **USB Hata Ayıklama**'yı (USB Debugging) aktif edin veya Android Studio Emülatörünü başlatın.
 2. Telefonu USB ile bilgisayara bağlayın.
-3. Bilgisayarda ve telefonda çıkan "Hata ayıklamaya izin verilsin mi?" uyarılarına **Evet** deyin.
 
-### Adım 3: Uygulamayı Telefona Kurun
-Üçüncü bir terminal açın ve şu komutları çalıştırın:
+### Adım 2: Uygulamayı Kurun ve Çalıştırın
+Terminalden `mobile-android` dizininde Gradle komutunu çalıştırın:
 ```powershell
-cd mobile
-npx expo run:android --no-build-cache
+cd mobile-android
+.\gradlew installDebug
 ```
-*Not: Bu işlem ilk seferde birkaç dakika sürebilir. İşlem bittiğinde uygulama telefonunuzda otomatik olarak açılacaktır.*
 
 ## 5. Tam Sistem Testi (Dashboard)
-Uygulamanın tam kapasite çalışması için şu 3 terminalin de **aynı anda** açık ve çalışır olduğundan emin olun:
-- **Terminal 1:** Java Backend (Port 8080)
-- **Terminal 2:** Python Backend (Port 8000)
-- **Terminal 3:** Mobil Uygulama (Geliştirme Sunucusu)
+Uygulamanın tam kapasite çalışması için şu servislerin açık olduğundan emin olun:
+- **Terminal 1:** Java Backend (`java-core-api` - Port 8080)
+- **Terminal 2:** Python Backend (`python-analysis-engine` - Port 8000)
+- **Terminal 3 / Android Studio:** Native Android (`mobile-android`)
 
 ## 6. Otomatik Testlerin Çalıştırılması
-Birim testlerini hızlıca doğrulamak için:
+Birim testlerini çalıştırmak için:
 ```powershell
-cd mobile
+cd mobile-android
+.\gradlew testDebugUnitTest
+```
 npm test
 ```
 

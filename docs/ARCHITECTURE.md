@@ -14,9 +14,9 @@ Bu belge, Antigravity piyasa analizi ve sinyal uygulaması için hibrit (Polyglo
 - **Teknoloji:** Java 17+, Spring Boot 3, Spring Security, Spring Data JPA.
 - **İletişim:** Analiz sonuçları için Python motoruyla etkileşime girer ve mobil ön yüze hizmet verir.
 
-### 3. Mobil Ön Yüz (React Native)
+### 3. Mobil Ön Yüz (Android Native)
 - **Rol:** Kullanıcıların piyasa sinyallerini, haberleri ve sanal portföylerini görebileceği arayüz.
-- **Teknoloji:** React Native (Expo), TypeScript, Zustand (State Management).
+- **Teknoloji:** Kotlin, Jetpack Compose, Hilt (Dependency Injection), Coroutines & Flow.
 
 ### 4. Oyun ve Portföy Sistemi
 - **Rol:** Kullanıcıların gerçek verilerle sanal alım-satım yapmasını sağlayan modül.

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "777162969154",
+    "project_id": "antigravity-borsa",
+    "storage_bucket": "antigravity-borsa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777162969154:android:121d93770f10a59ad35ddb",
+        "android_client_info": {
+          "package_name": "com.antigravity.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777162969154-v0uakj0p1ck462hadna64he6anl2e8g0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.antigravity.mobile",
+            "certificate_hash": "e041a92a1fe3975b677eece0b9249212f61f2ee5"
+          }
+        },
+        {
+          "client_id": "777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5UjP5s6tkdiD7EVckqrRNVsjMKZtH-Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
