@@ -13,8 +13,8 @@ class SupabaseConfig @Inject constructor(
     companion object {
         // Supabase proje bilgileri (Geliştirme / Production ortamı)
         // Kullanıcı kendi projesinin URL ve Anon Key'ini buraya veya BuildConfig'e tanımlar
-        var SUPABASE_URL: String = "https://your-project.supabase.co"
-        var SUPABASE_ANON_KEY: String = "your-anon-public-key"
+        var SUPABASE_URL: String = "https://qnpcbifwstangldotwpt.supabase.co"
+        var SUPABASE_ANON_KEY: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFucGNiaWZ3c3RhbmdsZG90d3B0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTE5OTEsImV4cCI6MjEwNjE4Nzk5MX0.08rL2EpqvXVaNK_Jz3bPkb7m3gGEA8qCKr3QX-tF1vY"
         
         // Python FastAPI Sunucu Adresi (Emülatör için 10.0.2.2:8000, Canlı için Render/Koyeb URL)
         var PYTHON_BASE_URL: String = "http://10.0.2.2:8000"
