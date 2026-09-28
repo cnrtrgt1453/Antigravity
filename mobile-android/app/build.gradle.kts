@@ -11,6 +11,12 @@ android {
     namespace = "com.antigravity.mobile"
     compileSdk = 34
 
+    val localProperties = java.util.Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+
     defaultConfig {
         applicationId = "com.antigravity.mobile"
         minSdk = 26
@@ -22,6 +28,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val supabaseUrl = localProperties.getProperty("supabase.url") ?: "https://your-project.supabase.co"
+        val supabaseAnonKey = localProperties.getProperty("supabase.anon.key") ?: "your-anon-public-key"
+        val pythonBaseUrl = localProperties.getProperty("python.base.url") ?: "http://10.0.2.2:8000"
+
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"$supabaseAnonKey\"")
+        buildConfigField("String", "PYTHON_BASE_URL", "\"$pythonBaseUrl\"")
     }
 
     buildTypes {
@@ -42,6 +56,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.11" // Note: With Kotlin 2.0.0, this might be handled by the compose-compiler plugin but still good to specify for compatibility

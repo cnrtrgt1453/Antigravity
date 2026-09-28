@@ -1,0 +1,7 @@
+## This file is an example of local.properties
+# Copy this file to local.properties and fill in your values.
+sdk.dir=/path/to/your/android/sdk
+
+supabase.url=https://your-project.supabase.co
+supabase.anon.key=your-anon-public-key
+python.base.url=http://10.0.2.2:8000

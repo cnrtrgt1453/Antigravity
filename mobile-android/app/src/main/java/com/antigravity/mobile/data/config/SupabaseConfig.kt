@@ -2,6 +2,7 @@ package com.antigravity.mobile.data.config
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.antigravity.mobile.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,13 +12,10 @@ class SupabaseConfig @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     companion object {
-        // Supabase proje bilgileri (Geliştirme / Production ortamı)
-        // Kullanıcı kendi projesinin URL ve Anon Key'ini buraya veya BuildConfig'e tanımlar
-        var SUPABASE_URL: String = "https://qnpcbifwstangldotwpt.supabase.co"
-        var SUPABASE_ANON_KEY: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFucGNiaWZ3c3RhbmdsZG90d3B0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2MTE5OTEsImV4cCI6MjEwNjE4Nzk5MX0.08rL2EpqvXVaNK_Jz3bPkb7m3gGEA8qCKr3QX-tF1vY"
-        
-        // Python FastAPI Sunucu Adresi (Emülatör için 10.0.2.2:8000, Canlı için Render/Koyeb URL)
-        var PYTHON_BASE_URL: String = "http://10.0.2.2:8000"
+        // BuildConfig (local.properties) üzerinden güvenli yüklenir, kodda gizli kalır
+        var SUPABASE_URL: String = BuildConfig.SUPABASE_URL
+        var SUPABASE_ANON_KEY: String = BuildConfig.SUPABASE_ANON_KEY
+        var PYTHON_BASE_URL: String = BuildConfig.PYTHON_BASE_URL
 
         private const val PREFS_NAME = "financeup_supabase_prefs"
         private const val KEY_ACCESS_TOKEN = "access_token"
