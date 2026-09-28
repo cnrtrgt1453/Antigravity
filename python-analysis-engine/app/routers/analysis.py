@@ -5,7 +5,7 @@ from typing import List, Dict, Any, Optional
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.db.signal_repository import ISignalRepository, FileSignalRepository
+from app.db.signal_repository import ISignalRepository, FileSignalRepository, SupabaseSignalRepository
 from app.services.data_provider import IMarketDataProvider, YahooFinanceProvider
 from app.services.analysis_strategy import IAnalysisStrategy, GoldenCrossStrategy
 from app.services.indicator_service import TechnicalIndicatorService
@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 COOLDOWN_HOURS = 12
 
 def get_signal_repository() -> ISignalRepository:
-    return FileSignalRepository(base_dir=BASE_DIR)
+    return SupabaseSignalRepository(base_dir=BASE_DIR)
 
 def get_market_data_provider() -> IMarketDataProvider:
     return YahooFinanceProvider()

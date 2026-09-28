@@ -1,44 +1,42 @@
-# Antigravity - Proje Mimarisi Özeti
+# FinanceUP - Proje Mimarisi
 
-Bu belge, Antigravity piyasa analizi ve sinyal uygulaması için hibrit (Polyglot Microservices) mimariyi özetler.
+Bu belge, FinanceUP piyasa analizi ve sanal alım-satım platformunun güncel hibrit (Supabase BaaS + Python FastAPI + Android Native) mimarisini özetler.
+
+## Mimari Prensipler
+1. **0 TL Maliyet:** Tüm altyapı ücretsiz katmanlar (Supabase Free Tier, Render/Koyeb Free Tier) üzerinde çalışacak şekilde tasarlanmıştır.
+2. **Minimum Teknoloji:** 3 bağımsız servis yerine yalnızca 1 istemci (Android) + 1 BaaS (Supabase) + 1 analitik motor (Python FastAPI) yapısına geçilmiştir. Java Spring Boot katmanı kaldırılarak bellek ve sunucu maliyeti sıfırlanmıştır.
+
+---
 
 ## Teknoloji Yığını
 
-### 1. Analiz Motoru (Python)
-- **Rol:** Veri çekme, matematiksel hesaplamalar ve sinyal üretimi.
-- **Teknoloji:** Python 3.9+, FastAPI, Pandas, TA-Lib, `yfinance`.
-- **Mantık:** Teknik analizleri (SMA, Golden/Dead Cross) gerçekleştirir ve sonuçları REST API üzerinden sunar.
+### 1. BaaS & Veritabanı Katmanı (Supabase / PostgreSQL)
+- **Rol:** Kimlik doğrulama, kullanıcı profilleri, portföy & bakiye yönetimi, takip listesi, haberler ve atomik alım-satım motoru.
+- **Teknoloji:** PostgreSQL 15, Row Level Security (RLS), Supabase Auth (Google SSO), PL/pgSQL RPC.
+- **Atomik İşlemler:** Alım ve satım işlemleri `buy_stock` ve `sell_stock` SQL RPC fonksiyonları içinde transaction garantisiyle yürütülür (%1 komisyon, anlık ortalama maliyet hesaplama, bakiye düşümü).
 
-### 2. Çekirdek API ve Orkestrasyon (Java Spring Boot)
-- **Rol:** Arka plan orkestrasyonu, güvenlik, veri kalıcılığı ve dış servis koordinasyonu.
-- **Teknoloji:** Java 17+, Spring Boot 3, Spring Security, Spring Data JPA.
-- **İletişim:** Analiz sonuçları için Python motoruyla etkileşime girer ve mobil ön yüze hizmet verir.
+### 2. Analiz Motoru (Python FastAPI)
+- **Rol:** BIST hisselerinin OHLC verilerini çekme, matematiksel teknik göstergeleri (SMA50, SMA200, Golden/Dead Cross) hesaplama ve anlık grafik endpoint'leri sunma.
+- **Teknoloji:** Python 3.10+, FastAPI, Pandas, `yfinance`, `supabase-py`, APScheduler.
+- **İletişim:** Hesaplanan sinyalleri doğrudan Supabase `market_signals` tablosuna ve hisse son fiyatlarını `stocks` tablosuna aktarır.
 
-### 3. Mobil Ön Yüz (Android Native)
-- **Rol:** Kullanıcıların piyasa sinyallerini, haberleri ve sanal portföylerini görebileceği arayüz.
-- **Teknoloji:** Kotlin, Jetpack Compose, Hilt (Dependency Injection), Coroutines & Flow.
+### 3. Mobil İstemci (Android Native)
+- **Rol:** Kullanıcı arayüzü, canlı grafik gösterimi, takip listesi ve sanal borsa simülasyonu.
+- **Teknoloji:** Kotlin, Jetpack Compose, Hilt (Dependency Injection), Ktor Client, Coroutines & Flow.
+- **İletişim:** Veritabanı ve Auth işlemleri için doğrudan Supabase PostgREST REST API'si ile; anlık teknik grafik ve taramalar için Python FastAPI ile konuşur.
 
-### 4. Oyun ve Portföy Sistemi
-- **Rol:** Kullanıcıların gerçek verilerle sanal alım-satım yapmasını sağlayan modül.
-- **Mantık:** Java tarafında cüzdan ve işlem geçmişi yönetilirken, Python tarafı anlık fiyatlama ve kar/zarar hesaplamalarını sağlar.
-
-### 5. Veritabanı Katmanı (PostgreSQL)
-- **Rol:** Kullanıcı verileri, işlem geçmişi, piyasa sinyalleri ve haberler için kalıcı depolama.
-- **Optimizasyon:** İzleme listesi gibi sık sorgulanan alanlar için kompozit indeksler ile optimize edilmiştir.
+---
 
 ## Temel İş Akışları
 
-### Günlük Analiz Döngüsü
-1. **Tetikleyici:** Python'daki zamanlanmış görev veya mobilden gelen manuel tetikleme.
-2. **Analiz:** Python motoru OHLC verilerini çeker ve kesişimleri hesaplar.
-3. **Kalıcılık:** Sonuçlar, geçmiş takibi için PostgreSQL'de saklanır.
-
-### Haber Senkronizasyonu
-1. **Tetikleyici:** Java tarafında hafta içi 18:15'te çalışan cron görevi.
-2. **Çekme:** Dış finansal haber kaynakları ile entegrasyon.
-3. **Akıllı Güncelleme:** UID/Link bazlı tekilleştirme ile veri güncelliği.
-
-### Oyun ve Alım-Satım Akışı
-1. **İşlem:** Kullanıcı bir hisseyi almayı veya satmayı onaylar.
-2. **Doğrulama:** Java backend bakiye ve stok miktarını kontrol eder.
-3. **Güncelleme:** İşlem sonucu portföy tablosuna kaydedilir ve işlem geçmişine eklenir.
+```
+[Android Native İstemci]
+   │
+   ├── (Auth & Profil) ──────────> [Supabase Auth]
+   ├── (Portföy & Alım/Satım) ────> [Supabase RPC (buy_stock / sell_stock)]
+   ├── (Takip Listesi & Hisseler) > [Supabase PostgREST]
+   │
+   └── (Anlık Grafik & Sinyal) ───> [Python FastAPI (yfinance + TA)]
+                                            │
+                                            └── (Sinyalleri Kaydet) ──> [Supabase DB]
+```

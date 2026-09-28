@@ -7,7 +7,7 @@ from enum import Enum
 
 from app.services.data_provider import YahooFinanceProvider
 from app.services.analysis_strategy import GoldenCrossStrategy
-from app.services.result_reporter import JsonResultReporter
+from app.services.result_reporter import JsonResultReporter, SupabaseResultReporter
 from app.services.scanner_engine import ScannerEngine
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ def scan_all_instruments():
     
     provider = YahooFinanceProvider()
     strategy = GoldenCrossStrategy(short_window=50, long_window=200)
-    reporter = JsonResultReporter(file_path=RESULTS_FILE)
+    reporter = SupabaseResultReporter(file_path=RESULTS_FILE)
     
     engine = ScannerEngine(
         data_provider=provider,
