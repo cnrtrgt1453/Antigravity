@@ -1,5 +1,6 @@
 package com.antigravity.mobile.presentation.profile
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,11 +30,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ProfileScreen(
     onLogout: () -> Unit,
     onNavigateToPrivacy: () -> Unit,
+    onNavigateToLogin: () -> Unit = {},
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isLoggedIn by viewModel.isLoggedIn.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.refresh()
+    }
 
     LaunchedEffect(uiState.isLoggedOut || uiState.isDeleted) {
         if (uiState.isLoggedOut || uiState.isDeleted) {
@@ -41,120 +48,213 @@ fun ProfileScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF0D1117))
-            .verticalScroll(rememberScrollState())
-            .padding(20.dp)
-    ) {
-        Spacer(modifier = Modifier.height(40.dp))
-
-        // Profile Header
-        ProfileHeader(
-            fullName = uiState.user?.fullName ?: "Kullanıcı",
-            email = uiState.user?.email ?: ""
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Statistics
-        Text(
-            text = "İstatistikler",
-            color = Color(0xFF8B949E),
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            StatCard(modifier = Modifier.weight(1f), value = "0", label = "Takip")
-            StatCard(modifier = Modifier.weight(1f), value = uiState.tradeCount.toString(), label = "İşlem")
-            StatCard(modifier = Modifier.weight(1f), value = (uiState.portfolio?.items?.size ?: 0).toString(), label = "Portföy")
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Balance Card
-        BalanceCard(balance = uiState.portfolio?.balance?.toString() ?: "0.00")
-
-        Spacer(modifier = Modifier.height(28.dp))
-
-        // App Info Section
-        Text(
-            text = "Uygulama",
-            color = Color(0xFF8B949E),
-            fontSize = 13.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
-
+    if (!isLoggedIn) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(14.dp))
-                .background(Color(0xFF161B22))
-                .border(1.dp, Color(0xFF30363D), RoundedCornerShape(14.dp))
+                .fillMaxSize()
+                .background(Color(0xFF0D1117))
+                .padding(20.dp)
         ) {
-            InfoRow(icon = Icons.Outlined.Info, label = "FinanceUp", value = "v1.0.0")
-            Divider(color = Color(0xFF30363D))
-            InfoRow(icon = Icons.Outlined.TrendingUp, label = "Yöntem", value = "Golden / Dead Cross")
-            Divider(color = Color(0xFF30363D))
-            InfoRow(
-                icon = Icons.Outlined.ErrorOutline,
-                label = "Sinyaller yatırım tavsiyesi değildir.",
-                value = "",
-                labelColor = Color(0xFFC9D1D9)
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Text(
+                text = "Profilim",
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White
             )
-            Divider(color = Color(0xFF30363D))
-            InfoRow(
-                icon = Icons.Outlined.Description,
-                label = "Gizlilik Politikası",
-                value = "",
-                labelColor = Color(0xFF58A6FF),
-                showChevron = true,
-                onClick = onNavigateToPrivacy
-            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 80.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF161B22)),
+                    border = BorderStroke(1.dp, Color(0xFF30363D))
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(28.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Surface(
+                            shape = CircleShape,
+                            color = Color(0xFFF6C90E).copy(alpha = 0.15f),
+                            modifier = Modifier.size(68.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.Lock,
+                                    contentDescription = null,
+                                    tint = Color(0xFFF6C90E),
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Text(
+                            text = "Giriş yapınız.",
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Text(
+                            text = "Profil bilgilerinizi, portföy istatistiklerinizi ve hesap detaylarınızı görüntülemek için lütfen giriş yapınız.",
+                            color = Color(0xFF8B949E),
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Button(
+                            onClick = onNavigateToLogin,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White,
+                                contentColor = Color.Black
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(Icons.Default.Login, contentDescription = null, modifier = Modifier.size(20.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("GOOGLE İLE GİRİŞ YAP", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        }
+                    }
+                }
+            }
         }
-
-        Spacer(modifier = Modifier.height(28.dp))
-
-        // Logout Button
-        Button(
-            onClick = { showLogoutDialog = true },
+    } else {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFF85149).copy(alpha = 0.1f),
-                contentColor = Color(0xFFF85149)
-            ),
-            shape = RoundedCornerShape(14.dp),
-            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFF85149).copy(alpha = 0.3f))
+                .fillMaxSize()
+                .background(Color(0xFF0D1117))
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp)
         ) {
-            Icon(Icons.Default.Logout, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Çıkış Yap", fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(40.dp))
+
+            // Profile Header
+            ProfileHeader(
+                fullName = uiState.user?.fullName ?: "Kullanıcı",
+                email = uiState.user?.email ?: ""
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Statistics
+            Text(
+                text = "İstatistikler",
+                color = Color(0xFF8B949E),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                StatCard(modifier = Modifier.weight(1f), value = "0", label = "Takip")
+                StatCard(modifier = Modifier.weight(1f), value = uiState.tradeCount.toString(), label = "İşlem")
+                StatCard(modifier = Modifier.weight(1f), value = (uiState.portfolio?.items?.size ?: 0).toString(), label = "Portföy")
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Balance Card
+            BalanceCard(balance = uiState.portfolio?.balance?.toString() ?: "0.00")
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            // App Info Section
+            Text(
+                text = "Uygulama",
+                color = Color(0xFF8B949E),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(Color(0xFF161B22))
+                    .border(1.dp, Color(0xFF30363D), RoundedCornerShape(14.dp))
+            ) {
+                InfoRow(icon = Icons.Outlined.Info, label = "FinanceUp", value = "v1.0.0")
+                Divider(color = Color(0xFF30363D))
+                InfoRow(icon = Icons.Outlined.TrendingUp, label = "Yöntem", value = "Golden / Dead Cross")
+                Divider(color = Color(0xFF30363D))
+                InfoRow(
+                    icon = Icons.Outlined.ErrorOutline,
+                    label = "Sinyaller yatırım tavsiyesi değildir.",
+                    value = "",
+                    labelColor = Color(0xFFC9D1D9)
+                )
+                Divider(color = Color(0xFF30363D))
+                InfoRow(
+                    icon = Icons.Outlined.Description,
+                    label = "Gizlilik Politikası",
+                    value = "",
+                    labelColor = Color(0xFF58A6FF),
+                    showChevron = true,
+                    onClick = onNavigateToPrivacy
+                )
+            }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            // Logout Button
+            Button(
+                onClick = { showLogoutDialog = true },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFF85149).copy(alpha = 0.1f),
+                    contentColor = Color(0xFFF85149)
+                ),
+                shape = RoundedCornerShape(14.dp),
+                border = BorderStroke(1.dp, Color(0xFFF85149).copy(alpha = 0.3f))
+            ) {
+                Icon(Icons.Default.Logout, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Çıkış Yap", fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Hesabımı Sil",
+                color = Color(0xFF8B949E),
+                fontSize = 14.sp,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showDeleteDialog = true }
+                    .padding(vertical = 10.dp),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(40.dp))
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Hesabımı Sil",
-            color = Color(0xFF8B949E),
-            fontSize = 14.sp,
-            textDecoration = TextDecoration.Underline,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { showDeleteDialog = true }
-                .padding(vertical = 10.dp),
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(40.dp))
     }
 
     if (showLogoutDialog) {
@@ -163,7 +263,11 @@ fun ProfileScreen(
             title = { Text("Çıkış Yap") },
             text = { Text("Hesabınızdan çıkmak istediğinize emin misiniz?") },
             confirmButton = {
-                TextButton(onClick = { viewModel.logout() }) {
+                TextButton(onClick = {
+                    showLogoutDialog = false
+                    viewModel.logout()
+                    onLogout()
+                }) {
                     Text("Çıkış Yap", color = Color.Red)
                 }
             },
@@ -200,8 +304,10 @@ fun ProfileHeader(fullName: String, email: String) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val initials = if (fullName.contains(" ")) {
-            fullName.split(" ").take(2).map { it.first() }.joinToString("").uppercase()
+        val initials = if (fullName.isBlank() || fullName == "Misafir Kullanıcı") {
+            "?"
+        } else if (fullName.contains(" ")) {
+            fullName.split(" ").filter { it.isNotBlank() }.take(2).map { it.first() }.joinToString("").uppercase()
         } else {
             fullName.take(2).uppercase()
         }

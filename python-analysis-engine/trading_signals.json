@@ -1,0 +1,95 @@
+{
+  "timestamp": 1790799000.0,
+  "signals": [
+    {
+      "symbol": "THYAO",
+      "signal_type": "BUY",
+      "entry_price": 284.50,
+      "stop_loss": 272.00,
+      "take_profit": 309.50,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790799000000
+    },
+    {
+      "symbol": "ASELS",
+      "signal_type": "BUY",
+      "entry_price": 62.40,
+      "stop_loss": 59.80,
+      "take_profit": 67.60,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790795400000
+    },
+    {
+      "symbol": "KCHOL",
+      "signal_type": "BUY",
+      "entry_price": 182.20,
+      "stop_loss": 174.50,
+      "take_profit": 197.60,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790791800000
+    },
+    {
+      "symbol": "AKBNK",
+      "signal_type": "BUY",
+      "entry_price": 54.10,
+      "stop_loss": 51.50,
+      "take_profit": 59.30,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790788200000
+    },
+    {
+      "symbol": "BIMAS",
+      "signal_type": "BUY",
+      "entry_price": 492.00,
+      "stop_loss": 472.00,
+      "take_profit": 532.00,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790784600000
+    },
+    {
+      "symbol": "TUPRS",
+      "signal_type": "BUY",
+      "entry_price": 158.70,
+      "stop_loss": 152.00,
+      "take_profit": 172.10,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790781000000
+    },
+    {
+      "symbol": "EREGL",
+      "signal_type": "BUY",
+      "entry_price": 48.30,
+      "stop_loss": 46.10,
+      "take_profit": 52.70,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790777400000
+    },
+    {
+      "symbol": "SAHOL",
+      "signal_type": "BUY",
+      "entry_price": 93.50,
+      "stop_loss": 89.20,
+      "take_profit": 102.10,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790773800000
+    },
+    {
+      "symbol": "SISE",
+      "signal_type": "BUY",
+      "entry_price": 42.10,
+      "stop_loss": 40.20,
+      "take_profit": 45.90,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790770200000
+    },
+    {
+      "symbol": "PGSUS",
+      "signal_type": "BUY",
+      "entry_price": 236.40,
+      "stop_loss": 226.00,
+      "take_profit": 257.20,
+      "risk_reward_ratio": 2.0,
+      "timestamp": 1790766600000
+    }
+  ]
+}

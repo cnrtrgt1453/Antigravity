@@ -1,176 +1,144 @@
 package com.antigravity.mobile.presentation.signals
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.antigravity.mobile.domain.model.MarketSignal
-import com.antigravity.mobile.presentation.components.StockDetailsBottomSheet
-import com.antigravity.mobile.ui.theme.SuccessGreen
-import com.antigravity.mobile.ui.theme.ErrorRed
+import com.antigravity.mobile.domain.model.TradingSignal
+import com.antigravity.mobile.presentation.signals.components.SignalCard
+import com.antigravity.mobile.presentation.signals.components.SignalDetailBottomSheet
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignalsScreen(
     viewModel: SignalsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var selectedSignal by remember { mutableStateOf<TradingSignal?>(null) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .background(Color(0xFF0D1117))
     ) {
-        Spacer(modifier = Modifier.height(48.dp))
-        Text(
-            text = "Sinyaller",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.ExtraBold
-        )
-        Text(
-            text = "Teknik analiz al-sat sinyalleri",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)
-        )
+        Spacer(modifier = Modifier.height(44.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Filter Chips
-        LazyRow(modifier = Modifier.fillMaxWidth()) {
-            item {
-                FilterChip(
-                    selected = uiState.activeFilter == SignalFilter.ALL,
-                    onClick = { viewModel.applyFilter(SignalFilter.ALL) },
-                    label = { Text("Hepsi") },
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-            }
-            item {
-                FilterChip(
-                    selected = uiState.activeFilter == SignalFilter.GOLDEN,
-                    onClick = { viewModel.applyFilter(SignalFilter.GOLDEN) },
-                    label = { Text("Golden Cross") },
-                    modifier = Modifier.padding(end = 8.dp),
-                    colors = FilterChipDefaults.filterChipColors(selectedContainerColor = SuccessGreen)
-                )
-            }
-            item {
-                FilterChip(
-                    selected = uiState.activeFilter == SignalFilter.DEAD,
-                    onClick = { viewModel.applyFilter(SignalFilter.DEAD) },
-                    label = { Text("Dead Cross") },
-                    colors = FilterChipDefaults.filterChipColors(selectedContainerColor = ErrorRed)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (uiState.isLoading) {
-            Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 80.dp)
-            ) {
-                items(uiState.filteredResults) { signal ->
-                    SignalCard(
-                        signal = signal,
-                        onClick = { viewModel.selectSymbol(signal.ticker) }
-                    )
-                }
-            }
-        }
-    }
-
-    if (uiState.selectedSymbol != null) {
-        StockDetailsBottomSheet(
-            symbol = uiState.selectedSymbol,
-            name = uiState.filteredResults.find { it.ticker == uiState.selectedSymbol }?.message?.take(20) + "...",
-            ohlcData = uiState.chartData,
-            isLoading = uiState.isChartLoading,
-            onDismiss = { viewModel.selectSymbol(null) }
-        )
-    }
-}
-
-@Composable
-fun SignalCard(signal: MarketSignal, onClick: () -> Unit) {
-    val isGolden = signal.signal == "GOLDEN_CROSS"
-    val color = if (isGolden) SuccessGreen else ErrorRed
-
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable { onClick() },
-        colors = CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.surface)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-            ) {
+        // Başlık Alanı
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
                 Text(
-                    text = signal.ticker,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    text = "İşlem Sinyalleri",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color.White
                 )
-                Surface(
-                    color = color.copy(alpha = 0.1f),
-                    shape = MaterialTheme.shapes.small
-                ) {
-                    Text(
-                        text = if (isGolden) "GOLDEN" else "DEAD",
-                        color = color,
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                        fontWeight = FontWeight.Black
-                    )
-                }
+                Text(
+                    text = "Teknik analiz & momentum al-sat sinyalleri",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFF8B949E)
+                )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Text(
-                text = signal.message ?: "",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-            )
+            IconButton(onClick = { viewModel.loadSignals() }) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Yenile",
+                    tint = Color.White
+                )
+            }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Column {
-                    Text("Mevcut Fiyat", style = MaterialTheme.typography.labelSmall)
-                    Text(signal.current_price.toString() + " ₺", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+        when (val state = uiState) {
+            is SignalsUiState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
-                Column {
-                    Text("Kesişim Fiyatı", style = MaterialTheme.typography.labelSmall)
-                    Text(signal.cross_price?.toString() ?: "-", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+            is SignalsUiState.Error -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = state.message,
+                            color = Color(0xFFE53935),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = { viewModel.loadSignals() },
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                        ) {
+                            Text("Tekrar Dene")
+                        }
+                    }
                 }
-                Column {
-                    Text("Tarih", style = MaterialTheme.typography.labelSmall)
-                    Text(signal.cross_date ?: "-", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+            }
+            is SignalsUiState.Success -> {
+                if (state.signals.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Şu anda kriterleri karşılayan aktif sinyal bulunmuyor.",
+                            color = Color(0xFF8B949E),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(bottom = 100.dp)
+                    ) {
+                        items(state.signals, key = { it.symbol + it.timestamp }) { signal ->
+                            SignalCard(
+                                signal = signal,
+                                onClick = { selectedSignal = signal }
+                            )
+                        }
+                    }
                 }
             }
         }
     }
+
+    if (selectedSignal != null) {
+        SignalDetailBottomSheet(
+            signal = selectedSignal,
+            onDismiss = { selectedSignal = null }
+        )
+    }
 }
+

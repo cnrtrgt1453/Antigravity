@@ -9,15 +9,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 data class NewsUiState(
     val news: List<News> = emptyList(),
     val isLoading: Boolean = false,
     val refreshing: Boolean = false,
-    val watchlistOnly: Boolean = true,
+    val watchlistOnly: Boolean = false,
     val selectedSymbol: String? = null,
-    val sortOrder: String = "publishedAt,desc",
+    val searchQuery: String = "",
+    val sortOrder: String = "desc", // "desc": Yeniden Eskiye, "asc": Eskiden Yeniye
+    val currentMonthName: String = "",
     val error: String? = null
 )
 
@@ -26,13 +29,24 @@ class NewsViewModel @Inject constructor(
     private val marketRepository: MarketRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(NewsUiState())
+    private val _uiState = MutableStateFlow(NewsUiState(currentMonthName = getCurrentMonthName()))
     val uiState: StateFlow<NewsUiState> = _uiState.asStateFlow()
 
     private var currentPage = 0
 
     init {
         loadNews(reset = true)
+    }
+
+    private fun getCurrentMonthName(): String {
+        val months = listOf(
+            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        )
+        val cal = Calendar.getInstance()
+        val monthIdx = cal.get(Calendar.MONTH)
+        val year = cal.get(Calendar.YEAR)
+        return "${months.getOrElse(monthIdx) { "" }} $year"
     }
 
     fun loadNews(reset: Boolean = false) {
@@ -43,17 +57,21 @@ class NewsViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = !reset, refreshing = reset)
-            
+
+            val symbol = _uiState.value.selectedSymbol
+            val sort = _uiState.value.sortOrder
+
             marketRepository.getNews(
                 page = currentPage,
                 watchlistOnly = _uiState.value.watchlistOnly,
-                symbol = _uiState.value.selectedSymbol,
-                sort = _uiState.value.sortOrder
+                symbol = symbol,
+                sort = sort
             ).onSuccess { newNews ->
                 _uiState.value = _uiState.value.copy(
-                    news = _uiState.value.news + newNews,
+                    news = if (reset) newNews else _uiState.value.news + newNews,
                     isLoading = false,
-                    refreshing = false
+                    refreshing = false,
+                    error = null
                 )
                 currentPage++
             }.onFailure { error ->
@@ -66,19 +84,35 @@ class NewsViewModel @Inject constructor(
         }
     }
 
-    fun toggleWatchlistOnly(only: Boolean) {
-        _uiState.value = _uiState.value.copy(watchlistOnly = only, selectedSymbol = null)
-        loadNews(reset = true)
+    fun refreshNews() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(refreshing = true)
+            try {
+                marketRepository.syncKapNews()
+            } catch (_: Exception) {}
+            loadNews(reset = true)
+        }
     }
 
     fun selectSymbol(symbol: String?) {
-        _uiState.value = _uiState.value.copy(selectedSymbol = symbol)
+        val clean = symbol?.trim()?.uppercase()?.removeSuffix(".IS")?.ifBlank { null }
+        _uiState.value = _uiState.value.copy(selectedSymbol = clean, searchQuery = clean ?: "")
         loadNews(reset = true)
     }
 
-    fun toggleSortOrder() {
-        val newOrder = if (_uiState.value.sortOrder.endsWith("desc")) "publishedAt,asc" else "publishedAt,desc"
-        _uiState.value = _uiState.value.copy(sortOrder = newOrder)
-        loadNews(reset = true)
+    fun setSearchQuery(query: String) {
+        _uiState.value = _uiState.value.copy(searchQuery = query)
+    }
+
+    fun submitSearch() {
+        val query = _uiState.value.searchQuery.trim().uppercase().removeSuffix(".IS")
+        selectSymbol(query.ifBlank { null })
+    }
+
+    fun setSortOrder(order: String) {
+        if (_uiState.value.sortOrder != order) {
+            _uiState.value = _uiState.value.copy(sortOrder = order)
+            loadNews(reset = true)
+        }
     }
 }

@@ -41,7 +41,7 @@ CREATE INDEX IF NOT EXISTS idx_watchlist_user ON public.watchlist(user_id);
 CREATE TABLE IF NOT EXISTS public.portfolios (
     id BIGSERIAL PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE UNIQUE,
-    balance NUMERIC(19, 4) DEFAULT 750000.0000 NOT NULL,
+    balance NUMERIC(19, 4) DEFAULT 500000.0000 NOT NULL,
     created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
 );
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS public.portfolios (
 CREATE TABLE IF NOT EXISTS public.portfolio_items (
     id BIGSERIAL PRIMARY KEY,
     portfolio_id BIGINT NOT NULL REFERENCES public.portfolios(id) ON DELETE CASCADE,
-    stock_symbol VARCHAR(20) NOT NULL REFERENCES public.stocks(symbol) ON DELETE CASCADE,
+    stock_symbol VARCHAR(20) NOT NULL,
     quantity BIGINT NOT NULL CHECK (quantity >= 0),
     average_cost NUMERIC(19, 4) NOT NULL,
     CONSTRAINT uq_portfolio_stock UNIQUE(portfolio_id, stock_symbol)
@@ -62,7 +62,7 @@ CREATE INDEX IF NOT EXISTS idx_portfolio_items_portfolio ON public.portfolio_ite
 CREATE TABLE IF NOT EXISTS public.trade_history (
     id BIGSERIAL PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    stock_symbol VARCHAR(20) NOT NULL REFERENCES public.stocks(symbol) ON DELETE CASCADE,
+    stock_symbol VARCHAR(20) NOT NULL,
     type VARCHAR(10) NOT NULL CHECK (type IN ('BUY', 'SELL')),
     quantity BIGINT NOT NULL CHECK (quantity > 0),
     price NUMERIC(19, 4) NOT NULL,
@@ -126,11 +126,18 @@ CREATE POLICY "Users can update their own profile" ON public.profiles FOR UPDATE
 CREATE POLICY "Users can manage their own watchlist" ON public.watchlist FOR ALL USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can view their own portfolio" ON public.portfolios FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert their own portfolio" ON public.portfolios FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update their own portfolio" ON public.portfolios FOR UPDATE USING (auth.uid() = user_id);
+
 CREATE POLICY "Users can view their portfolio items" ON public.portfolio_items FOR SELECT USING (
+    EXISTS (SELECT 1 FROM public.portfolios p WHERE p.id = portfolio_items.portfolio_id AND p.user_id = auth.uid())
+);
+CREATE POLICY "Users can manage their portfolio items" ON public.portfolio_items FOR ALL USING (
     EXISTS (SELECT 1 FROM public.portfolios p WHERE p.id = portfolio_items.portfolio_id AND p.user_id = auth.uid())
 );
 
 CREATE POLICY "Users can view their own trade history" ON public.trade_history FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert their own trade history" ON public.trade_history FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- ==============================================================================
 -- OTOMATIK PROFIL VE PORTFOY OLUŞTURUCU TETİKLEYİCİ (TRIGGER)
@@ -148,9 +155,10 @@ BEGIN
         new.raw_user_meta_data->>'avatar_url'
     );
 
-    -- Başlangıç Portföyü oluştur (750.000 TL bakiye)
+    -- Başlangıç Portföyü oluştur (500.000 TL bakiye)
     INSERT INTO public.portfolios (user_id, balance)
-    VALUES (new.id, 750000.0000);
+    VALUES (new.id, 500000.0000)
+    ON CONFLICT (user_id) DO NOTHING;
 
     RETURN new;
 END;
@@ -179,10 +187,12 @@ DECLARE
     v_total_volume NUMERIC(19, 4);
     v_commission NUMERIC(19, 4);
     v_total_deduction NUMERIC(19, 4);
+    v_existing_id BIGINT;
     v_existing_quantity BIGINT := 0;
     v_existing_avg_cost NUMERIC(19, 4) := 0;
     v_new_quantity BIGINT;
     v_new_avg_cost NUMERIC(19, 4);
+    v_clean_symbol VARCHAR;
 BEGIN
     v_user_id := auth.uid();
     IF v_user_id IS NULL THEN
@@ -193,6 +203,8 @@ BEGIN
         RAISE EXCEPTION 'Geçersiz miktar veya fiyat!';
     END IF;
 
+    v_clean_symbol := split_part(UPPER(TRIM(p_symbol)), '.', 1);
+
     -- Portföyü ve kilitli bakiyeyi çek (FOR UPDATE)
     SELECT id, balance INTO v_portfolio_id, v_balance
     FROM public.portfolios
@@ -200,7 +212,10 @@ BEGIN
     FOR UPDATE;
 
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Portföy bulunamadı!';
+        -- Otomatik olarak başlangıç portföyü oluştur (500.000 TL bakiye)
+        INSERT INTO public.portfolios (user_id, balance)
+        VALUES (v_user_id, 500000.0000)
+        RETURNING id, balance INTO v_portfolio_id, v_balance;
     END IF;
 
     -- Hesaplamalar (%1 Komisyon Oranı)
@@ -219,32 +234,33 @@ BEGIN
     WHERE id = v_portfolio_id;
 
     -- 2. Portföy Kalemini Güncelle veya Ekle
-    SELECT quantity, average_cost INTO v_existing_quantity, v_existing_avg_cost
+    SELECT id, quantity, average_cost INTO v_existing_id, v_existing_quantity, v_existing_avg_cost
     FROM public.portfolio_items
-    WHERE portfolio_id = v_portfolio_id AND stock_symbol = p_symbol;
+    WHERE portfolio_id = v_portfolio_id AND (stock_symbol = v_clean_symbol OR stock_symbol = p_symbol)
+    LIMIT 1;
 
-    IF FOUND THEN
+    IF v_existing_id IS NOT NULL THEN
         v_new_quantity := v_existing_quantity + p_quantity;
         v_new_avg_cost := ROUND(((v_existing_quantity * v_existing_avg_cost) + v_total_volume) / v_new_quantity, 4);
 
         UPDATE public.portfolio_items
         SET quantity = v_new_quantity,
             average_cost = v_new_avg_cost
-        WHERE portfolio_id = v_portfolio_id AND stock_symbol = p_symbol;
+        WHERE id = v_existing_id;
     ELSE
         INSERT INTO public.portfolio_items (portfolio_id, stock_symbol, quantity, average_cost)
-        VALUES (v_portfolio_id, p_symbol, p_quantity, ROUND(p_price, 4));
+        VALUES (v_portfolio_id, v_clean_symbol, p_quantity, ROUND(p_price, 4));
     END IF;
 
-    -- 3. İşlem Geçmişine Ekle
-    INSERT INTO public.trade_history (user_id, stock_symbol, type, quantity, price, commission, total_amount)
-    VALUES (v_user_id, p_symbol, 'BUY', p_quantity, p_price, v_commission, v_total_deduction);
+    -- 3. İşlem Geçmişine Ekle (Kullanıcıya özel işlem listesi)
+    INSERT INTO public.trade_history (user_id, stock_symbol, type, quantity, price, commission, total_amount, timestamp)
+    VALUES (v_user_id, v_clean_symbol, 'BUY', p_quantity, p_price, v_commission, v_total_deduction, now());
 
     RETURN json_build_object(
         'success', true,
         'message', 'Alım emri başarıyla gerçekleşti.',
         'remaining_balance', v_balance - v_total_deduction,
-        'symbol', p_symbol,
+        'symbol', v_clean_symbol,
         'quantity', p_quantity,
         'price', p_price
     );
@@ -262,10 +278,12 @@ DECLARE
     v_user_id UUID;
     v_portfolio_id BIGINT;
     v_existing_quantity BIGINT;
+    v_item_id BIGINT;
     v_total_volume NUMERIC(19, 4);
     v_commission NUMERIC(19, 4);
     v_net_proceeds NUMERIC(19, 4);
     v_new_balance NUMERIC(19, 4);
+    v_clean_symbol VARCHAR;
 BEGIN
     v_user_id := auth.uid();
     IF v_user_id IS NULL THEN
@@ -276,6 +294,8 @@ BEGIN
         RAISE EXCEPTION 'Geçersiz miktar veya fiyat!';
     END IF;
 
+    v_clean_symbol := split_part(UPPER(TRIM(p_symbol)), '.', 1);
+
     SELECT id INTO v_portfolio_id
     FROM public.portfolios
     WHERE user_id = v_user_id;
@@ -285,12 +305,13 @@ BEGIN
     END IF;
 
     -- Hisse sahipliğini kontrol et
-    SELECT quantity INTO v_existing_quantity
+    SELECT id, quantity INTO v_item_id, v_existing_quantity
     FROM public.portfolio_items
-    WHERE portfolio_id = v_portfolio_id AND stock_symbol = p_symbol
+    WHERE portfolio_id = v_portfolio_id AND (stock_symbol = v_clean_symbol OR stock_symbol = p_symbol)
+    LIMIT 1
     FOR UPDATE;
 
-    IF NOT FOUND OR v_existing_quantity < p_quantity THEN
+    IF v_item_id IS NULL OR v_existing_quantity < p_quantity THEN
         RAISE EXCEPTION 'Yetersiz hisse miktarı! Elinizde % adet var.', COALESCE(v_existing_quantity, 0);
     END IF;
 
@@ -309,24 +330,42 @@ BEGIN
     -- 2. Portföy Kalemini Güncelle ya da Sıfırlandıysa Sil
     IF v_existing_quantity = p_quantity THEN
         DELETE FROM public.portfolio_items
-        WHERE portfolio_id = v_portfolio_id AND stock_symbol = p_symbol;
+        WHERE id = v_item_id;
     ELSE
         UPDATE public.portfolio_items
         SET quantity = quantity - p_quantity
-        WHERE portfolio_id = v_portfolio_id AND stock_symbol = p_symbol;
+        WHERE id = v_item_id;
     END IF;
 
-    -- 3. İşlem Geçmişine Ekle
-    INSERT INTO public.trade_history (user_id, stock_symbol, type, quantity, price, commission, total_amount)
-    VALUES (v_user_id, p_symbol, 'SELL', p_quantity, p_price, v_commission, v_net_proceeds);
+    -- 3. İşlem Geçmişine Ekle (Kullanıcıya özel işlem listesi)
+    INSERT INTO public.trade_history (user_id, stock_symbol, type, quantity, price, commission, total_amount, timestamp)
+    VALUES (v_user_id, v_clean_symbol, 'SELL', p_quantity, p_price, v_commission, v_net_proceeds, now());
 
     RETURN json_build_object(
         'success', true,
         'message', 'Satış işlemi başarıyla gerçekleşti.',
         'new_balance', v_new_balance,
-        'symbol', p_symbol,
+        'symbol', v_clean_symbol,
         'quantity', p_quantity,
         'net_proceeds', v_net_proceeds
     );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- ==============================================================================
+-- 12. GECMIS AY KAP HABERLERINI TEMIZLEME FONKSIYONU
+-- ==============================================================================
+CREATE OR REPLACE FUNCTION public.cleanup_old_news()
+RETURNS integer AS $$
+DECLARE
+    v_deleted_count integer;
+BEGIN
+    -- Bulunduğumuz ayın ilk günü saat 00:00:00 UTC'den önceki tüm haberleri sil
+    DELETE FROM public.news 
+    WHERE published_at < date_trunc('month', CURRENT_DATE);
+    
+    GET DIAGNOSTICS v_deleted_count = ROW_COUNT;
+    RETURN v_deleted_count;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+

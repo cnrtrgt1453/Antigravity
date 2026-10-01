@@ -8,6 +8,8 @@ import com.antigravity.mobile.presentation.auth.LoginScreen
 import com.antigravity.mobile.presentation.main.MainScreen
 import com.antigravity.mobile.presentation.history.TradeHistoryScreen
 import com.antigravity.mobile.presentation.privacy.PrivacyPolicyScreen
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.antigravity.mobile.presentation.auth.AuthViewModel
 
 sealed class Screen(val route: String) {
     object Login : Screen("login")
@@ -17,33 +19,40 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun RootNavigation(navController: NavHostController) {
+fun RootNavigation(
+    navController: NavHostController,
+    authViewModel: AuthViewModel? = null
+) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = Screen.Main.route
     ) {
-        composable(Screen.Login.route) {
-            LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(Screen.Main.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
-                    }
-                }
-            )
-        }
-        
         composable(Screen.Main.route) {
             MainScreen(
                 onLogout = {
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Main.route) { inclusive = true }
-                    }
+                    authViewModel?.logout()
                 },
                 onNavigateToHistory = {
                     navController.navigate(Screen.TradeHistory.route)
                 },
                 onNavigateToPrivacy = {
                     navController.navigate(Screen.PrivacyPolicy.route)
+                },
+                onNavigateToLogin = {
+                    authViewModel?.resetState()
+                    navController.navigate(Screen.Login.route)
+                }
+            )
+        }
+
+        composable(Screen.Login.route) {
+            LoginScreen(
+                viewModel = authViewModel ?: hiltViewModel(),
+                onLoginSuccess = {
+                    navController.popBackStack()
+                },
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }

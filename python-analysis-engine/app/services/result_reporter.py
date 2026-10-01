@@ -58,7 +58,27 @@ class SupabaseResultReporter:
 
             if signals:
                 client.table("market_signals").insert(signals).execute()
-                logger.info(f"{len(signals)} signals saved to Supabase.")
+                logger.info(f"{len(signals)} signals saved to Supabase market_signals.")
+
+            # 3. stocks tablosundaki son fiyat ve analiz verilerini güncelle
+            for r in results:
+                ticker = r.get("ticker")
+                if not ticker:
+                    continue
+                last_price = r.get("current_price") or r.get("price")
+                update_payload = {
+                    "last_price": round(float(last_price), 4) if last_price is not None else None,
+                    "sma50": round(float(r["sma50"]), 4) if r.get("sma50") is not None else None,
+                    "sma200": round(float(r["sma200"]), 4) if r.get("sma200") is not None else None,
+                    "signal": r.get("signal") or "NO_SIGNAL",
+                    "cross_price": round(float(r["cross_price"]), 4) if r.get("cross_price") is not None else None,
+                    "cross_date": r.get("cross_date")
+                }
+                try:
+                    client.table("stocks").update(update_payload).eq("symbol", ticker).execute()
+                except Exception:
+                    pass
+            logger.info("Supabase stocks table updated with latest analysis.")
         except Exception as e:
             logger.error(f"Failed to report results to Supabase: {e}")
 

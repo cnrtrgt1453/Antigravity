@@ -10,8 +10,10 @@ import com.antigravity.mobile.domain.model.ScanResponse
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
+import com.antigravity.mobile.domain.model.MarketFilter
+
 interface MarketRepository {
-    fun getStocksPagingData(): Flow<PagingData<Stock>>
+    fun getStocksPagingData(filter: MarketFilter = MarketFilter.ALL, searchQuery: String = ""): Flow<PagingData<Stock>>
     suspend fun getMarketSummary(): Result<List<MarketSummary>>
     suspend fun getLatestSignals(): Result<List<MarketSignal>>
     suspend fun toggleWatchlist(symbol: String, isWatched: Boolean): Result<Unit>
@@ -20,4 +22,7 @@ interface MarketRepository {
     suspend fun triggerFullScan(): Result<ScanResponse>
     suspend fun getCooldownStatus(): Result<CooldownStatus>
     suspend fun getWatchlist(): Result<List<String>>
+    suspend fun getWatchlistStocks(): Result<List<Stock>>
+    suspend fun getBist30Stocks(): Result<List<Stock>>
+    suspend fun syncKapNews(): Result<Unit>
 }

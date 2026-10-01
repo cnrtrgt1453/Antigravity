@@ -1,120 +1,146 @@
 package com.antigravity.mobile.presentation.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.antigravity.mobile.presentation.components.StockDetailsBottomSheet
+import com.antigravity.mobile.presentation.components.StockListItem
 import com.antigravity.mobile.presentation.components.TrendCard
 
 @Composable
 fun HomeScreen(
+    onNavigateToLogin: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .background(Color(0xFF0D1117)),
+        contentPadding = PaddingValues(bottom = 100.dp)
     ) {
-        Spacer(modifier = Modifier.height(48.dp))
-        
-        Text(
-            text = "Hoş Geldiniz",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.ExtraBold
-        )
-        
-        Text(
-            text = "Piyasaların dünü, bugünü ve yarını.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
-        )
+        // Üst Boşluk
+        item {
+            Spacer(modifier = Modifier.height(44.dp))
+        }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        // 1. Dolar, Euro, Pound ve Gram Altın
+        item {
+            if (uiState.isLoading && uiState.summaries.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(90.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 2.dp
+                    )
+                }
+            } else if (uiState.summaries.isNotEmpty()) {
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(uiState.summaries) { summary ->
+                        TrendCard(summary = summary)
+                    }
+                }
+            }
+        }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Piyasa Özeti",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            
-            Button(
-                onClick = { viewModel.triggerScan() },
-                enabled = !uiState.scanLoading && (uiState.cooldownStatus?.can_scan == true),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (uiState.cooldownStatus?.can_scan == true) Color(0xFF238636) else Color(0xFF21262D)
-                ),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                modifier = Modifier.height(32.dp)
+        // Başlık: BIST 30 Hisseleri
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                if (uiState.scanLoading) {
-                    CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp, color = Color.White)
-                } else {
-                    val status = uiState.cooldownStatus
+                Text(
+                    text = "BIST 30 Hisseleri",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+
+                if (uiState.bist30Stocks.isNotEmpty()) {
                     Text(
-                        text = if (status?.can_scan == true) "Şimdi Tara" else formatCooldown(status?.remaining_seconds ?: 0),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        text = "${uiState.bist30Stocks.size} Hisse",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color(0xFF8B949E),
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
         }
-        
-        Spacer(modifier = Modifier.height(12.dp))
 
-        if (uiState.isLoading) {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-        } else {
-            LazyRow {
-                items(uiState.summaries) { summary ->
-                    TrendCard(summary = summary)
+        // Yükleniyor Göstergesi
+        if (uiState.isBist30Loading && uiState.bist30Stocks.isEmpty()) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // More sections like "Sizin İçin Önerilenler" can go here
-        Card(
-            modifier = Modifier.fillMaxWidth().height(120.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-        ) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                Text(
-                    text = "Faz 2 yayında! Analiz ve Sinyaller sekmesine göz atın.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    modifier = Modifier.padding(16.dp)
+        // 2. BIST 30 Hisse Listesi (İsimleri ve Fiyatları)
+        items(uiState.bist30Stocks, key = { it.symbol }) { stock ->
+            Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)) {
+                StockListItem(
+                    stock = stock,
+                    onItemClick = { clickedStock ->
+                        if (viewModel.isLoggedIn()) {
+                            viewModel.selectStock(clickedStock)
+                        } else {
+                            onNavigateToLogin()
+                        }
+                    },
+                    onWatchlistToggle = { toggledStock ->
+                        if (viewModel.isLoggedIn()) {
+                            viewModel.toggleWatchlist(toggledStock)
+                        } else {
+                            onNavigateToLogin()
+                        }
+                    }
                 )
             }
         }
-        
-        Spacer(modifier = Modifier.height(100.dp))
     }
-}
 
-private fun formatCooldown(seconds: Int): String {
-    val h = seconds / 3600
-    val m = (seconds % 3600) / 60
-    return "${h}s ${m}d"
+    if (viewModel.isLoggedIn() && uiState.selectedStock != null) {
+        StockDetailsBottomSheet(
+            symbol = uiState.selectedStock?.symbol,
+            name = uiState.selectedStock?.name,
+            stock = uiState.selectedStock,
+            ohlcData = uiState.chartData,
+            isLoading = uiState.isChartLoading,
+            onDismiss = { viewModel.selectStock(null) }
+        )
+    }
 }

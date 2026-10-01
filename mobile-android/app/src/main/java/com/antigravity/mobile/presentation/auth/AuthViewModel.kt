@@ -26,10 +26,12 @@ class AuthViewModel @Inject constructor(
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
-    fun loginWithGoogle(idToken: String) {
+    fun getOAuthLoginUrl(): String = authRepository.getOAuthLoginUrl()
+
+    fun handleOAuthCallback(url: String) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
-            authRepository.loginWithGoogle(idToken)
+            authRepository.handleOAuthCallback(url)
                 .onSuccess { user ->
                     _authState.value = AuthState.Success(user)
                 }
@@ -37,5 +39,31 @@ class AuthViewModel @Inject constructor(
                     _authState.value = AuthState.Error(error.message ?: "Giriş başarısız oldu.")
                 }
         }
+    }
+
+    fun checkCurrentSession() {
+        viewModelScope.launch {
+            val user = authRepository.getCurrentUser()
+            if (user != null) {
+                _authState.value = AuthState.Success(user)
+            } else {
+                _authState.value = AuthState.Idle
+            }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            authRepository.logout()
+            _authState.value = AuthState.Idle
+        }
+    }
+
+    fun setError(message: String) {
+        _authState.value = AuthState.Error(message)
+    }
+
+    fun resetState() {
+        _authState.value = AuthState.Idle
     }
 }

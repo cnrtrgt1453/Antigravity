@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.scheduler.jobs import start_scheduler
-from app.routers import analysis
+from app.routers import analysis, news
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -18,6 +18,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Python Analysis Engine", version="1.0.0", lifespan=lifespan)
 
 app.include_router(analysis.router, prefix="/api/v1/analysis", tags=["Analysis"])
+app.include_router(news.router, prefix="/api/v1/news", tags=["News"])
 
 @app.get("/")
 def read_root():

@@ -2,6 +2,7 @@ package com.antigravity.mobile.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antigravity.mobile.data.config.SupabaseConfig
 import com.antigravity.mobile.domain.model.Portfolio
 import com.antigravity.mobile.domain.model.User
 import com.antigravity.mobile.domain.repository.AuthRepository
@@ -26,17 +27,33 @@ data class ProfileUiState(
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val gameRepository: GameRepository
+    private val gameRepository: GameRepository,
+    private val config: SupabaseConfig
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+
+    private val _isLoggedIn = MutableStateFlow(config.isLoggedIn())
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn.asStateFlow()
 
     init {
         loadProfileData()
     }
 
     private fun loadProfileData() {
+        val loggedIn = config.isLoggedIn()
+        _isLoggedIn.value = loggedIn
+        if (!loggedIn) {
+            _uiState.value = ProfileUiState(
+                user = null,
+                portfolio = null,
+                tradeCount = 0,
+                isLoading = false
+            )
+            return
+        }
+
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             
@@ -53,11 +70,20 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun refresh() {
+        loadProfileData()
+    }
+
     fun logout() {
         viewModelScope.launch {
-            authRepository.logout().onSuccess {
-                _uiState.value = _uiState.value.copy(isLoggedOut = true)
-            }
+            authRepository.logout()
+            _isLoggedIn.value = false
+            _uiState.value = _uiState.value.copy(
+                user = null,
+                portfolio = null,
+                tradeCount = 0,
+                isLoggedOut = true
+            )
         }
     }
 
@@ -66,6 +92,7 @@ class ProfileViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             authRepository.deleteAccount()
                 .onSuccess {
+                    _isLoggedIn.value = false
                     _uiState.value = _uiState.value.copy(isDeleted = true, isLoading = false)
                 }
                 .onFailure { error ->

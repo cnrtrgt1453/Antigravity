@@ -1,13 +1,16 @@
 package com.antigravity.mobile.presentation.auth
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.content.Intent
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -17,44 +20,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.antigravity.mobile.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onNavigateBack: () -> Unit = onLoginSuccess
 ) {
     val authState by viewModel.authState.collectAsState()
     val context = LocalContext.current
-    
-    // Web Client ID from legacy project
-    val webClientId = "777162969154-ha4tnq6c6bu0b4ijcpb01ae8m3d9gpc9.apps.googleusercontent.com"
 
-    val gso = remember {
-        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(webClientId)
-            .requestEmail()
-            .build()
-    }
-
-    val googleSignInClient = remember {
-        GoogleSignIn.getClient(context, gso)
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            account?.idToken?.let { idToken ->
-                viewModel.loginWithGoogle(idToken)
-            }
-        } catch (e: ApiException) {
-            // Handle error
-        }
+    LaunchedEffect(Unit) {
+        viewModel.checkCurrentSession()
     }
 
     LaunchedEffect(authState) {
@@ -63,22 +43,35 @@ fun LoginScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Logo
-        Box(
+    Box(modifier = Modifier.fillMaxSize()) {
+        IconButton(
+            onClick = onNavigateBack,
             modifier = Modifier
-                .size(100.dp)
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
+                .padding(top = 40.dp, start = 16.dp)
+                .align(Alignment.TopStart)
         ) {
-            Text(text = "📈", fontSize = 64.sp)
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Geri",
+                tint = Color.White
+            )
         }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+        // Logo
+        Image(
+            painter = painterResource(id = R.drawable.app_logo),
+            contentDescription = "FinanceUP Logo",
+            modifier = Modifier
+                .size(110.dp)
+                .clip(RoundedCornerShape(24.dp))
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -105,7 +98,17 @@ fun LoginScreen(
         } else {
             Button(
                 onClick = { 
-                    launcher.launch(googleSignInClient.signInIntent)
+                    val loginUrl = viewModel.getOAuthLoginUrl()
+                    try {
+                        val customTabsIntent = CustomTabsIntent.Builder()
+                            .setShowTitle(true)
+                            .build()
+                        customTabsIntent.launchUrl(context, Uri.parse(loginUrl))
+                    } catch (e: Exception) {
+                        // Tarayıcı ile fallback
+                        val fallbackIntent = Intent(Intent.ACTION_VIEW, Uri.parse(loginUrl))
+                        context.startActivity(fallbackIntent)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,7 +121,6 @@ fun LoginScreen(
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Custom Google-like Icon logic from legacy can be added if needed
                     Text(
                         text = "GOOGLE İLE BAĞLAN",
                         fontWeight = FontWeight.Bold,
@@ -155,4 +157,5 @@ fun LoginScreen(
             textAlign = TextAlign.Center
         )
     }
+}
 }

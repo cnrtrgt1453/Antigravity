@@ -28,6 +28,10 @@ fun TradeHistoryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        viewModel.fetchHistory()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(

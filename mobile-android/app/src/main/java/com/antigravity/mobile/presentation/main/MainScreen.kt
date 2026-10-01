@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -30,7 +31,7 @@ sealed class BottomBarScreen(
     val title: String,
     val icon: ImageVector
 ) {
-    object Home : BottomBarScreen("home", "Ana Sayfa", Icons.Default.Home)
+    object Home : BottomBarScreen("home", "Anasayfa", Icons.Default.Home)
     object Market : BottomBarScreen("market", "Piyasalar", Icons.Default.ShowChart)
     object Signals : BottomBarScreen("signals", "Sinyaller", Icons.Default.Analytics)
     object News : BottomBarScreen("news", "Haberler", Icons.Default.Newspaper)
@@ -42,7 +43,8 @@ sealed class BottomBarScreen(
 fun MainScreen(
     onLogout: () -> Unit,
     onNavigateToHistory: () -> Unit,
-    onNavigateToPrivacy: () -> Unit
+    onNavigateToPrivacy: () -> Unit,
+    onNavigateToLogin: () -> Unit = {}
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -53,19 +55,25 @@ fun MainScreen(
             startDestination = BottomBarScreen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomBarScreen.Home.route) { HomeScreen() }
-            composable(BottomBarScreen.Market.route) { MarketScreen() }
+            composable(BottomBarScreen.Home.route) { 
+                HomeScreen(onNavigateToLogin = onNavigateToLogin) 
+            }
+            composable(BottomBarScreen.Market.route) { 
+                MarketScreen(onNavigateToLogin = onNavigateToLogin) 
+            }
             composable(BottomBarScreen.Signals.route) { SignalsScreen() }
             composable(BottomBarScreen.News.route) { NewsScreen() }
             composable(BottomBarScreen.Game.route) {
                 com.antigravity.mobile.presentation.game.GameScreen(
-                    onNavigateToHistory = onNavigateToHistory
+                    onNavigateToHistory = onNavigateToHistory,
+                    onNavigateToLogin = onNavigateToLogin
                 )
             }
             composable(BottomBarScreen.Profile.route) {
                 ProfileScreen(
                     onLogout = onLogout,
-                    onNavigateToPrivacy = onNavigateToPrivacy
+                    onNavigateToPrivacy = onNavigateToPrivacy,
+                    onNavigateToLogin = onNavigateToLogin
                 )
             }
         }
@@ -88,7 +96,13 @@ fun BottomBar(navController: NavHostController) {
     NavigationBar {
         screens.forEach { screen ->
             NavigationBarItem(
-                label = { Text(text = screen.title) },
+                label = {
+                    Text(
+                        text = screen.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
                 icon = { Icon(imageVector = screen.icon, contentDescription = "Navigation Icon") },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {

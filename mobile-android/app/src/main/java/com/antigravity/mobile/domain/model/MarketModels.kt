@@ -13,8 +13,23 @@ data class Stock(
     val sma50: Double? = null,
     val sma200: Double? = null,
     val crossPrice: Double? = null,
-    val isWatched: Boolean = false
+    val crossDate: String? = null,
+    val isWatched: Boolean = false,
+    val dailyChangePercent: Double? = null,
+    val crossDiff: Double? = null,
+    val crossDiffPercent: Double? = null
 )
+
+enum class MarketFilter(val title: String) {
+    ALL("Tümü"),
+    BIST30("BIST 30"),
+    BIST50("BIST 50"),
+    BIST100("BIST 100"),
+    TOP_GAINERS("Günün Yükselenleri"),
+    TOP_LOSERS("Günün Düşenleri"),
+    CROSS_GAINERS("Kesişim Kazandıranlar"),
+    CROSS_LOSERS("Kesişim Kaybettirenler")
+}
 
 @Serializable
 data class MarketSignal(
